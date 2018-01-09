@@ -34,9 +34,9 @@ import com.teeny.wms.model.KeyValueEntity;
 import com.teeny.wms.model.ReceivingEntity;
 import com.teeny.wms.model.ReceivingItemEntity;
 import com.teeny.wms.model.ResponseEntity;
-import com.teeny.wms.page.receiving.adapter.ReceivingAcceptanceAdapter;
+import com.teeny.wms.page.receiving.adapter.ReceivingAdapter;
 import com.teeny.wms.page.receiving.fragment.OrderDetailFragment;
-import com.teeny.wms.page.receiving.helper.AcceptanceHelper;
+import com.teeny.wms.page.receiving.helper.ReceivingHelper;
 import com.teeny.wms.page.common.adapter.KeyValueListAdapter;
 import com.teeny.wms.pop.DialogFactory;
 import com.teeny.wms.pop.Toaster;
@@ -59,17 +59,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  *
  * @author zp
  * @version 1.0
- * @see ReceivingAcceptanceActivity
+ * @see ReceivingActivity
  * @since 2017/7/16
  */
 
-public class ReceivingAcceptanceActivity extends ToolbarActivity implements BaseFragmentPagerAdapter.Callback, ViewPager.OnPageChangeListener {
+public class ReceivingActivity extends ToolbarActivity implements BaseFragmentPagerAdapter.Callback, ViewPager.OnPageChangeListener {
 
     private static final String KEY_ENTITY = "entity";
 
     public static void startActivity(Context context, DocumentEntity entity) {
         Intent intent = new Intent();
-        intent.setClass(context, ReceivingAcceptanceActivity.class);
+        intent.setClass(context, ReceivingActivity.class);
         if (Validator.isNotNull(entity)) {
             intent.putExtra(KEY_ENTITY, entity);
         }
@@ -92,7 +92,7 @@ public class ReceivingAcceptanceActivity extends ToolbarActivity implements Base
 
     private ReceivingService mService;
 
-    private AcceptanceHelper mHelper;
+    private ReceivingHelper mHelper;
     private DocumentEntity mDocumentEntity;
 
     private AlertDialog mOrderSelectDialog;
@@ -100,7 +100,7 @@ public class ReceivingAcceptanceActivity extends ToolbarActivity implements Base
 
     private ViewPager mViewPager;
     private KeyValueTextView mCountView;
-    private Map<ReceivingAcceptanceAdapter, AdapterDataObserver> mAdapterDataObserverHolder;
+    private Map<ReceivingAdapter, AdapterDataObserver> mAdapterDataObserverHolder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,7 +114,7 @@ public class ReceivingAcceptanceActivity extends ToolbarActivity implements Base
     protected void onDestroy() {
         mScannerHelper.unregisterReceiver(this);
         unregisterEventBus();
-        for (Map.Entry<ReceivingAcceptanceAdapter, AdapterDataObserver> entry : mAdapterDataObserverHolder.entrySet()) {
+        for (Map.Entry<ReceivingAdapter, AdapterDataObserver> entry : mAdapterDataObserverHolder.entrySet()) {
             entry.getKey().unregisterAdapterDataObserver(entry.getValue());
         }
         super.onDestroy();
@@ -219,7 +219,7 @@ public class ReceivingAcceptanceActivity extends ToolbarActivity implements Base
 
         mService = NetServiceManager.getInstance().getService(ReceivingService.class);
 
-        mHelper = new AcceptanceHelper();
+        mHelper = new ReceivingHelper();
         mScannerHelper.openScanner(this, this::handleScannerResult);
 
         mOrderAdapter = new KeyValueMultipleChoiceAdapter(null);
@@ -269,7 +269,7 @@ public class ReceivingAcceptanceActivity extends ToolbarActivity implements Base
         if (entity == null) {
             Toaster.showToast("所选单据中未找到该商品.");
         } else {
-            ReceivingAcceptanceOrderDetailActivity.startActivity(this, entity);
+            ReceivingOrderDetailActivity.startActivity(this, entity);
         }
     }
 
@@ -331,7 +331,7 @@ public class ReceivingAcceptanceActivity extends ToolbarActivity implements Base
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onFilter(AcceptanceHelper helper) {
+    public void onFilter(ReceivingHelper helper) {
         mBuyerTextView.setText(mHelper.getBuyerNames());
         mStatusTextView.setText(mHelper.getStatus());
     }
@@ -354,7 +354,7 @@ public class ReceivingAcceptanceActivity extends ToolbarActivity implements Base
     private Fragment createFragment(int position) {
         OrderDetailFragment fragment = OrderDetailFragment.newInstance(position);
         AdapterDataObserver observer = new AdapterDataObserver(fragment);
-        ReceivingAcceptanceAdapter adapter = fragment.getAdapter();
+        ReceivingAdapter adapter = fragment.getAdapter();
         adapter.registerAdapterDataObserver(observer);
         mAdapterDataObserverHolder.put(adapter, observer);
         return fragment;

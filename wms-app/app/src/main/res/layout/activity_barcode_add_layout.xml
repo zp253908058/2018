@@ -21,7 +21,7 @@
                 android:layout_marginTop="@dimen/dp_16"
                 android:background="@color/white"
                 android:hint="@string/text_goods_barcode"
-                android:imeOptions="actionSearch" />
+                android:imeOptions="actionDone" />
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/barcode_add_goods"

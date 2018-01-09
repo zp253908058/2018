@@ -20,6 +20,7 @@ import com.teeny.wms.datasouce.net.service.ShelveService;
 import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.ResponseEntity;
 import com.teeny.wms.model.ShelveEntity;
+import com.teeny.wms.page.barcode.BarcodeAddActivity;
 import com.teeny.wms.page.document.controller.DocumentHelper;
 import com.teeny.wms.page.shelve.ShelveAndStorageEditActivity;
 import com.teeny.wms.page.shelve.adapter.ShelveAdapter;
@@ -75,8 +76,8 @@ public class ShelveAndStorageFragment extends BaseFragment implements RecyclerVi
         mEventBus = EventBus.getDefault();
         mEventBus.register(this);
 
-        mOption1Dialog = DialogFactory.createOptionMenuDialog(this.getContext(), R.array.pd_option_1, this);
-        mOption2Dialog = DialogFactory.createOptionMenuDialog(this.getContext(), R.array.pd_option_2, this);
+        mOption1Dialog = DialogFactory.createOptionMenuDialog(this.getContext(), R.array.option_1, this);
+        mOption2Dialog = DialogFactory.createOptionMenuDialog(this.getContext(), R.array.option_2, this);
     }
 
     @Override
@@ -126,13 +127,30 @@ public class ShelveAndStorageFragment extends BaseFragment implements RecyclerVi
         ShelveEntity entity = mAdapter.getItem(mSelectPosition);
         switch (entity.getStatus()) {
             case 0:
-                if (position == 0) {
-                    complete();
-                    return;
+                switch (position) {
+                    case 0:
+                        complete();
+                        break;
+                    case 2:
+                        BarcodeAddActivity.startActivity(getContext(), entity.getGoodsId(), entity.getGoodsCode());
+                        break;
+                    case 1:
+                    default:
+                        ShelveAndStorageEditActivity.startActivity(getActivity(), entity);
+                        break;
                 }
+                break;
             case 1:
             default:
-                ShelveAndStorageEditActivity.startActivity(getActivity(), entity);
+                switch (position) {
+                    case 1:
+                        BarcodeAddActivity.startActivity(getContext(),entity.getGoodsId(), entity.getGoodsCode());
+                        break;
+                    case 0:
+                    default:
+                        ShelveAndStorageEditActivity.startActivity(getActivity(), entity);
+                        break;
+                }
                 break;
         }
     }

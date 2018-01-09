@@ -16,17 +16,17 @@ import java.util.List;
  *
  * @author zp
  * @version 1.0
- * @see AcceptanceLotAdapter
+ * @see ReceivingLotAdapter
  * @since 2017/8/15
  */
 
-public class AcceptanceLotAdapter extends RecyclerAdapter<ReceivingLotEntity> {
+public class ReceivingLotAdapter extends RecyclerAdapter<ReceivingLotEntity> {
     /**
      * the constructor of this class.
      *
      * @param items the data source.
      */
-    public AcceptanceLotAdapter(@Nullable List<ReceivingLotEntity> items) {
+    public ReceivingLotAdapter(@Nullable List<ReceivingLotEntity> items) {
         super(items);
     }
 

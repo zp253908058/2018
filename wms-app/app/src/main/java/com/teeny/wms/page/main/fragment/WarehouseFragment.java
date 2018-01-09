@@ -17,7 +17,6 @@ import android.widget.PopupWindow;
 
 import com.teeny.wms.R;
 import com.teeny.wms.base.RecyclerViewTouchListener;
-import com.teeny.wms.base.ToolbarActivity;
 import com.teeny.wms.base.ToolbarFragment;
 import com.teeny.wms.base.decoration.GridDecoration;
 import com.teeny.wms.datasouce.local.cache.UserManager;
@@ -29,7 +28,7 @@ import com.teeny.wms.model.KeyValueEntity;
 import com.teeny.wms.model.ResponseEntity;
 import com.teeny.wms.page.allot.AllotOrderAddActivity;
 import com.teeny.wms.page.barcode.BarcodeCollectActivity;
-import com.teeny.wms.page.receiving.ReceivingAcceptanceActivity;
+import com.teeny.wms.page.receiving.ReceivingActivity;
 import com.teeny.wms.page.allot.AllotListActivity;
 import com.teeny.wms.page.document.QueryDocumentActivity;
 import com.teeny.wms.page.document.controller.DocumentHelper;
@@ -289,7 +288,7 @@ public class WarehouseFragment extends ToolbarFragment implements View.OnClickLi
     public void onItemClick(View view, int position) {
         switch (position) {
             case 0:
-                ReceivingAcceptanceActivity.startActivity(getContext(), null);
+                ReceivingActivity.startActivity(getContext(), null);
                 break;
             case 1:
                 ShelveAndStorageActivity.startActivity(getContext(), null);

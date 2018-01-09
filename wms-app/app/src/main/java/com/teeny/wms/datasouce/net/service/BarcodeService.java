@@ -1,13 +1,16 @@
 package com.teeny.wms.datasouce.net.service;
 
 import com.teeny.wms.model.BarcodeGoodsEntity;
+import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.ResponseEntity;
-import com.teeny.wms.model.SKUEntity;
+import com.teeny.wms.model.request.BarcodeAddRequestEntity;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 /**
@@ -29,4 +32,7 @@ public interface BarcodeService {
 
     @GET("barcode/goodsList")
     Flowable<ResponseEntity<List<BarcodeGoodsEntity>>> getGoodsList(@Query("goods") String goods);
+
+    @POST("barcode/add")
+    Flowable<ResponseEntity<EmptyEntity>> add(@Body BarcodeAddRequestEntity entity);
 }

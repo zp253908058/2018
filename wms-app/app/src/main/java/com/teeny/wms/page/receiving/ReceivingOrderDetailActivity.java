@@ -25,7 +25,7 @@ import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.ReceivingItemEntity;
 import com.teeny.wms.model.ResponseEntity;
 import com.teeny.wms.model.request.ReceivingRequestEntity;
-import com.teeny.wms.page.receiving.adapter.AcceptanceLotAdapter;
+import com.teeny.wms.page.receiving.adapter.ReceivingLotAdapter;
 import com.teeny.wms.page.document.controller.DocumentHelper;
 import com.teeny.wms.pop.DialogFactory;
 import com.teeny.wms.pop.Toaster;
@@ -45,24 +45,24 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  *
  * @author zp
  * @version 1.0
- * @see ReceivingAcceptanceOrderDetailActivity
+ * @see ReceivingOrderDetailActivity
  * @since 2017/7/20
  */
 
-public class ReceivingAcceptanceOrderDetailActivity extends ToolbarActivity implements DialogInterface.OnClickListener {
+public class ReceivingOrderDetailActivity extends ToolbarActivity implements DialogInterface.OnClickListener {
 
     private static final String KEY_ENTITY = "entity";
     private static final int INVALID_POSITION = -1;
 
     public static void startActivity(Context context, ReceivingItemEntity entity) {
         Intent intent = new Intent();
-        intent.setClass(context, ReceivingAcceptanceOrderDetailActivity.class);
+        intent.setClass(context, ReceivingOrderDetailActivity.class);
         intent.putExtra(KEY_ENTITY, entity);
         context.startActivity(intent);
     }
 
     private ReceivingItemEntity mEntity;
-    private AcceptanceLotAdapter mAdapter;
+    private ReceivingLotAdapter mAdapter;
 
     private ReceivingService mService;
 
@@ -96,7 +96,7 @@ public class ReceivingAcceptanceOrderDetailActivity extends ToolbarActivity impl
         switch (id) {
             case R.id.add:
                 mSelectPosition = INVALID_POSITION;
-                AcceptanceLotAddActivity.startActivity(this, mEntity.getRate(), mEntity.getZhUnit(), mEntity.getLhUnit());
+                ReceivingLotAddActivity.startActivity(this, mEntity.getRate(), mEntity.getZhUnit(), mEntity.getLhUnit());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -127,7 +127,7 @@ public class ReceivingAcceptanceOrderDetailActivity extends ToolbarActivity impl
         makeAreaView.setText(mEntity.getProduceArea());
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mAdapter = new AcceptanceLotAdapter(new ArrayList<>());
+        mAdapter = new ReceivingLotAdapter(new ArrayList<>());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         VerticalDecoration decoration = new VerticalDecoration(this.getContext());
@@ -189,7 +189,7 @@ public class ReceivingAcceptanceOrderDetailActivity extends ToolbarActivity impl
 
             @Override
             public void doComplete() {
-                ReceivingAcceptanceActivity.CompleteFlag flag = new ReceivingAcceptanceActivity.CompleteFlag();
+                ReceivingActivity.CompleteFlag flag = new ReceivingActivity.CompleteFlag();
                 getEventBus().post(flag);
                 DocumentHelper.getInstance().notifyDocumentChanged();
                 finish();
@@ -201,7 +201,7 @@ public class ReceivingAcceptanceOrderDetailActivity extends ToolbarActivity impl
     public void onItemClick(View view, int position) {
         mSelectPosition = position;
         ReceivingLotEntity entity = mAdapter.getItem(position);
-        AcceptanceLotAddActivity.startActivity(this, entity);
+        ReceivingLotAddActivity.startActivity(this, entity);
     }
 
     public boolean onItemLongClick(View view, int position) {

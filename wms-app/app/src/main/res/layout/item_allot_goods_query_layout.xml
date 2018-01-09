@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/allot_goods_query_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:paddingStart="@dimen/dp_16">
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/allot_goods_query_location"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_goods_allocation" />
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/allot_goods_query_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_goods_name" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_goods_query_lot"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            app:key="@string/text_lot_number" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_goods_query_specification"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            app:key="@string/text_specification" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_goods_query_validity"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            app:key="@string/text_validity" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_goods_query_production_date"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            app:key="@string/text_production_date" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_goods_query_unit"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            app:key="@string/text_unit" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_goods_query_amount"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            app:key="@string/text_amount" />
+
+    </LinearLayout>
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/allot_goods_query_manufacturer"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_manufacturer" />
+
+</LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/shape_divider"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_16"
+        android:background="@color/divider_color" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/allot_order_header_location"
+        style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+        android:hint="@string/text_goods_allocation"
+        android:imeOptions="actionSearch" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/allot_order_header_goods"
+        style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+        android:hint="@string/text_goods"
+        android:imeOptions="actionSearch" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_16"
+        android:background="@color/divider_color" />
+
+</LinearLayout>

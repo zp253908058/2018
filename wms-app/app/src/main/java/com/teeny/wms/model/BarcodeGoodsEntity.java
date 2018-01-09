@@ -22,6 +22,25 @@ public class BarcodeGoodsEntity implements Parcelable, GoodsChoiceEntity {
     private String manufacturer;          //厂家
     private String dosageForm;            //剂型
 
+    private String makeArea;              //产地
+    private String approvalNumber;        //批准文号
+
+    public String getMakeArea() {
+        return makeArea;
+    }
+
+    public void setMakeArea(String makeArea) {
+        this.makeArea = makeArea;
+    }
+
+    public String getApprovalNumber() {
+        return approvalNumber;
+    }
+
+    public void setApprovalNumber(String approvalNumber) {
+        this.approvalNumber = approvalNumber;
+    }
+
     public int getId() {
         return id;
     }
@@ -83,6 +102,8 @@ public class BarcodeGoodsEntity implements Parcelable, GoodsChoiceEntity {
         this.dosageForm = dosageForm;
     }
 
+
+
     protected BarcodeGoodsEntity(Parcel in) {
         id = in.readInt();
         goodsName = in.readString();
@@ -91,6 +112,8 @@ public class BarcodeGoodsEntity implements Parcelable, GoodsChoiceEntity {
         unit = in.readString();
         manufacturer = in.readString();
         dosageForm = in.readString();
+        makeArea = in.readString();
+        approvalNumber = in.readString();
     }
 
     @Override
@@ -102,6 +125,8 @@ public class BarcodeGoodsEntity implements Parcelable, GoodsChoiceEntity {
         dest.writeString(unit);
         dest.writeString(manufacturer);
         dest.writeString(dosageForm);
+        dest.writeString(makeArea);
+        dest.writeString(approvalNumber);
     }
 
     @Override

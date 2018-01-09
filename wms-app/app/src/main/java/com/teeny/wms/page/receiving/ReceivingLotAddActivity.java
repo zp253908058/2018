@@ -30,11 +30,11 @@ import java.util.Locale;
  *
  * @author zp
  * @version 1.0
- * @see AcceptanceLotAddActivity
+ * @see ReceivingLotAddActivity
  * @since 2017/8/16
  */
 
-public class AcceptanceLotAddActivity extends ToolbarActivity implements DatePickerDialog.OnDateSetListener {
+public class ReceivingLotAddActivity extends ToolbarActivity implements DatePickerDialog.OnDateSetListener {
 
     public static final String KEY_DATA = "data";
     public static final String KEY_FLAG = "flag";
@@ -53,7 +53,7 @@ public class AcceptanceLotAddActivity extends ToolbarActivity implements DatePic
 
     private static void startActivity(Context context, ReceivingLotEntity entity, boolean init) {
         Intent intent = new Intent();
-        intent.setClass(context, AcceptanceLotAddActivity.class);
+        intent.setClass(context, ReceivingLotAddActivity.class);
         intent.putExtra(KEY_DATA, entity);
         intent.putExtra(KEY_FLAG, init);
         context.startActivity(intent);

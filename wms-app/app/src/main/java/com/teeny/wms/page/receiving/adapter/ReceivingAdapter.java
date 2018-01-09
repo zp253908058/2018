@@ -2,7 +2,6 @@ package com.teeny.wms.page.receiving.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -23,11 +22,11 @@ import java.util.List;
  *
  * @author zp
  * @version 1.0
- * @see ReceivingAcceptanceAdapter
+ * @see ReceivingAdapter
  * @since 2017/7/20
  */
 
-public class ReceivingAcceptanceAdapter extends RecyclerAdapter<ReceivingItemEntity> implements Filterable {
+public class ReceivingAdapter extends RecyclerAdapter<ReceivingItemEntity> implements Filterable {
 
     private final Object mLock = new Object();
 
@@ -40,7 +39,7 @@ public class ReceivingAcceptanceAdapter extends RecyclerAdapter<ReceivingItemEnt
      *
      * @param items the data source.
      */
-    public ReceivingAcceptanceAdapter(@Nullable List<ReceivingItemEntity> items) {
+    public ReceivingAdapter(@Nullable List<ReceivingItemEntity> items) {
         super(items);
     }
 

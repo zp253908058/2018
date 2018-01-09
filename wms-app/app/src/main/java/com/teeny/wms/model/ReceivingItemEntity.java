@@ -16,6 +16,7 @@ public class ReceivingItemEntity implements Parcelable {
     private int id;//id 1
     private int originalId;       //原始id
     private String billNo;
+    private int goodsId;
     private String goodsName;
     private String lotNo;
     private String specification;
@@ -60,6 +61,14 @@ public class ReceivingItemEntity implements Parcelable {
 
     public void setBillNo(String billNo) {
         this.billNo = billNo;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
     }
 
     public String getGoodsName() {
@@ -194,6 +203,7 @@ public class ReceivingItemEntity implements Parcelable {
         id = in.readInt();
         originalId = in.readInt();
         billNo = in.readString();
+        goodsId = in.readInt();
         goodsName = in.readString();
         lotNo = in.readString();
         specification = in.readString();
@@ -217,6 +227,7 @@ public class ReceivingItemEntity implements Parcelable {
         dest.writeInt(id);
         dest.writeInt(originalId);
         dest.writeString(billNo);
+        dest.writeInt(goodsId);
         dest.writeString(goodsName);
         dest.writeString(lotNo);
         dest.writeString(specification);

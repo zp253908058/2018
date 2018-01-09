@@ -19,11 +19,11 @@ import java.util.List;
  *
  * @author zp
  * @version 1.0
- * @see AcceptanceHelper
+ * @see ReceivingHelper
  * @since 2017/8/17
  */
 
-public class AcceptanceHelper {
+public class ReceivingHelper {
 
     private List<ReceivingEntity> mOriginalData;
     private SparseArrayCompat<List<ReceivingItemEntity>> mDataHolder;
@@ -31,7 +31,7 @@ public class AcceptanceHelper {
 
     private List<ReceivingEntity> mDataSource;
 
-    public AcceptanceHelper() {
+    public ReceivingHelper() {
         mDataHolder = new SparseArrayCompat<>();
     }
 

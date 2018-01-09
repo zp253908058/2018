@@ -163,6 +163,7 @@
     <string name="text_barcode_collect">条码收集</string>
     <string name="text_barcode_add">条码新增</string>
     <string name="text_allot_order_add">调拨单新增</string>
+    <string name="text_allot_order_add_detail">调拨单新增详情</string>
     <string name="text_goods_barcode">商品条码</string>
     <string name="text_goods_search">商品搜索</string>
     <string name="text_dosage_form">剂型</string>

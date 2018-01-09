@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +17,8 @@ import com.teeny.wms.datasouce.net.NetServiceManager;
 import com.teeny.wms.datasouce.net.ResponseSubscriber;
 import com.teeny.wms.datasouce.net.service.BarcodeService;
 import com.teeny.wms.model.BarcodeGoodsEntity;
+import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.ResponseEntity;
-import com.teeny.wms.model.SKUGoodsDetailEntity;
 import com.teeny.wms.model.request.BarcodeAddRequestEntity;
 import com.teeny.wms.page.common.adapter.GoodsChoiceAdapter;
 import com.teeny.wms.pop.Toaster;
@@ -42,16 +43,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class BarcodeAddActivity extends ToolbarActivity {
 
     private static final String KEY_ID = "id";
+    private static final String KEY_OLD_BARCODE = "old_barcode";
 
     public static void startActivity(Context context) {
-        startActivity(context, 0);
+        startActivity(context, 0, null);
     }
 
-    public static void startActivity(Context context, int id) {
+    public static void startActivity(Context context, int id, String oldBarcode) {
         Intent intent = new Intent();
         intent.setClass(context, BarcodeAddActivity.class);
         if (id > 0) {
             intent.putExtra(KEY_ID, id);
+        }
+        if (Validator.isNotEmpty(oldBarcode)) {
+            intent.putExtra(KEY_OLD_BARCODE, oldBarcode);
         }
         context.startActivity(intent);
     }
@@ -60,6 +65,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
     private AppCompatEditText mGoodsView;
 
     private KeyValueEditView mGoodsNameView;
+    private KeyValueEditView mSpecificationView;
     private KeyValueEditView mManufacturerView;
     private KeyValueEditView mMakeAreaView;
     private KeyValueEditView mDosageFormView;
@@ -67,6 +73,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
     private KeyValueEditView mApprovalNumberView;
 
     private int mId;
+    private String mOldBarcode;
     private BarcodeService mService;
 
     @Override
@@ -88,9 +95,19 @@ public class BarcodeAddActivity extends ToolbarActivity {
     }
 
     private void initView() {
-        mId = getIntent().getIntExtra(KEY_ID, 0);
+        Intent intent = getIntent();
+        mId = intent.getIntExtra(KEY_ID, 0);
+        mOldBarcode = intent.getStringExtra(KEY_OLD_BARCODE);
 
         mBarcodeView = (AppCompatEditText) findViewById(R.id.barcode_add_barcode);
+        mBarcodeView.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                WindowUtils.hideInputSoft(v);
+                complete();
+                return true;
+            }
+            return false;
+        });
         mGoodsView = (AppCompatEditText) findViewById(R.id.barcode_add_goods);
         mGoodsView.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -102,6 +119,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
         });
 
         mGoodsNameView = (KeyValueEditView) findViewById(R.id.barcode_add_goods_name);
+        mSpecificationView = (KeyValueEditView) findViewById(R.id.barcode_add_specification);
         mManufacturerView = (KeyValueEditView) findViewById(R.id.barcode_add_manufacturer);
         mMakeAreaView = (KeyValueEditView) findViewById(R.id.barcode_add_make_area);
         mDosageFormView = (KeyValueEditView) findViewById(R.id.barcode_add_dosage_form);
@@ -120,25 +138,31 @@ public class BarcodeAddActivity extends ToolbarActivity {
     }
 
     private void complete() {
+        if (mId < 0) {
+            Toaster.showToast("商品id错误,请重新添加.");
+            return;
+        }
+        String barcode = mBarcodeView.getText().toString();
+        if (Validator.isEmpty(barcode)) {
+            Toaster.showToast("请输入条码.");
+            return;
+        }
         BarcodeAddRequestEntity entity = new BarcodeAddRequestEntity();
-//        entity.setId(mId);
-//        entity.setAmount(Converter.toInt(amount));
-//        entity.setOriginalAmount(Converter.toInt(amount));
-//        entity.setLocationCode(allocation);
-//        entity.setValidateDate(date);
-//        entity.setLotNo(lot);
-//        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.add(entity);
-//        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
-//            @Override
-//            public void doNext(EmptyEntity data) {
-//                getEventBus().post(new SKUCheckActivity.DataAddedFlag());
-//            }
-//
-//            @Override
-//            public void doComplete() {
-//                finish();
-//            }
-//        });
+        entity.setId(mId);
+        entity.setOldBarcode(mOldBarcode);
+        entity.setNewBarcode(barcode);
+        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.add(entity);
+        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
+            @Override
+            public void doNext(EmptyEntity data) {
+                Toaster.showToast("添加成功.");
+            }
+
+            @Override
+            public void doComplete() {
+                finish();
+            }
+        });
     }
 
     private void obtainData() {
@@ -152,7 +176,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
                 if (Validator.isNotNull(data)) {
                     setData(data);
                 } else {
-                    Toaster.showToast("该商品码不存在.");
+                    Toaster.showToast("该商品id无效.");
                 }
             }
 
@@ -174,25 +198,25 @@ public class BarcodeAddActivity extends ToolbarActivity {
             @Override
             @SuppressWarnings("unchecked")
             public void doNext(List<BarcodeGoodsEntity> data) {
-                if (Validator.isNotNull(data)) {
-                    if (data.size() > 1) {
-                        final GoodsChoiceAdapter adapter = new GoodsChoiceAdapter(data);
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogStyle_NoTitle);
-                        ListView listView = (ListView) LayoutInflater.from(getContext()).inflate(R.layout.common_list_view, null);
-                        listView.setAdapter(adapter);
-                        builder.setView(listView);
-                        AlertDialog dialog = builder.create();
-                        listView.setOnItemClickListener((parent, view, position, id) -> {
-                            setData((SKUGoodsDetailEntity) adapter.getItem(position));
-                            dialog.dismiss();
-                        });
-                        dialog.show();
-                        return;
-                    }
-                    setData(data.get(0));
-                } else {
-                    Toaster.showToast("该商品码不存在.");
+                if (Validator.isEmpty(data)) {
+                    Toaster.showToast("搜索内容不存在.");
+                    return;
                 }
+                if (data.size() > 1) {
+                    final GoodsChoiceAdapter adapter = new GoodsChoiceAdapter(data);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogStyle_NoTitle);
+                    ListView listView = (ListView) LayoutInflater.from(getContext()).inflate(R.layout.common_list_view, null);
+                    listView.setAdapter(adapter);
+                    builder.setView(listView);
+                    AlertDialog dialog = builder.create();
+                    listView.setOnItemClickListener((parent, view, position, id) -> {
+                        setData((BarcodeGoodsEntity) adapter.getItem(position));
+                        dialog.dismiss();
+                    });
+                    dialog.show();
+                    return;
+                }
+                setData(data.get(0));
             }
 
             @Override
@@ -200,29 +224,18 @@ public class BarcodeAddActivity extends ToolbarActivity {
 
             }
         });
-//        if (data.size() > 1) {
-//            final GoodsChoiceAdapter adapter = new GoodsChoiceAdapter(data);
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogStyle_NoTitle);
-//            ListView listView = (ListView) LayoutInflater.from(getContext()).inflate(R.layout.common_list_view, null);
-//            listView.setAdapter(adapter);
-//            builder.setView(listView);
-//            AlertDialog dialog = builder.create();
-//            listView.setOnItemClickListener((parent, view, position, id) -> {
-//                setData((SKUGoodsDetailEntity) adapter.getItem(position));
-//                dialog.dismiss();
-//            });
-//            dialog.show();
-//            return;
-//        }
-//        setData(data.get(0));
     }
 
     private void setData(BarcodeGoodsEntity data) {
-//        mNameView.setValue(data.getGoodsName());
-//        mNumberView.setValue(data.getNumber());
-//        mSpecificationView.setValue(data.getStandard());
-//        mUnitView.setValue(data.getUnit());
-//        mManufacturerView.setValue(data.getManufacturers());
-//        mId = data.getpId();
+        mId = data.getId();
+        mOldBarcode = data.getBarcode();
+        mGoodsNameView.setValue(data.getGoodsName());
+        mSpecificationView.setValue(data.getSpecification());
+        mMakeAreaView.setValue(data.getMakeArea());
+        mDosageFormView.setValue(data.getDosageForm());
+        mApprovalNumberView.setValue(data.getApprovalNumber());
+        mUnitView.setValue(data.getUnit());
+        mManufacturerView.setValue(data.getManufacturers());
+
     }
 }

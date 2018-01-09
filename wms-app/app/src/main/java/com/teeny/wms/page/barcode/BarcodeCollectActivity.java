@@ -139,7 +139,7 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
     @Override
     public void onItemClick(View view, int position) {
         BarcodeGoodsEntity entity = mAdapter.getItem(position);
-        BarcodeAddActivity.startActivity(this, entity.getId());
+        BarcodeAddActivity.startActivity(this, entity.getId(), entity.getBarcode());
     }
 
     @Override
