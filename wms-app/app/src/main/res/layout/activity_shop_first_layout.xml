@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/base_appbar_layout"
+        style="@style/AppBarLayoutStyle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:divider="@drawable/shape_divider"
+            android:orientation="vertical"
+            android:showDividers="middle"
+            app:layout_scrollFlags="scroll|snap">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@drawable/shape_divider"
+                android:dividerPadding="@dimen/dp_16"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_16"
+                    android:background="@color/divider_color" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/shop_first_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:dropDownVerticalOffset="@dimen/dp_48"
+                    android:paddingLeft="@dimen/dp_8"
+                    android:paddingRight="@dimen/dp_8"
+                    android:spinnerMode="dropdown" />
+
+                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/shop_first_repository"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@null"
+                    android:completionThreshold="0"
+                    android:dropDownWidth="match_parent"
+                    android:gravity="center_vertical"
+                    android:hint="@string/text_repository"
+                    android:imeOptions="actionNext"
+                    android:lines="1"
+                    android:paddingEnd="@dimen/dp_16"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_16"
+                    android:singleLine="true"
+                    android:theme="@style/AutoCompleteTextView" />
+
+                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/shop_first_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@null"
+                    android:completionThreshold="0"
+                    android:dropDownWidth="match_parent"
+                    android:gravity="center_vertical"
+                    android:hint="@string/text_area"
+                    android:imeOptions="actionDone"
+                    android:lines="1"
+                    android:paddingEnd="@dimen/dp_16"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_16"
+                    android:singleLine="true"
+                    android:theme="@style/AutoCompleteTextView" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/shop_first_goods_allocation"
+                    style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                    android:hint="@string/text_goods_allocation" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/shop_first_goods"
+                    style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                    android:hint="@string/text_goods" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_16"
+                    android:background="@color/divider_color" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/common_tab_layout" />
+
+        <include layout="@layout/common_key_value_text_view_32" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/shop_first_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/dp_16"
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimary"
+        app:srcCompat="@drawable/icon_vector_check" />
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="function_array">
+        <item>收货</item>
+        <item>上架</item>
+        <item>调拨单</item>
+        <item>复核</item>
+        <item>单据查询</item>
+        <item>单品盘点</item>
+        <item>门店初盘</item>
+        <item>仓库初盘</item>
+        <item>复盘</item>
+        <item>条码采集</item>
+        <item>新增调拨单</item>
+    </string-array>
+
+    <string-array name="sku_title">
+        <item>全部</item>
+        <item>验收单</item>
+        <item>上架单</item>
+        <item>调拨单</item>
+        <item>复核单</item>
+    </string-array>
+
+    <string-array name="status">
+        <item>待验收</item>
+        <item>验收完成</item>
+    </string-array>
+
+    <string-array name="shelve_status">
+        <item>全部</item>
+        <item>待上架</item>
+        <item>已上架</item>
+    </string-array>
+
+    <string-array name="option_array_1">
+        <item>无差异</item>
+        <item>标签条码问题</item>
+        <item>硬件设备问题</item>
+        <item>拣货数量问题</item>
+    </string-array>
+
+    <string-array name="pd_status">
+        <item>未盘点</item>
+        <item>已盘点</item>
+    </string-array>
+
+    <string-array name="pd_option_1">
+        <item>完成当前</item>
+        <item>编辑</item>
+    </string-array>
+
+    <string-array name="pd_option_2">
+        <item>编辑</item>
+    </string-array>
+</resources>

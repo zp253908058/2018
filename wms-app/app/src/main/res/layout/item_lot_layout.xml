@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:divider="@drawable/shape_divider"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:showDividers="middle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewStyle.Key"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/text_lot_number" />
+
+        <TextView
+            android:id="@+id/lot_number"
+            style="@style/TextViewStyle.Key"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewStyle.Key"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/text_amount" />
+
+        <TextView
+            android:id="@+id/lot_amount"
+            style="@style/TextViewStyle.Key"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|end" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewStyle.Key"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/text_validity" />
+
+        <TextView
+            android:id="@+id/lot_validate_date"
+            style="@style/TextViewStyle.Key"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|end" />
+
+    </LinearLayout>
+
+</LinearLayout>

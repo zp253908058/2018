@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:divider="@drawable/shape_divider"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:paddingStart="@dimen/dp_16"
+    android:showDividers="middle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_list_export_location"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key="@string/text_export_goods_allocation" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_list_import_location"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key="@string/text_import_goods_allocation" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_document_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_32"
+            app:key="@string/text_document_number" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_list_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_32"
+            app:key="@string/text_goods_name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_32"
+            android:orientation="horizontal">
+
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/allot_list_lot_number"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:key="@string/text_lot_number" />
+
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/allot_list_specification"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:key="@string/text_specification"
+                app:valueColor="@color/colorPrimaryDark" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_32"
+            android:orientation="horizontal">
+
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/allot_list_production_date"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:key="@string/text_production_date" />
+
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/allot_list_amount"
+                android:layout_width="@dimen/dp_0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:key="@string/text_amount"
+                app:valueColor="@color/colorPrimaryDark" />
+        </LinearLayout>
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_list_manufacturer"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_32"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_8"
+            app:key="@string/text_manufacturer" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/allot_list_validity_date"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_32"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_8"
+            app:key="@string/text_validity" />
+
+    </LinearLayout>
+
+</LinearLayout>

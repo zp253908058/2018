@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppBarLayoutStyle" parent="Widget.Design.AppBarLayout">
+        <item name="elevation">4dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fitsSystemWindows">true</item>
+
+    </style>
+
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="navigationIcon">@null</item>
+        <item name="elevation">4dp</item>
+        <item name="titleTextAppearance">@style/ToolbarTextAppearance.Title</item>
+        <item name="subtitleTextAppearance">@style/ToolbarTextAppearance.Subtitle</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+    </style>
+
+    <style name="ToolbarTextAppearance">
+        <!--<item name="android:fontFamily">sans-serif-condensed</item>-->
+        <item name="android:textColor">@color/text_color</item>
+        <!--<item name="android:shadowDx">1</item>-->
+        <!--<item name="android:shadowDy">1</item>-->
+        <!--<item name="android:shadowRadius">2</item>-->
+        <!--<item name="android:shadowColor">?colorAccent</item>-->
+    </style>
+
+    <style name="ToolbarTextAppearance.Title">
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="ToolbarTextAppearance.Subtitle">
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:layout_height">@dimen/dp_48</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/background_selectable_button</item>
+    </style>
+
+    <style name="ButtonStyle.Deep">
+        <item name="android:background">@drawable/background_selectable_button_deep</item>
+    </style>
+
+
+    <!-- 启动界面样式，防止黑屏 -->
+    <style name="SplashStyle" parent="@style/AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:background">@mipmap/background_splash</item>
+    </style>
+
+    <style name="FloatingActionButton" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <!--<item name="tabMaxWidth">@dimen/tab_max_width</item>-->
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabIndicatorHeight">@dimen/dp_2</item>
+        <item name="tabPaddingStart">@dimen/dp_8</item>
+        <item name="tabPaddingEnd">@dimen/dp_8</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:textColor">@color/text_color_secondary</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="CardViewStyle" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">@dimen/dp_8</item>
+        <item name="cardElevation">@dimen/dp_4</item>
+        <item name="contentPadding">@dimen/dp_16</item>
+        <item name="cardBackgroundColor">@android:color/white</item>
+    </style>
+
+    <style name="TextViewStyle">
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="TextViewStyle.Grey">
+        <item name="android:textColor">@color/text_color_secondary</item>
+    </style>
+
+    <style name="TextViewStyle.Dark">
+        <item name="android:textColor">@color/text_color</item>
+    </style>
+
+    <style name="TextViewStyle.Key">
+        <item name="android:textColor">@color/text_key</item>
+    </style>
+
+    <style name="TextViewStyle.Value">
+        <item name="android:textColor">@color/text_value</item>
+    </style>
+
+    <style name="TextViewStyle.Dark.RightDrawable">
+        <item name="android:paddingLeft">@dimen/dp_16</item>
+        <item name="android:paddingRight">@dimen/dp_16</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:lines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="TextViewStyle.Dark.RightDrawable.Scan">
+        <item name="android:drawableEnd">@drawable/icon_vector_scan</item>
+    </style>
+
+    <style name="PopupWindow" parent="android:Animation">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="PopupWindow.TopToBottom">
+        <item name="android:windowEnterAnimation">@anim/top_to_bottom</item>
+        <item name="android:windowExitAnimation">@anim/bottom_to_top</item>
+    </style>
+
+    <style name="PopupWindow.CenterScale">
+        <item name="android:windowEnterAnimation">@anim/center_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/center_scale_out</item>
+    </style>
+
+    <style name="PopupWindow.TopScale">
+        <item name="android:windowEnterAnimation">@anim/top_scale_in</item>
+        <item name="android:windowExitAnimation">@anim/top_scale_out</item>
+    </style>
+
+    <style name="AutoCompleteTextView">
+        <item name="android:dropDownVerticalOffset">0dip</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+</resources>

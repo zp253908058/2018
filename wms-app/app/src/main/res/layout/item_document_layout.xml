@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/shape_divider"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:paddingStart="@dimen/dp_16"
+    android:showDividers="middle"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/document_type_text_view"
+            style="@style/TextViewStyle.Dark"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"/>
+
+        <TextView
+            android:id="@+id/document_status_text_view"
+            style="@style/TextViewStyle.Grey"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/colorAccent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewStyle.Dark"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="start|center_vertical"
+            android:text="@string/text_document_number" />
+
+        <TextView
+            android:id="@+id/document_number_text_view"
+            style="@style/TextViewStyle.Grey"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/TextViewStyle.Dark"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="start|center_vertical"
+            android:text="@string/text_document_date" />
+
+        <TextView
+            android:id="@+id/document_date_text_view"
+            style="@style/TextViewStyle.Grey"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical" />
+
+    </LinearLayout>
+
+</LinearLayout>

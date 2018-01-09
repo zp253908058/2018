@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/scan_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"
+        android:hint="@string/text_goods_scan"
+        android:paddingEnd="@dimen/dp_0"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_0"
+        android:paddingStart="@dimen/dp_16" />
+
+    <ImageView
+        android:id="@+id/scan_image_view"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:scaleType="center"
+        android:src="@drawable/icon_vector_scan" />
+
+</merge>

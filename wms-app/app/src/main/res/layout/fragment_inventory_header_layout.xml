@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/shape_divider"
+    android:dividerPadding="@dimen/dp_16"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        android:background="@color/divider_color" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/inventory_header_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:dropDownVerticalOffset="@dimen/dp_48"
+        android:paddingLeft="@dimen/dp_8"
+        android:paddingRight="@dimen/dp_8"
+        android:spinnerMode="dropdown" />
+
+    <android.support.v7.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/inventory_header_repository"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        android:completionThreshold="0"
+        android:dropDownWidth="match_parent"
+        android:gravity="center_vertical"
+        android:hint="@string/text_repository"
+        android:imeOptions="actionNext"
+        android:lines="1"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:singleLine="true"
+        android:theme="@style/AutoCompleteTextView" />
+
+    <android.support.v7.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/inventory_header_area"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        android:completionThreshold="0"
+        android:dropDownWidth="match_parent"
+        android:gravity="center_vertical"
+        android:hint="@string/text_area"
+        android:imeOptions="actionDone"
+        android:lines="1"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:singleLine="true"
+        android:theme="@style/AutoCompleteTextView" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/inventory_header_allocation"
+        style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+        android:hint="@string/text_goods_allocation" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/inventory_header_goods"
+        style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+        android:hint="@string/text_goods" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_16"
+        android:background="@color/divider_color" />
+
+</LinearLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/divider_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@color/white"
+        android:divider="@drawable/shape_divider"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/allocation_edit_name"
+            style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+            android:hint="@string/text_goods_allocation"
+            android:imeOptions="actionNext" />
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_16"
+            android:hint="@string/text_amount"
+            android:paddingLeft="@dimen/dp_16"
+            android:paddingRight="@dimen/dp_16"
+            app:errorEnabled="true"
+            app:hintAnimationEnabled="true">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/allocation_edit_amount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:imeOptions="actionDone"
+                android:inputType="numberSigned"
+                android:lines="1"
+                android:singleLine="true"
+                android:textSize="@dimen/sp_14" />
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/allocation_edit_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/dp_16"
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimary"
+        app:srcCompat="@drawable/icon_vector_check" />
+</RelativeLayout>

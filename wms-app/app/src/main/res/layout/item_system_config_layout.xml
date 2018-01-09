@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp_16"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <TextView
+        android:id="@+id/system_config_service_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_service_name"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/sp_14"/>
+
+    <TextView
+        android:id="@+id/system_config_service_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:textColor="@color/text_color_secondary"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintLeft_toRightOf="@+id/system_config_service_name_text"
+        app:layout_constraintTop_toTopOf="@id/system_config_service_name_text"
+        tools:text="ss" />
+
+
+    <TextView
+        android:id="@+id/system_config_service_address_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/title_service_address"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintLeft_toLeftOf="@+id/system_config_service_name_text"
+        app:layout_constraintTop_toBottomOf="@+id/system_config_service_name_text" />
+
+    <TextView
+        android:id="@+id/system_config_service_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:textColor="@color/text_color_secondary"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintLeft_toRightOf="@+id/system_config_service_address_text"
+        app:layout_constraintTop_toTopOf="@id/system_config_service_address_text"
+        tools:text="ss" />
+
+
+    <TextView
+        android:id="@+id/system_config_port_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/title_port"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintLeft_toLeftOf="@id/system_config_service_address_text"
+        app:layout_constraintTop_toBottomOf="@id/system_config_service_address_text" />
+
+    <TextView
+        android:id="@+id/system_config_port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_color_secondary"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintLeft_toLeftOf="@+id/system_config_service_address"
+        app:layout_constraintTop_toTopOf="@+id/system_config_port_text"
+        tools:text="ssss" />
+
+</android.support.constraint.ConstraintLayout>

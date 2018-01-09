@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.teeny.wms.widget.KeyValueTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/key_value_text_view"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_32"
+    android:background="@color/divider_color"
+    app:gravity="center"
+    app:key="@string/text_count_data"
+    app:valueColor="@color/text_key" />

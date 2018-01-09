@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/register_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="@string/text_device_register"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.teeny.wms.widget.FunctionEditText
+        android:id="@+id/register_account_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@drawable/background_edit_text"
+        android:digits="@string/digits_account"
+        android:drawableEnd="@drawable/icon_vector_cancel"
+        android:drawableRight="@drawable/icon_vector_cancel"
+        android:hint="@string/text_account"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLength="16"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintTop_toBottomOf="@+id/register_title_text" />
+
+    <com.teeny.wms.widget.FunctionEditText
+        android:id="@+id/register_password_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_16"
+        android:background="@drawable/background_edit_text"
+        android:drawableEnd="@drawable/icon_vector_cancel"
+        android:drawableRight="@drawable/icon_vector_cancel"
+        android:hint="@string/text_password"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:lines="1"
+        android:maxLength="16"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintTop_toBottomOf="@+id/register_account_text_view" />
+
+    <Button
+        android:id="@+id/login_button"
+        style="@style/ButtonStyle"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/text_register"
+        app:layout_constraintTop_toBottomOf="@+id/register_password_text_view" />
+
+</android.support.constraint.ConstraintLayout>

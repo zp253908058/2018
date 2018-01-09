@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/goods_choice_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_goods_name"
+        app:keySize="@dimen/sp_14"
+        app:separatorSize="@dimen/sp_14"
+        app:valueSize="@dimen/sp_14" />
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/goods_choice_specification"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_specification"
+        app:keySize="@dimen/sp_14"
+        app:separatorSize="@dimen/sp_14"
+        app:valueSize="@dimen/sp_14" />
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/goods_choice_manufacturer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_manufacturer"
+        app:keySize="@dimen/sp_14"
+        app:separatorSize="@dimen/sp_14"
+        app:valueSize="@dimen/sp_14" />
+
+</LinearLayout>

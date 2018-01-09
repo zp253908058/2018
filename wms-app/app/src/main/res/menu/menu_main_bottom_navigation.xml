@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_main_navigation_warehouse"
+        android:icon="@drawable/icon_vector_save"
+        android:title="@string/text_warehouse" />
+
+    <item
+        android:id="@+id/item_main_navigation_mining_sales"
+        android:icon="@drawable/icon_vector_save"
+        android:title="@string/text_mining_sales" />
+
+    <item
+        android:id="@+id/item_main_navigation_text_statistics"
+        android:icon="@drawable/icon_vector_save"
+        android:title="@string/text_statistics" />
+
+    <item
+        android:id="@+id/item_main_navigation_me"
+        android:icon="@drawable/icon_vector_save"
+        android:title="@string/text_me" />
+</menu>

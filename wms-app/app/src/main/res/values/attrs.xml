@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BadgeView">
+        <attr name="android:text" />
+        <attr name="android:textColor" />
+        <attr name="android:textSize" />
+        <attr name="badge" format="integer" />
+        <attr name="badgeTextColor" format="color|reference" />
+        <attr name="badgeTextSize" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="NavigationItemView">
+        <attr name="android:text" />
+        <attr name="android:textSize" />
+        <attr name="android:textColor" />
+        <attr name="navigation_icon" format="reference" />
+    </declare-styleable>
+
+    <attr name="key" format="string" />
+    <attr name="keySize" format="dimension" />
+    <attr name="keyColor" format="color" />
+    <attr name="value" format="string" />
+    <attr name="valueSize" format="dimension" />
+    <attr name="valueColor" format="color" />
+
+    <declare-styleable name="KeyValueTextView">
+        <attr name="key" />
+        <attr name="keySize" />
+        <attr name="keyColor" />
+        <attr name="value" />
+        <attr name="valueSize" />
+        <attr name="valueColor" />
+        <attr name="separator" format="string" />
+        <attr name="separatorSize" format="dimension" />
+        <attr name="separatorColor" format="color" />
+        <attr name="gravity">
+            <enum name="left" value="0" />
+            <enum name="center" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="KeyValueEditView">
+        <attr name="key" />
+        <attr name="keySize" />
+        <attr name="keyColor" />
+        <attr name="value" />
+        <attr name="valueSize" />
+        <attr name="valueColor" />
+        <attr name="android:enabled" />
+        <attr name="valueStyle" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="MaxHeightLayout">
+        <attr name="android:maxHeight" />
+        <attr name="maxHeightRatio" format="float" />
+    </declare-styleable>
+</resources>

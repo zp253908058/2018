@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divider_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/shape_divider_16"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:divider="@drawable/shape_divider"
+                android:dividerPadding="@dimen/dp_16"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/allot_list_document_scan"
+                    style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                    android:completionThreshold="0"
+                    android:dropDownWidth="match_parent"
+                    android:hint="@string/text_document_scan"
+                    android:imeOptions="actionNext"
+                    android:paddingEnd="@dimen/dp_16"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_16"
+                    android:theme="@style/AutoCompleteTextView" />
+
+                <android.support.v7.widget.AppCompatAutoCompleteTextView
+                    android:id="@+id/allot_list_goods_scan"
+                    style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                    android:completionThreshold="0"
+                    android:dropDownWidth="match_parent"
+                    android:hint="@string/text_goods_scan"
+                    android:imeOptions="actionNext"
+                    android:paddingEnd="@dimen/dp_16"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    android:paddingStart="@dimen/dp_16"
+                    android:theme="@style/AutoCompleteTextView" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/allot_list_export_goods_allocation"
+                    style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                    android:hint="@string/text_export_goods_allocation"
+                    android:imeOptions="actionNext" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/allot_list_import_goods_allocation"
+                    style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                    android:hint="@string/text_import_goods_allocation"
+                    android:imeOptions="actionDone" />
+
+            </LinearLayout>
+
+            <include layout="@layout/common_recycler_view" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/allot_list_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/dp_16"
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimary"
+        app:srcCompat="@drawable/icon_vector_check" />
+</FrameLayout>

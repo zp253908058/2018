@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/warehouse_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/grey_200"
+            android:divider="@drawable/shape_divider"
+            android:dividerPadding="@dimen/dp_16"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_56"
+                android:background="@android:color/white"
+                android:divider="@color/divider_color"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+                <com.teeny.wms.widget.BadgeView
+                    android:id="@+id/warehouse_receiving_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/text_receiving_list"
+                    app:badgeTextColor="@color/red_600" />
+
+                <com.teeny.wms.widget.BadgeView
+                    android:id="@+id/warehouse_putaway_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/text_putaway_list"
+                    app:badgeTextColor="@color/orange_600" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_56"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:background="@android:color/white"
+                android:divider="@color/divider_color"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+                <com.teeny.wms.widget.BadgeView
+                    android:id="@+id/warehouse_allot_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/text_allot_list"
+                    app:badgeTextColor="@color/blue_600" />
+
+                <com.teeny.wms.widget.BadgeView
+                    android:id="@+id/warehouse_review_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/text_review_list" />
+
+            </LinearLayout>
+
+            <include layout="@layout/common_recycler_view" />
+
+            <Button
+                android:id="@+id/warehouse_logout"
+                style="@style/ButtonStyle"
+                android:layout_margin="@dimen/dp_16"
+                android:text="@string/text_logout" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/warehouse_cover_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_30"
+        android:visibility="gone" />
+</FrameLayout>

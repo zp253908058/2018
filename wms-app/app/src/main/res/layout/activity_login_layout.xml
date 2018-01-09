@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_login"
+    android:padding="@dimen/dp_16">
+
+    <FrameLayout
+        android:id="@+id/login_container_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_other_option_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:id="@+id/login_divider_view_1"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/px_1"
+        android:layout_marginBottom="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_48"
+        android:background="@color/text_color_secondary"
+        app:layout_constraintBottom_toTopOf="@+id/login_switch_button"
+        app:layout_constraintEnd_toStartOf="@+id/login_other_option_text"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/login_other_option_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_16"
+        android:text="@string/text_other_option"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toTopOf="@+id/login_switch_button"
+        app:layout_constraintEnd_toStartOf="@+id/login_divider_view_2"
+        app:layout_constraintStart_toEndOf="@+id/login_divider_view_1" />
+
+
+    <View
+        android:id="@+id/login_divider_view_2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/px_1"
+        android:layout_marginBottom="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_48"
+        android:background="@color/text_color_secondary"
+        app:layout_constraintBottom_toTopOf="@+id/login_switch_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_other_option_text" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/login_switch_button"
+        style="@style/ButtonStyle"
+        android:layout_width="@dimen/dp_0"
+        android:layout_marginBottom="@dimen/dp_32"
+        android:layout_marginEnd="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_16"
+        android:drawableLeft="@drawable/icon_vector_device_register"
+        android:drawableStart="@drawable/icon_vector_device_register"
+        android:onClick="onClick"
+        android:paddingEnd="@dimen/dp_0"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_0"
+        android:paddingStart="@dimen/dp_16"
+        android:text="@string/text_device_register"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/login_system_config_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/login_system_config_button"
+        style="@style/ButtonStyle"
+        android:layout_width="@dimen/dp_0"
+        android:layout_marginBottom="@dimen/dp_32"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_16"
+        android:drawableLeft="@drawable/icon_vector_settings"
+        android:drawableStart="@drawable/icon_vector_settings"
+        android:onClick="onClick"
+        android:paddingEnd="@dimen/dp_0"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_0"
+        android:paddingStart="@dimen/dp_16"
+        android:text="@string/text_system_configure"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/login_switch_button" />
+
+</android.support.constraint.ConstraintLayout>

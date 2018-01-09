@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.teeny.wms.widget.MaxHeightLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/warehouse_top_sheet_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:adjustViewBounds="true"
+    android:background="@android:color/white"
+    android:divider="@drawable/shape_divider"
+    android:maxHeight="@dimen/dp_320"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16"
+    android:showDividers="middle"
+    app:behavior_hideable="true">
+
+    <com.teeny.wms.widget.FunctionEditText
+        android:id="@+id/warehouse_search_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        android:drawableEnd="@drawable/icon_vector_cancel"
+        android:drawableLeft="@drawable/icon_vector_search"
+        android:drawablePadding="@dimen/dp_8"
+        android:drawableRight="@drawable/icon_vector_cancel"
+        android:drawableStart="@drawable/icon_vector_search"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center_vertical"
+        android:hint="@string/text_search_warehouse"
+        android:imeOptions="actionDone"
+        android:inputType="text"
+        android:textSize="@dimen/sp_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="21dp" />
+
+    <!--app:layout_constraintEnd_toStartOf="@+id/warehouse_search_view"-->
+    <!--<TextView-->
+    <!--android:id="@+id/warehouse_search_view"-->
+    <!--style="@style/TextViewStyle.Dark"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="?android:attr/selectableItemBackground"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:paddingEnd="@dimen/dp_8"-->
+    <!--android:paddingStart="@dimen/dp_8"-->
+    <!--android:text="@string/text_search"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/warehouse_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</com.teeny.wms.widget.MaxHeightLayout>

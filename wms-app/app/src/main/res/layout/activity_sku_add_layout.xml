@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divider_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="48dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/sku_add_scan"
+                style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:hint="@string/text_goods_scan"
+                android:imeOptions="actionSearch" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:divider="@drawable/shape_divider"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:showDividers="middle">
+
+                <com.teeny.wms.widget.KeyValueEditView
+                    android:id="@+id/sku_add_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:enabled="false"
+                    app:key="@string/text_goods_name" />
+
+                <com.teeny.wms.widget.KeyValueEditView
+                    android:id="@+id/sku_add_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:enabled="false"
+                    app:key="@string/text_number" />
+
+                <com.teeny.wms.widget.KeyValueEditView
+                    android:id="@+id/sku_add_specification"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:enabled="false"
+                    app:key="@string/text_specification" />
+
+                <com.teeny.wms.widget.KeyValueEditView
+                    android:id="@+id/sku_add_unit"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:enabled="false"
+                    app:key="@string/text_unit" />
+
+                <com.teeny.wms.widget.KeyValueEditView
+                    android:id="@+id/sku_add_manufacturer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:enabled="false"
+                    app:key="@string/text_manufacturer" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:divider="@drawable/shape_divider"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:showDividers="middle">
+
+                <com.teeny.wms.widget.KeyValueEditView
+                    android:id="@+id/sku_add_lot_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    app:key="@string/text_lot_number" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/sku_add_allocation"
+                    style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                    android:layout_height="@dimen/dp_48"
+                    android:background="@color/white"
+                    android:hint="@string/text_goods_allocation"
+                    android:imeOptions="actionNext"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="0dp" />
+
+                <com.teeny.wms.widget.KeyValueEditView
+                    android:id="@+id/sku_add_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    app:key="@string/text_amount" />
+
+                <LinearLayout
+                    android:id="@+id/sku_add_validity_date_click"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:background="@drawable/background_selectable_item_white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="onClick"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Key"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_validity"
+                        android:textColor="@color/text_key" />
+
+                    <TextView
+                        android:id="@+id/sku_add_validity_date"
+                        style="@style/TextViewStyle.Value"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:textColor="@color/text_value" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/sku_add_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/dp_16"
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimary"
+        app:srcCompat="@drawable/icon_vector_check" />
+</FrameLayout>

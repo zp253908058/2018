@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divider_color"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp_64"
+            android:paddingTop="@dimen/dp_16">
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/ex_warehouse_review_scan_click"
+                style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                android:completionThreshold="0"
+                android:dropDownWidth="match_parent"
+                android:gravity="center_vertical"
+                android:hint="@string/text_scan_sale_order_number"
+                android:imeOptions="actionDone"
+                android:lines="1"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:singleLine="true"
+                android:theme="@style/AutoCompleteTextView" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16">
+
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/ex_warehouse_review_sale_order_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    app:key="@string/text_sale_order_number" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8">
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_priority"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="@string/text_priority" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_staging_area"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="@string/text_staging_area" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8">
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_customer"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="@string/text_customer" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_status"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="@string/text_status" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8">
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_document_status"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="@string/text_document_status" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_distribution_road"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="@string/text_distribution_road" />
+
+                </LinearLayout>
+
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/ex_warehouse_review_document_remark"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    app:key="@string/text_document_remark" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:divider="@drawable/shape_divider"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:showDividers="middle">
+
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/ex_warehouse_review_replenishment_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    app:key="@string/text_replenishment_order"
+                    app:valueColor="@color/colorPrimaryDark" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Dark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:lines="1"
+                        android:text="@string/text_intact_goods_number" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_intact_goods_number"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:gravity="center"
+                        app:keySize="@dimen/sp_18"
+                        app:separator="/"
+                        app:valueSize="@dimen/sp_18" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Dark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:lines="1"
+                        android:text="@string/text_lcl_count" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_lcl_count"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:gravity="center"
+                        app:keySize="@dimen/sp_18"
+                        app:separator="/"
+                        app:valueSize="@dimen/sp_18" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Dark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:lines="1"
+                        android:text="@string/text_package_count" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/ex_warehouse_review_package_count"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:gravity="center"
+                        app:keySize="@dimen/sp_18"
+                        app:separator="/"
+                        app:valueSize="@dimen/sp_18" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:divider="@drawable/shape_divider"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:id="@+id/ex_warehouse_review_recipient_click"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:onClick="onClick"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Dark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:lines="1"
+                        android:text="@string/text_recipient" />
+
+                    <TextView
+                        android:id="@+id/ex_warehouse_review_recipient"
+                        style="@style/TextViewStyle.Dark"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        android:lines="1"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ex_warehouse_review_diff_remark_click"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_48"
+                    android:onClick="onClick"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Dark"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:lines="1"
+                        android:text="@string/text_diff_remark" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/ex_warehouse_review_diff_remark"
+                            style="@style/TextViewStyle.Dark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:lines="1" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/icon_vector_arrow_drop_down"
+                            android:tint="@color/text_color_secondary" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/ex_warehouse_review_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/dp_16"
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimary"
+        app:srcCompat="@drawable/icon_vector_check" />
+</FrameLayout>

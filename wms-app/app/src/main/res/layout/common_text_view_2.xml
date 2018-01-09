@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text_view"
+    style="@style/TextViewStyle.Dark"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:paddingStart="@dimen/dp_16" />

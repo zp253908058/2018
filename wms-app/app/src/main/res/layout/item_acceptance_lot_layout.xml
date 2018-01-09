@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/lot_number"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_48"
+            android:layout_weight="1"
+            app:key="@string/text_lot_number" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/lot_serial_number"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key="@string/text_serial_number" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/lot_price"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key="@string/text_price"
+            app:valueColor="@color/colorPrimaryDark" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/lot_validity_date"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_48"
+            android:layout_weight="1"
+            app:key="@string/text_validity" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/lot_zh_amount"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:key="@string/text_intact_goods_number" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/lot_lh_amount"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_48"
+            android:layout_weight="1"
+            app:key="@string/text_lh_amount" />
+
+    </LinearLayout>
+
+</LinearLayout>
