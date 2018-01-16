@@ -82,11 +82,9 @@ public class AllotController {
      * @return null
      */
     @PostMapping("updateAll")
-    public ResponseEntity<EmptyEntity> complete(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
-        mAllotService.updateAll(ids, account, 1);
+    public ResponseEntity<EmptyEntity> complete(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @User UserEntity entity) {
+        mAllotService.updateAll(ids, account, entity.getId());
         return new ResponseEntity<>();
-
-        //TODO   user
     }
 
     /**
@@ -95,11 +93,9 @@ public class AllotController {
      * @return null
      */
     @PostMapping("updateOne")
-    public ResponseEntity<EmptyEntity> single(@RequestParam("id") int id, @RequestHeader("account") String account) {
-        mAllotService.updateOne(id, account, 1);
+    public ResponseEntity<EmptyEntity> single(@RequestParam("id") int id, @RequestHeader("account") String account, @User UserEntity entity) {
+        mAllotService.updateOne(id, account, entity.getId());
         return new ResponseEntity<>();
-
-        //TODO   user
     }
 
     /**
@@ -108,11 +104,9 @@ public class AllotController {
      * @return null
      */
     @PostMapping("update")
-    public ResponseEntity<EmptyEntity> update(@RequestBody AllotListRequestEntity entity, @RequestHeader("account") String account) {
-        mAllotService.update(entity, account, 1);
+    public ResponseEntity<EmptyEntity> update(@RequestBody AllotListRequestEntity entity, @RequestHeader("account") String account, @User UserEntity userEntity) {
+        mAllotService.update(entity, account, userEntity.getId());
         return new ResponseEntity<>();
-
-        //TODO   user
     }
 
     /**
