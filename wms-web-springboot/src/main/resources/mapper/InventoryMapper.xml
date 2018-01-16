@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.InventoryMapper">
+
+    <select id="getInventoryList" resultType="InventoryGoodsEntity">
+        SELECT
+        d.smb_id AS id,
+        d.original_id AS originalId,
+        d.bill_id AS billId,
+        d.p_id AS goodsId,
+        p.name AS goodsName,
+        l.loc_code AS location,
+        d.EligibleQty AS countInBill,
+        d.pdQty AS inventoryCount,
+        p.unit1Name AS unit,
+        p.standard AS specification,
+        c.name AS manufacturer,
+        d.DealStates AS status,
+        l.loc_code AS locationCode,
+        p.barcode AS goodsCode,
+        d.Batchno AS lotNo,
+        CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
+        CONVERT(VARCHAR(100), d.MakeDate, 23) AS productionDate,
+        isnull(sa.name, '') AS repositoryName,
+        isnull(a.name, '') AS areaName,
+        p.pinyin AS pinyin
+        FROM ${account}.dbo.pda_pdBill_D d
+        LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+        LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
+        LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = l.sc_id
+        WHERE
+        d.bill_id = #{id}
+        <if test="isMerge">
+            AND d.smb_id = (SELECT min(smb_id) AS id FROM ${account}.dbo.pda_pdBill_D WHERE d.original_id = original_id)
+        </if>
+        ORDER BY l.l_id
+    </select>
+
+    <update id="single">
+        UPDATE ${account}.dbo.pda_pdBill_D
+        SET DealStates = 1, pdQty = EligibleQty, wctime = getdate(), loginid = #{userId}
+        WHERE original_id = #{originalId}
+
+        <selectKey keyProperty="count" resultType="int" order="AFTER">
+            SELECT count(*)
+            FROM ${account}.dbo.pda_pdBill_D d
+            WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id
+            FROM ${account}.dbo.pda_pdBill_D d1
+            WHERE d1.original_id = #{originalId})
+        </selectKey>
+
+        <if test="count==0">
+            UPDATE ${account}.dbo.pda_pdBill
+            SET pdastates = 2
+            WHERE billid = (SELECT DISTINCT d.bill_id
+            FROM ${account}.dbo.pda_pdBill_D d
+            WHERE d.original_id = #{originalId})
+        </if>
+    </update>
+
+    <update id="complete">
+        UPDATE ${account}.dbo.pda_pdBill_D
+        SET DealStates = 1, pdQty = EligibleQty, wctime = getdate(), loginid = #{userId}
+        WHERE original_id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+        <selectKey keyProperty="count" resultType="int" order="AFTER">
+            SELECT count(*)
+            FROM ${account}.dbo.pda_pdBill_D d
+            WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id
+            FROM ${account}.dbo.pda_pdBill_D d1
+            WHERE d1.original_id = #{originalId})
+        </selectKey>
+
+        <if test="count==0">
+            UPDATE ${account}.dbo.pda_pdBill
+            SET pdastates = 2
+            WHERE billid = (SELECT DISTINCT d.bill_id
+            FROM ${account}.dbo.pda_pdBill_D d
+            WHERE d.original_id = #{originalId})
+        </if>
+    </update>
+
+
+    <resultMap id="keyValue" type="keyValue">
+        <id column="id" property="key" javaType="int"/>
+        <result column="name" property="value"/>
+    </resultMap>
+
+    <select id="getPdType" resultMap="keyValue">
+        SELECT
+        b.billid AS id,
+        b.pdname AS name
+        FROM ${account}.dbo.pda_pdBill b
+        WHERE b.billstates = #{type} AND b.pdastates &lt; 2
+        <if test="sId != 0">
+            AND b.s_id = #{sId}
+        </if>
+    </select>
+
+    <insert id="edit">
+        INSERT INTO ${account}.dbo.pda_pdBill_D
+        (bill_id,
+        p_id,
+        MakeDate,
+        EligibleQty,
+        S_id,
+        Location_id,
+        Supplier_id,
+        InstoreTime,
+        billstates,
+        Validdate,
+        Batchno,
+        pdQty,
+        DealStates,
+        pdastates,
+        original_id,
+        wctime,
+        loginid) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (SELECT
+            d.bill_id,
+            d.p_id,
+            d.MakeDate,
+            d.EligibleQty,
+            d.S_id,
+            d.Location_id,
+            d.Supplier_id,
+            d.InstoreTime,
+            d.billstates,
+            #{validateDate},
+            #{lotNo},
+            #{count},
+            1,
+            d.pdastates,
+            d.original_id,
+            getdate(),
+            #{userId}
+            FROM ${account}.dbo.pda_pdBill_D d
+            WHERE d.smb_id = (SELECT max(d1.smb_id)
+            FROM ${account}.dbo.pda_pdBill_D d1
+            WHERE d1.original_id = #{id}))
+        </foreach>
+    </insert>
+
+    <delete id="deleteByIds">
+        DELETE FROM ${account}.dbo.pda_pdBill_D WHERE smb_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="updateBillStatus">
+        <selectKey keyProperty="count" order="BEFORE">
+            SELECT count(*)
+            FROM ${account}.dbo.pda_pdBill_D d
+            WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id
+            FROM ${account}.dbo.pda_pdBill_D d1
+            WHERE d1.original_id = #{id})
+        </selectKey>
+
+        <if test="count==0">
+            UPDATE ${account}.dbo.pda_pdBill
+            SET pdastates = 2
+            WHERE billid = (SELECT DISTINCT d.bill_id
+            FROM ${account}.dbo.pda_pdBill_D d
+            WHERE d.original_id = #{id})
+        </if>
+    </update>
+
+    <insert id="addInventory">
+        INSERT INTO ${account}.dbo.pda_pdBill_D
+        (bill_id,
+         p_id,
+         Validdate,
+         Batchno,
+         EligibleQty,
+         pdQty,
+         S_id,
+         Location_id,
+         Supplier_id,
+         InstoreTime,
+         billstates,
+         DealStates,
+         pdastates,
+         wctime,
+         loginid)
+            SELECT
+                #{item.inventoryId},
+                #{item.goodsId},
+                #{item.validateDate},
+                #{item.lotNo},
+                #{item.amount},
+                #{item.amount},
+                #{sId},
+                #{item.locationId},
+                p.Supplier_id,
+                getdate(),
+                #{item.billState},
+                1,
+                0,
+                getdate(),
+                #{userId}
+            FROM ${account}.dbo.pda_Products p
+            WHERE p.p_id = #{item.goodsId}
+    </insert>
+
+    <select id="getSKUList" resultType="SKUEntity">
+        SELECT
+            s.storehouse_id                        AS id,
+            s.p_id                                 AS goodsId,
+            s.Pname                                AS goodsName,
+            s.Code                                 AS number,
+            s.Locname                              AS locationName,
+            s.location_id                          AS locationId,
+            s.batchno                              AS lotNo,
+            s.factory                              AS manufacturer,
+            s.quantity,
+            CONVERT(VARCHAR(100), s.validdate, 23) AS validateDate,
+            CONVERT(VARCHAR(100), s.makedate, 23)  AS productDate,
+            s.Standard                             AS specification,
+            s.Name1                                AS unit,
+            s.costprice                            AS costPrice,
+            s.costtotal                            AS costTotal,
+            s.Makearea                             AS productionPlace
+        FROM ${account}.dbo.VW_PDA_Storehouse s
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+            INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+        <where>
+            <if test="location != null and location != ''">
+                l.loc_code = #{location}
+            </if>
+            <if test="barcode != null and barcode != ''">
+                AND p.barcode = #{barcode}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addProduct">
+        INSERT INTO ${account}.dbo.pda_kcpdBill_D (
+            storehouse_id,
+            p_id,
+            Batchno,
+            Location_id,
+            quantity,
+            pdqty,
+            Validdate,
+            ss_id,
+            DealStates,
+            pdastates,
+            wctime,
+            loginid)
+        VALUES (
+            #{item.id},
+            #{item.pId},
+            #{item.lotNo},
+            #{item.locationId},
+            #{item.amount},
+            #{item.originalAmount},
+            #{item.validateDate},
+            #{sId},
+            1,
+            0,
+            getdate(),
+            #{userId}
+        )
+    </insert>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.UserMapper">
+    <select id="getUser" resultType="UserEntity">
+        SELECT
+            e.e_id          AS id,
+            e.password,
+            e.serial_number AS serialNumber,
+            e.pinyin,
+            e.name          AS username,
+            e.alias,
+            e.phone,
+            e.address,
+            e.ZT
+        FROM ${account}.dbo.pda_employees e
+        WHERE e.serial_number = #{username};
+    </select>
+</mapper>

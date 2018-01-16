@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.ReceivingMapper">
+    <resultMap id="units" type="keyValue">
+        <id column="c_id" property="key" javaType="int"/>
+        <result column="name" property="value"/>
+    </resultMap>
+
+    <select id="getUnitList" resultMap="units">
+        SELECT DISTINCT
+        b.c_id,
+        c.name
+        FROM ${account}.dbo.pda_RecBill b
+        LEFT JOIN ${account}.dbo.pda_clients c ON b.c_id = c.c_id
+        WHERE b.billstates = 10
+        <if test="sId != 0">
+            AND b.s_id = #{sId}
+        </if>
+    </select>
+
+    <resultMap id="detail" type="ReceivingEntity">
+        <result column="billid" property="orderId"/>
+        <result column="billnumber" property="billNo"/>
+        <result column="e_id" property="buyerId"/>
+        <result column="buyer" property="buyer"/>
+        <result column="unitName" property="unitName"/>
+        <collection property="goodsList" javaType="ArrayList" ofType="ReceivingItemEntity"
+                    column="{account = account, orderId = billid}"
+                    select="com.teeny.wms.web.repository.ReceivingMapper.getReceivingItem"/>
+    </resultMap>
+
+    <select id="getDetailByUnitId" resultMap="detail">
+        SELECT
+            b.billid,
+            b.billnumber,
+            b.e_id,
+            e.name     AS buyer,
+            c.name     AS unitName,
+            #{account} AS account
+        FROM ${account}.dbo.pda_RecBill b
+            LEFT JOIN ${account}.dbo.pda_employees e ON b.e_id = e.e_id
+            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = b.c_id
+        WHERE b.c_id = #{unitId} AND b.billstates = 10 AND b.pdastates != 2
+    </select>
+
+    <select id="getDetailByOrderNo" resultMap="detail">
+        SELECT
+            b.billid,
+            b.billnumber,
+            b.e_id,
+            e.name     AS buyer,
+            c.name     AS unitName,
+            #{account} AS account
+        FROM ${account}.dbo.pda_RecBill b
+            LEFT JOIN ${account}.dbo.pda_employees e ON b.e_id = e.e_id
+            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = b.c_id
+        WHERE b.billstates = 10 AND b.pdastates != 2 AND b.c_id = (SELECT c_id
+                                                                   FROM ${account}.dbo.pda_RecBill
+                                                                   WHERE billnumber = #{orderNo})
+
+    </select>
+
+    <select id="getReceivingItem" resultType="ReceivingItemEntity">
+        SELECT
+            d.smb_id                               AS id,
+            d.original_id                          AS originalId,
+            b.billnumber                           AS billNo,
+            d.TaxPrice                             AS retailPrice,
+            d.Yqty                                 AS amount,
+            d.EligibleQty                          AS quantity,
+            c.name                                 AS manufacturer,
+            d.Batchno                              AS lotNo,
+            p.name                                 AS goodsName,
+            p.standard                             AS specification,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validityDate,
+            CONVERT(VARCHAR(100), p.makearea, 23)  AS produceArea,
+            p.barcode                              AS barcode,
+            d.DealStates                           AS status,
+            p.WholeUnitName                        AS zhUnit,
+            p.unit1Name                            AS lhUnit,
+            p.WholeRate                            AS rate
+        FROM ${account}.dbo.pda_RecBill_D d
+            LEFT JOIN ${account}.dbo.pda_RecBill b ON b.billid = d.bill_id
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
+        WHERE d.bill_id = #{orderId} AND d.pdastates = 0
+    </select>
+
+    <select id="getLotList" resultType="ReceivingLotEntity">
+        SELECT
+            d.Batchno                              AS lotNo,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validityDate,
+            d.TaxPrice                             AS price,
+            d.rownumber                            AS serialNo,
+            d.WholeQty                             AS zhAmount,
+            p.WholeUnitName                        AS zhUnit,
+            d.retailQty                            AS lhAmount,
+            p.unit1Name                            AS lhUnit,
+            p.WholeRate                            AS rate
+        FROM ${account}.dbo.pda_RecBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+        WHERE d.DealStates = 1 AND d.original_id = #{id}
+    </select>
+
+    <update id="updateStatus">
+        UPDATE ${account}.dbo.pda_RecBill SET pdastates = 1, pdaReTime = getdate() WHERE billid IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="getReceivingBill" resultType="ReceivingBillEntity">
+        SELECT TOP 1
+            bill_id,
+            p_id,
+            MakeDate,
+            Validdate,
+            Batchno,
+            Yqty,
+            EligibleQty,
+            TaxPrice,
+            TaxTotal,
+            CostPrice,
+            CostTotal,
+            S_id,
+            Location_id,
+            Supplier_id,
+            DealStates,
+            pdastates,
+            original_id
+        FROM ${account}.dbo.pda_RecBill_D
+        WHERE original_id = #{id}
+    </select>
+
+    <insert id="addData">
+        INSERT INTO ${account}.dbo.pda_RecBill_D
+        (bill_id,
+        p_id,
+        MakeDate,
+        Validdate,
+        Batchno,
+        Yqty,
+        EligibleQty,
+        TaxPrice,
+        TaxTotal,
+        CostPrice,
+        CostTotal,
+        S_id,
+        Location_id,
+        Supplier_id,
+        DealStates,
+        pdastates,
+        original_id,
+        rownumber,
+        wctime,
+        loginid)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.bill_id},
+            #{item.p_id},
+            #{item.MakeDate},
+            #{item.Validdate},
+            #{item.Batchno},
+            #{item.Yqty},
+            #{item.EligibleQty},
+            #{item.TaxPrice},
+            #{item.TaxTotal},
+            #{item.CostPrice},
+            #{item.CostTotal},
+            #{item.S_id},
+            #{item.Location_id},
+            #{item.Supplier_id},
+            #{item.DealStates},
+            #{item.pdastates},
+            #{item.original_id},
+            #{item.rownumber},
+            getdate(),
+            #{id})
+        </foreach>
+    </insert>
+
+    <update id="updateOrderStatus">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT count(*) AS total
+            FROM yyt.dbo.pda_RecBill_D d
+            WHERE d.DealStates = 0
+            AND d.bill_id = (SELECT DISTINCT d1.bill_id
+            FROM yyt.dbo.pda_RecBill_D d1
+            WHERE d1.original_id = #{id})
+        </selectKey>
+
+        <if test="count==0">
+            UPDATE yyt.dbo.pda_RecBill
+            SET billstates = 13
+            WHERE billid = (SELECT DISTINCT d.bill_id
+            FROM ${account}.dbo.pda_RecBill_D d
+            WHERE d.original_id = #{id})
+        </if>
+    </update>
+</mapper>

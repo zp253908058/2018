@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.CommonMapper">
+
+    <resultMap id="keyValue" type="keyValue">
+        <id column="id" property="key" javaType="int"/>
+        <result column="name" property="value"/>
+    </resultMap>
+
+    <resultMap id="historyLocation" type="stringMap">
+        <result column="name" property="key" javaType="string"/>
+        <result column="result" property="value" javaType="string"/>
+    </resultMap>
+
+    <select id="getAreaList" resultMap="keyValue">
+        SELECT s.sa_id AS id, s.name FROM ${account}.dbo.pda_stockArea s
+        <where>
+            <if test="sId != 0">
+                s.s_id=#{sId}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="stringMap" type="stringMap">
+        <result column="id" javaType="string" property="key"/>
+        <result column="name" javaType="string" property="value"/>
+    </resultMap>
+
+    <select id="getAccountSets" resultMap="stringMap">
+        SELECT db_name AS id, account_name AS name FROM pda_account_set
+    </select>
+
+
+    <select id="getHistoryLocation" resultMap="historyLocation">
+        SELECT TOP 10
+            l.loc_code AS result,
+            l.loc_name AS name
+        FROM ${account}.dbo.pda_locationTrace lt
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = lt.Location_id
+        WHERE lt.lt_id IN (SELECT lt_1.lt_id
+                           FROM ${account}.dbo.pda_locationTrace lt_1
+                           WHERE lt_1.p_id = #{pId}
+                                 AND lt_1.rectime = (
+                               SELECT DISTINCT MAX(rectime) AS time
+                               FROM ${account}.dbo.pda_locationTrace lt_2
+                               WHERE lt_2.p_id = #{pId} AND lt_2.Location_id = lt_1.Location_id))
+        ORDER BY lt.rectime DESC
+    </select>
+
+    <select id="getReceivingList" resultType="DocumentEntity">
+        SELECT
+        b.billid AS id,
+        b.billnumber AS documentNo,
+        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+        1 AS type,
+        '验收单' AS typeDescription,
+        CASE b.billstates
+        WHEN 10
+        THEN '验收中'
+        WHEN 13
+        THEN '已验收'
+        ELSE '' END AS status
+        FROM ${account}.dbo.pda_RecBill b
+        WHERE b.pdastates = 1
+        <if test="sId != 0">
+            AND b.s_id=#{sId}
+        </if>
+        ORDER BY documentDate DESC
+    </select>
+
+    <select id="getAllotList" resultType="DocumentEntity">
+        SELECT
+        b.billid AS id,
+        b.billnumber AS documentNo,
+        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+        3 AS type,
+        '调拨单' AS typeDescription,
+        CASE b.billstates
+        WHEN 2
+        THEN '待调拨'
+        WHEN 3
+        THEN '调拨中'
+        ELSE '' END AS status
+        FROM ${account}.dbo.pda_TranBill b
+        WHERE b.pdastates = 1
+        <if test="sId != 0">
+            AND b.sout_id=#{sId}
+        </if>
+        ORDER BY documentDate DESC
+    </select>
+
+    <select id="getPutawayList" resultType="DocumentEntity">
+        SELECT
+        b.billid AS id,
+        b.billnumber AS documentNo,
+        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+        2 AS type,
+        '上架单' AS typeDescription,
+        CASE b.billstates
+        WHEN 10
+        THEN '待上架'
+        WHEN 13
+        THEN '已上架'
+        ELSE '' END AS status
+        FROM ${account}.dbo.pda_PutOnBill b
+        WHERE b.pdastates = 1
+        <if test="sId != 0">
+            AND b.s_id=#{sId}
+        </if>
+        ORDER BY documentDate DESC
+    </select>
+
+    <select id="getReviewList" resultType="DocumentEntity">
+        SELECT
+        b.billid AS id,
+        b.billnumber AS documentNo,
+        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
+        4 AS type,
+        '复核单' AS typeDescription,
+        CASE b.billstates
+        WHEN 10
+        THEN '未复核'
+        WHEN 13
+        THEN '复核中'
+        ELSE '' END AS status
+        FROM ${account}.dbo.pda_CheckBill b
+        WHERE b.pdastates = 1
+        <if test="sId != 0">
+            AND b.s_id=#{sId}
+        </if>
+        ORDER BY documentDate DESC
+    </select>
+</mapper>

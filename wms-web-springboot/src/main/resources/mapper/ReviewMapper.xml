@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.ReviewMapper">
+
+    <update id="updateStatus">
+        UPDATE ${account}.dbo.pda_CheckBill_B
+        SET DealStates = 1, EligibleQty = 1, wctime = getdate(), loginid = #{userId}
+        WHERE smb_id = #{smbId}
+
+        <selectKey keyProperty="status" resultType="int" order="AFTER">
+            SELECT b.pdastates FROM ${account}.dbo.pda_CheckBill b WHERE b.billid=#{billId}
+        </selectKey>
+
+        <if test="status == 0">
+            UPDATE ${account}.dbo.pda_CheckBill SET pdastates = 1,pdaReTime=getdate() WHERE billid = #{billId}
+        </if>
+    </update>
+
+    <update id="updateBillStatus">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT count(*) AS total FROM ${account}.dbo.pda_CheckBill_B b WHERE b.bill_id=#{billId} AND b.DealStates=0
+        </selectKey>
+
+        <if test="count == 0">
+            UPDATE ${account}.dbo.pda_CheckBill SET billstates=13 WHERE billid=#{billId}
+        </if>
+    </update>
+
+    <select id="getDetail" resultType="ExWarehouseReviewEntity">
+        SELECT
+            b.billnumber                                                                       AS billNo,
+            c.RoadName                                                                         AS deliveryLine,
+            c.name                                                                             AS customer,
+            b.FirstStates                                                                      AS priority,
+            b.TempStore                                                                        AS tempArea,
+            b.pdastates                                                                        AS status,
+            b.billstates                                                                       AS documentStatus,
+            b.remark                                                                           AS billRemark,
+
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 1 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                                                   FROM ${account}.dbo.pda_CheckBill_B
+                                                                   WHERE barcode = #{billNo})) AS zhQuantity,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 2 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                                                   FROM ${account}.dbo.pda_CheckBill_B
+                                                                   WHERE barcode = #{billNo})) AS pxQuantity,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 3 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                                                   FROM ${account}.dbo.pda_CheckBill_B
+                                                                   WHERE barcode = #{billNo})) AS dbQuantity,
+
+
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 1 AND bill_id = (SELECT DISTINCT bill_id
+                                               FROM ${account}.dbo.pda_CheckBill_B
+                                               WHERE barcode = #{billNo}))                     AS zhQuantityTotal,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 2 AND bill_id = (SELECT DISTINCT bill_id
+                                               FROM ${account}.dbo.pda_CheckBill_B
+                                               WHERE barcode = #{billNo}))                     AS pxQuantityTotal,
+            (SELECT count(EligibleQty)
+             FROM ${account}.dbo.pda_CheckBill_B
+             WHERE PickType = 3 AND bill_id = (SELECT DISTINCT bill_id
+                                               FROM ${account}.dbo.pda_CheckBill_B
+                                               WHERE barcode = #{billNo}))                     AS dbQuantityTotal
+
+        FROM ${account}.dbo.pda_CheckBill b
+            LEFT JOIN ${account}.dbo.pda_clients c ON b.c_id = c.c_id
+        WHERE b.billid = (SELECT DISTINCT bb.bill_id
+                          FROM ${account}.dbo.pda_CheckBill_B bb
+                          WHERE bb.barcode = #{billNo})
+    </select>
+
+    <select id="getRecipients" resultType="RecipientEntity">
+        SELECT DISTINCT
+            e.e_id          AS id,
+            e.serial_number AS serialNumber,
+            e.pinyin,
+            e.name
+        FROM ${account}.dbo.pda_employees e
+        ORDER BY pinyin ASC
+    </select>
+
+    <resultMap id="keyValue" type="keyValue">
+        <id column="id" property="key" javaType="int"/>
+        <result column="name" property="value"/>
+    </resultMap>
+
+    <select id="getBillList" resultMap="keyValue">
+        SELECT
+        b.smb_id AS id,
+        b.barcode AS name
+        FROM ${account}.dbo.pda_CheckBill_B b
+        INNER JOIN ${account}.dbo.pda_CheckBill b1 ON b.bill_id = b1.billid
+        WHERE b.DealStates = 0 AND b1.billstates = 10
+        <if test="sId != 0">
+            AND b1.s_id=#{sId}
+        </if>
+    </select>
+
+    <select id="getReplenishmentCount" resultType="int">
+        SELECT count(*)
+        FROM ${account}.dbo.pda_CheckBill
+        WHERE FirstStates = '1'
+        <if test="sId != 0">
+            AND s_id = #{sId}
+        </if>
+    </select>
+</mapper>

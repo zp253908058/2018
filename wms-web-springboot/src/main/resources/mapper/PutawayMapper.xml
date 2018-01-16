@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.PutawayMapper">
+
+    <resultMap id="keyValue" type="keyValue">
+        <id column="id" property="key" javaType="int"/>
+        <result column="name" property="value"/>
+    </resultMap>
+
+    <select id="getSaListBysId" resultMap="keyValue">
+        SELECT DISTINCT
+            b.sa_id AS id,
+            a.name
+        FROM ${account}.dbo.pda_PutOnBill b
+            INNER JOIN ${account}.dbo.pda_stockArea a ON b.sa_id = a.sa_id
+        WHERE b.billstates = 10
+        <if test="sId != 0">
+            AND b.s_id = #{sId}
+        </if>
+    </select>
+
+    <select id="getBillList" resultMap="keyValue">
+        SELECT
+            b.billid     AS id,
+            b.billnumber AS name
+        FROM ${account}.dbo.pda_PutOnBill b
+        WHERE b.pdastates != 2
+        <if test="saId!=0">
+            AND b.sa_id=#{saId}
+        </if>
+        <if test="saId==0 and sId != 0">
+            AND b.s_id=#{sId}
+        </if>
+    </select>
+
+    <select id="getGoodsDetailList" resultType="PutawayEntity">
+        SELECT
+            d.smb_id      AS id,
+            d.original_id AS originalId,
+            d.DealStates  AS status,
+            p.p_id        AS goodsId,
+            p.name        AS goodsName,
+            d.Batchno     AS lotNo,
+            p.standard    AS specification,
+            d.MakeDate    AS productionDate,
+            p.unit1Name   AS unit,
+            d.EligibleQty AS amount,
+            p.Factory     AS manufacturer,
+            l.loc_code    AS locationCode,
+            p.barcode     AS goodsCode
+        FROM ${account}.dbo.pda_PutOnBill_D d
+            INNER JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id = b.billid AND b.pdastates != 2
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
+        WHERE b.billnumber = #{orderNoId}
+        ORDER BY l.loc_name ASC
+    </select>
+
+    <update id="all">
+        UPDATE ${account}.dbo.pda_PutOnBill_D
+        SET DealStates = 1, wctime = getdate(), loginid = #{userId}
+        WHERE original_id IN
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+
+        <selectKey order="AFTER" keyProperty="count" resultType="int">
+            SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT
+            DISTINCT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.original_id=#{id})
+        </selectKey>
+
+        <if test="count == 0">
+            UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT DISTINCT d.bill_id FROM
+            ${account}.dbo.pda_PutOnBill_D d WHERE d.original_id=#{id})
+        </if>
+    </update>
+
+    <update id="single">
+        UPDATE ${account}.dbo.pda_PutOnBill_D
+        SET DealStates = 1, wctime = getdate(), loginid = #{userId}
+        WHERE original_id = #{id}
+
+        <selectKey order="AFTER" keyProperty="count" resultType="int">
+            SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT
+            DISTINCT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.original_id=#{id})
+        </selectKey>
+
+        <if test="count == 0">
+            UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT DISTINCT d.bill_id FROM
+            ${account}.dbo.pda_PutOnBill_D d WHERE d.original_id=#{id})
+        </if>
+    </update>
+
+    <insert id="copyDataByParam">
+        INSERT INTO ${account}.dbo.pda_PutOnBill_D
+        (bill_id,
+         p_id,
+         MakeDate,
+         Validdate,
+         Batchno,
+         EligibleQty,
+         TaxPrice,
+         TaxTotal,
+         CostPrice,
+         CostTotal,
+         S_id,
+         Location_id,
+         Supplier_id,
+         InstoreTime,
+         LineSort,
+         DealStates,
+         pdastates,
+         original_id,
+         wctime,
+         loginid)
+            SELECT
+                d.bill_id,
+                d.p_id,
+                d.MakeDate,
+                d.Validdate,
+                d.Batchno,
+                #{amount},
+                d.TaxPrice,
+                d.TaxTotal,
+                d.CostPrice,
+                d.CostTotal,
+                d.S_id,
+                #{locationId},
+                d.Supplier_id,
+                d.InstoreTime,
+                d.LineSort,
+                1,
+                d.pdastates,
+                d.original_id,
+                getdate(),
+                #{userId}
+            FROM ${account}.dbo.pda_PutOnBill_D d
+            WHERE d.smb_id = (SELECT max(d1.smb_id)
+                              FROM ${account}.dbo.pda_PutOnBill_D d1
+                              WHERE d1.original_id = #{id})
+    </insert>
+
+    <delete id="deleteByIds">
+        DELETE FROM ${account}.dbo.pda_PutOnBill_D WHERE smb_id IN
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <update id="updateBillStatus">
+        <selectKey keyProperty="count" order="BEFORE">
+            SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT
+            DISTINCT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.original_id=#{id})
+        </selectKey>
+
+        <if test="count==0">
+            UPDATE ${account}.dbo.pda_PutOnBill SET billstates = 13 WHERE billid = (SELECT DISTINCT d.bill_id FROM
+            ${account}.dbo.pda_PutOnBill_D d WHERE d.original_id=#{id})
+        </if>
+    </update>
+</mapper>
