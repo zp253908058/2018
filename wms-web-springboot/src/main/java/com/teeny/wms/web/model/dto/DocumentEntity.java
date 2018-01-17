@@ -2,6 +2,8 @@ package com.teeny.wms.web.model.dto;
 
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
+
 /**
  * Class description:
  *
@@ -12,7 +14,10 @@ import org.apache.ibatis.type.Alias;
  */
 
 @Alias("DocumentEntity")
-public class DocumentEntity {
+public class DocumentEntity implements Serializable{
+
+    private static final long serialVersionUID = 7247714666080613257L;
+
     private int id;
     private String status;
     private int type;

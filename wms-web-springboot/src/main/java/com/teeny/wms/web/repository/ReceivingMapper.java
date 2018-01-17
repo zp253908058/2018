@@ -1,8 +1,7 @@
 package com.teeny.wms.web.repository;
 
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.dto.ReceivingBillEntity;
-import com.teeny.wms.web.model.response.ReceivingAddEntity;
 import com.teeny.wms.web.model.response.ReceivingEntity;
 import com.teeny.wms.web.model.response.ReceivingLotEntity;
 import org.apache.ibatis.annotations.Delete;

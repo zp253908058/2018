@@ -1,6 +1,6 @@
 package com.teeny.wms.app.exception.handler;
 
-import com.teeny.wms.app.model.ResponseEntity;
+import com.teeny.wms.web.model.ResponseEntity;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

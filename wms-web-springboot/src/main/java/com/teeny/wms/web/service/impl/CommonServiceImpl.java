@@ -1,12 +1,13 @@
 package com.teeny.wms.web.service.impl;
 
-import com.teeny.wms.app.model.KeyValueEntity;
-import com.teeny.wms.app.model.StringMapEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.StringMapEntity;
 import com.teeny.wms.web.model.response.DocumentResponseEntity;
 import com.teeny.wms.web.repository.CommonMapper;
 import com.teeny.wms.web.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * @since 2017/11/7
  */
 @Service
+@Transactional
 public class CommonServiceImpl implements CommonService {
 
     private CommonMapper mCommonMapper;

@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
+import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -40,12 +42,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     private static final String CLIENT_SECRET = "secret";
 
     private AuthenticationManager mAuthenticationManager;
-
-    private DataSource mDataSource;
+    private TokenStore mTokenStore;
 
     @Autowired
-    public void setDataSource(@Qualifier("dataSource") DataSource dataSource) {
-        mDataSource = dataSource;
+    public void setTokenStore(TokenStore tokenStore) {
+        mTokenStore = tokenStore;
     }
 
     @Autowired
@@ -64,32 +65,14 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .secret(CLIENT_SECRET);
     }
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new JdbcTokenStore(mDataSource);
-    }
-
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints.tokenStore(tokenStore()).authenticationManager(mAuthenticationManager);
+        endpoints.tokenStore(mTokenStore).authenticationManager(mAuthenticationManager);
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         //允许表单认证
         oauthServer.allowFormAuthenticationForClients();
-    }
-
-    private TokenEndpoint mTokenEndpoint;
-
-    @Autowired
-    public void setTokenEndpoint(TokenEndpoint tokenEndpoint) {
-        mTokenEndpoint = tokenEndpoint;
-    }
-
-    @PostConstruct
-    public void reconfigure() {
-        Set<HttpMethod> allowedMethods = new HashSet<>(Arrays.asList(HttpMethod.GET, HttpMethod.POST));
-        mTokenEndpoint.setAllowedRequestMethods(allowedMethods);
     }
 }

@@ -95,4 +95,19 @@ public class ReceivingAddEntity {
     public float getAmount() {
         return zhAmount * rate + lhAmount;
     }
+
+    @Override
+    public String toString() {
+        return "ReceivingAddEntity{" +
+                "lotNo='" + lotNo + '\'' +
+                ", serialNo=" + serialNo +
+                ", validityDate='" + validityDate + '\'' +
+                ", price=" + price +
+                ", zhAmount=" + zhAmount +
+                ", zhUnit='" + zhUnit + '\'' +
+                ", lhAmount=" + lhAmount +
+                ", lhUnit='" + lhUnit + '\'' +
+                ", rate=" + rate +
+                '}';
+    }
 }

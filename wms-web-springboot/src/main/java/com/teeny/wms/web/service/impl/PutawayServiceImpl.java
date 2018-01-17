@@ -1,7 +1,7 @@
 package com.teeny.wms.web.service.impl;
 
 import com.teeny.wms.app.exception.InnerException;
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
@@ -11,6 +11,7 @@ import com.teeny.wms.web.repository.PutawayMapper;
 import com.teeny.wms.web.service.PutawayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class PutawayServiceImpl implements PutawayService {
 
     private PutawayMapper mPutawayMapper;
@@ -50,8 +52,8 @@ public class PutawayServiceImpl implements PutawayService {
     }
 
     @Override
-    public List<PutawayEntity> getGoodsDetailList(String orderNo, String account) {
-        List<PutawayEntity> list = mPutawayMapper.getGoodsDetailList(orderNo, account);
+    public List<PutawayEntity> getGoodsDetailList(String orderNo, String account, int sId) {
+        List<PutawayEntity> list = mPutawayMapper.getGoodsDetailList(orderNo, account, sId);
         mPutawayMapper.updateStatus(account, orderNo);
         return list;
     }

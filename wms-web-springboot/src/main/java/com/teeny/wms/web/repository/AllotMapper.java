@@ -1,6 +1,6 @@
 package com.teeny.wms.web.repository;
 
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.AllotEntity;
 import com.teeny.wms.web.model.response.AllotGoodsEntity;

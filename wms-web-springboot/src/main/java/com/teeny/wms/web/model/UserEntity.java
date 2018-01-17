@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Alias("UserEntity")
 public class UserEntity implements Serializable {
 
+    private static final long serialVersionUID = 7247714666080613254L;
+
     private int id;
     private String serialNumber;
     private String password;
@@ -95,5 +97,20 @@ public class UserEntity implements Serializable {
 
     public void setZT(int ZT) {
         this.ZT = ZT;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", pinyin='" + pinyin + '\'' +
+                ", username='" + username + '\'' +
+                ", alias='" + alias + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", ZT=" + ZT +
+                '}';
     }
 }

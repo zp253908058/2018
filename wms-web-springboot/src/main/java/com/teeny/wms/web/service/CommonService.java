@@ -1,7 +1,7 @@
 package com.teeny.wms.web.service;
 
-import com.teeny.wms.app.model.KeyValueEntity;
-import com.teeny.wms.app.model.StringMapEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.StringMapEntity;
 import com.teeny.wms.web.model.response.DocumentResponseEntity;
 
 import java.util.List;

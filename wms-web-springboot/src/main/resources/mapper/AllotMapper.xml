@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.teeny.wms.web.repository.AllotMapper">
 
@@ -28,7 +26,8 @@
             d.DealStates                           AS status,
             p.serial_number                        AS number,
             l1.loc_code                            AS exportName,
-            l2.loc_code                            AS importName
+            l2.loc_code                            AS importName,
+            p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_TranBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
             LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid = d.bill_id
@@ -113,10 +112,61 @@
         </where>
     </select>
 
+    <insert id="copyData">
+        INSERT INTO ${account}.dbo.pda_TranBill_D
+        (bill_id,
+         p_id,
+         MakeDate,
+         Validdate,
+         Batchno,
+         quantity,
+         TaxPrice,
+         TaxTotal,
+         CostPrice,
+         CostTotal,
+         ss_id,
+         sd_id,
+         Location_id,
+         location_id2,
+         Supplier_id,
+         DealStates,
+         pdastates,
+         original_id,
+         wctime,
+         loginid)
+            SELECT
+                d.bill_id,
+                d.p_id,
+                d.MakeDate,
+                d.Validdate,
+                d.Batchno,
+                #{amount,jdbcType=NUMERIC},
+                d.TaxPrice,
+                d.TaxTotal,
+                d.CostPrice,
+                d.CostTotal,
+                d.ss_id,
+                d.sd_id,
+                d.Location_id,
+                #{locationId,jdbcType=NUMERIC},
+                d.Supplier_id,
+                1,
+                d.pdastates,
+                d.original_id,
+                getdate(),
+                #{userId,jdbcType=NUMERIC}
+            FROM ${account}.dbo.pda_TranBill_D d
+            WHERE d.smb_id = (SELECT max(d1.smb_id)
+                              FROM ${account}.dbo.pda_TranBill_D d1
+                              WHERE d1.original_id = #{id})
+
+    </insert>
+
     <select id="getGoodsCode" resultMap="keyValue">
         SELECT DISTINCT
         d.original_id AS id,
-        p.barcode AS name
+        p.barcode AS name,
+        p.pinyin      AS alternate
         FROM ${account}.dbo.pda_TranBill_D d
         INNER JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
         LEFT JOIN ${account}.dbo.pda_TranBill b ON d.bill_id = b.billid
@@ -160,7 +210,7 @@
     </update>
 
 
-    <select id="getAllotGoodsList" resultType="com.teeny.wms.model.response.AllotGoodsEntity">
+    <select id="getAllotGoodsList" resultType="AllotGoodsEntity">
         SELECT
             s.storehouse_id                       AS id,
             p.p_id                                AS goodsId,
@@ -202,7 +252,7 @@
         </selectKey>
 
         <if test="count==0">
-            INSERT INTO ${account}.dbo.pda_AddTranBill (billnumber, e_id, billstates, pdastates, createtime) VALUES (#{billNo}, #{userId}, 0, 0, getdate())
+            INSERT INTO ${account}.dbo.pda_AddTranBill (billnumber, e_id, billstates, pdastates, createtime) VALUES (#{billNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 0, 0, getdate())
         </if>
     </insert>
 
@@ -225,7 +275,7 @@
             SELECT
             (SELECT b.billid FROM ${account}.dbo.pda_AddTranBill b WHERE b.billstates = 0 AND b.e_id = #{userId}),
             s.p_id,
-            #{id},
+            #{id,jdbcType=INTEGER},
             s.batchno,
             getdate(),
             0
@@ -233,11 +283,11 @@
             WHERE s.storehouse_id = #{id}
         </if>
         <if test="count>0">
-            UPDATE ${account}.dbo.pda_AddTranBill_D SET createtime = getdate() WHERE storehouse_id = #{id} AND bill_id = (SELECT b.billid FROM ${account}.dbo.pda_AddTranBill b WHERE b.billstates = 0 AND b.e_id = 25)
+            UPDATE ${account}.dbo.pda_AddTranBill_D SET createtime = getdate() WHERE storehouse_id = #{id,jdbcType=INTEGER} AND bill_id = (SELECT b.billid FROM ${account}.dbo.pda_AddTranBill b WHERE b.billstates = 0 AND b.e_id = #{userId})
         </if>
     </insert>
 
-    <select id="getTempleGoodsList" resultType="com.teeny.wms.model.response.AllotGoodsEntity">
+    <select id="getTempleGoodsList" resultType="AllotGoodsEntity">
         SELECT
             s.storehouse_id                       AS id,
             p.p_id                                AS goodsId,

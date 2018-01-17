@@ -1,7 +1,7 @@
 package com.teeny.wms.web.service.impl;
 
 import com.teeny.wms.app.exception.InnerException;
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.dto.ReviewBillEntity;
 import com.teeny.wms.web.model.request.ExWarehouseReviewRequestEntity;
 import com.teeny.wms.web.model.response.ExWarehouseReviewEntity;
@@ -11,6 +11,7 @@ import com.teeny.wms.web.repository.ReviewMapper;
 import com.teeny.wms.web.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
  * @since 2017/11/7
  */
 @Service
+@Transactional
 public class ReviewServiceImpl implements ReviewService {
 
     private ReviewMapper mReviewMapper;

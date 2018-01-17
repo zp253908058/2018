@@ -1,20 +1,19 @@
 package com.teeny.wms.web.service.impl;
 
 import com.teeny.wms.app.exception.InnerException;
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.web.model.request.InventoryAddRequestEntity;
 import com.teeny.wms.web.model.request.InventoryRequestEntity;
 import com.teeny.wms.web.model.request.LotEntity;
 import com.teeny.wms.web.model.request.SKUAddRequestEntity;
-import com.teeny.wms.web.model.response.GoodsDetailEntity;
-import com.teeny.wms.web.model.response.InventoryGoodsEntity;
-import com.teeny.wms.web.model.response.SKUEntity;
+import com.teeny.wms.web.model.response.*;
 import com.teeny.wms.web.repository.CommonMapper;
 import com.teeny.wms.web.repository.InventoryMapper;
 import com.teeny.wms.web.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,6 +27,7 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class InventoryServiceImpl implements InventoryService {
 
     private InventoryMapper mInventoryMapper;
@@ -46,7 +46,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public List<InventoryGoodsEntity> getInventoryList(int id, boolean isMerge, String account) {
         List<InventoryGoodsEntity> list = mInventoryMapper.getInventoryList(id, isMerge, account);
-        mInventoryMapper.updateInventoryStatus(id, 1, account);
+        mInventoryMapper.updateInventoryStatus(account, id, 1);
         return list;
     }
 
@@ -59,7 +59,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public void complete(List<Integer> ids, String account, int userId) {
         if (Validator.isNotEmpty(ids)) {
-            mInventoryMapper.complete(ids, account, userId);
+            mInventoryMapper.complete(account, ids, userId);
         }
     }
 
@@ -82,7 +82,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public List<KeyValueEntity> getPdType(int type, String account, int sId) {
+    public List<KeyValueEntity> getPdType(String account, int type, int sId) {
         return mInventoryMapper.getPdType(account, type, sId);
     }
 
@@ -124,5 +124,43 @@ public class InventoryServiceImpl implements InventoryService {
         }
         entity.setLocationId(locationId);
         mInventoryMapper.addProduct(entity, account, sId, userId);
+    }
+
+    @Override
+    public InventoryInitializeEntity initialize(String account, int id, boolean isMerge) {
+        InventoryInitializeEntity entity = new InventoryInitializeEntity();
+        entity.setRepositoryList(mInventoryMapper.getCollection(account, id));
+        InventoryCountEntity count = mInventoryMapper.count(account, id, 0, 0, "", isMerge);
+        if (count != null) {
+            entity.setFinishedNumber(count.getFinishedNumber());
+            entity.setUnfinishedNumber(count.getUnfinishedNumber());
+        }
+        return entity;
+    }
+
+    @Override
+    public InventoryCountEntity count(String account, int pdId, int repositoryId, int areaId, boolean isMerge) {
+        return mInventoryMapper.count(account, pdId, repositoryId, areaId, "", isMerge);
+    }
+
+    @Override
+    public InventoryGoodsWrapperEntity getHomeData(String account, int pdId, int repositoryId, int areaId, String locationCode, boolean isMerge) {
+        InventoryGoodsWrapperEntity entity = new InventoryGoodsWrapperEntity();
+        List<InventoryGoodsEntity> list = mInventoryMapper.getList(account, pdId, repositoryId, areaId, locationCode, isMerge);
+        mInventoryMapper.updateInventoryStatus(account, pdId, 1);
+        entity.setList(list);
+        InventoryCountEntity count = mInventoryMapper.count(account, pdId, repositoryId, areaId, locationCode, isMerge);
+        if (count != null) {
+            entity.setFinishedNumber(count.getFinishedNumber());
+            entity.setUnfinishedNumber(count.getUnfinishedNumber());
+        }
+        return entity;
+    }
+
+    @Override
+    public void complete(String account, List<Integer> ids, int userId) {
+        if (Validator.isNotEmpty(ids)) {
+            mInventoryMapper.complete(account, ids, userId);
+        }
     }
 }

@@ -220,4 +220,30 @@ public class ReceivingBillEntity {
     public void setWholeQty(float wholeQty) {
         WholeQty = wholeQty;
     }
+
+    @Override
+    public String toString() {
+        return "ReceivingBillEntity{" +
+                "bill_id=" + bill_id +
+                ", p_id=" + p_id +
+                ", MakeDate='" + MakeDate + '\'' +
+                ", Validdate='" + Validdate + '\'' +
+                ", Batchno='" + Batchno + '\'' +
+                ", Yqty=" + Yqty +
+                ", EligibleQty=" + EligibleQty +
+                ", TaxPrice=" + TaxPrice +
+                ", TaxTotal=" + TaxTotal +
+                ", CostPrice=" + CostPrice +
+                ", CostTotal=" + CostTotal +
+                ", S_id=" + S_id +
+                ", Location_id=" + Location_id +
+                ", Supplier_id=" + Supplier_id +
+                ", DealStates=" + DealStates +
+                ", pdastates=" + pdastates +
+                ", original_id=" + original_id +
+                ", rownumber=" + rownumber +
+                ", retailQty=" + retailQty +
+                ", WholeQty=" + WholeQty +
+                '}';
+    }
 }

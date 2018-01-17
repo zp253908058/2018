@@ -1,8 +1,10 @@
 package com.teeny.wms.web.controller;
 
-import com.teeny.wms.app.model.KeyValueEntity;
-import com.teeny.wms.app.model.ResponseEntity;
+import com.teeny.wms.app.annotation.User;
+import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.web.model.EmptyEntity;
+import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.response.ReceivingEntity;
 import com.teeny.wms.web.model.response.ReceivingLotEntity;
 import com.teeny.wms.web.model.request.ReceivingRequestEntity;
@@ -68,10 +70,9 @@ public class ReceivingController {
     }
 
     @PostMapping("/complete")
-    public ResponseEntity<EmptyEntity> complete(@RequestHeader("account") String account, @RequestBody ReceivingRequestEntity entity) {
-        mReceivingService.complete(account, entity, 1);
+    public ResponseEntity<EmptyEntity> complete(@RequestHeader("account") String account, @RequestBody ReceivingRequestEntity entity, @User UserEntity user) {
+        System.out.println(entity);
+        mReceivingService.complete(account, entity, user.getId());
         return new ResponseEntity<>();
-
-        //TODO    当前用户还没有实现
     }
 }

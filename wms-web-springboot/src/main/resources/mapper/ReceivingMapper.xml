@@ -159,41 +159,41 @@
         loginid)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.bill_id},
-            #{item.p_id},
-            #{item.MakeDate},
-            #{item.Validdate},
-            #{item.Batchno},
-            #{item.Yqty},
-            #{item.EligibleQty},
-            #{item.TaxPrice},
-            #{item.TaxTotal},
-            #{item.CostPrice},
-            #{item.CostTotal},
-            #{item.S_id},
-            #{item.Location_id},
-            #{item.Supplier_id},
-            #{item.DealStates},
-            #{item.pdastates},
-            #{item.original_id},
-            #{item.rownumber},
+            (#{item.bill_id,jdbcType=INTEGER},
+            #{item.p_id,jdbcType=INTEGER},
+            #{item.MakeDate,jdbcType=VARCHAR},
+            #{item.Validdate,jdbcType=VARCHAR},
+            #{item.Batchno,jdbcType=VARCHAR},
+            #{item.Yqty,jdbcType=REAL},
+            #{item.EligibleQty,jdbcType=REAL},
+            #{item.TaxPrice,jdbcType=REAL},
+            #{item.TaxTotal,jdbcType=REAL},
+            #{item.CostPrice,jdbcType=REAL},
+            #{item.CostTotal,jdbcType=REAL},
+            #{item.S_id,jdbcType=INTEGER},
+            #{item.Location_id,jdbcType=INTEGER},
+            #{item.Supplier_id,jdbcType=INTEGER},
+            #{item.DealStates,jdbcType=INTEGER},
+            #{item.pdastates,jdbcType=INTEGER},
+            #{item.original_id,jdbcType=INTEGER},
+            #{item.rownumber,jdbcType=INTEGER},
             getdate(),
-            #{id})
+            #{id,jdbcType=INTEGER})
         </foreach>
     </insert>
 
     <update id="updateOrderStatus">
         <selectKey keyProperty="count" resultType="int" order="BEFORE">
             SELECT count(*) AS total
-            FROM yyt.dbo.pda_RecBill_D d
+            FROM ${account}.dbo.pda_RecBill_D d
             WHERE d.DealStates = 0
             AND d.bill_id = (SELECT DISTINCT d1.bill_id
-            FROM yyt.dbo.pda_RecBill_D d1
+            FROM ${account}.dbo.pda_RecBill_D d1
             WHERE d1.original_id = #{id})
         </selectKey>
 
         <if test="count==0">
-            UPDATE yyt.dbo.pda_RecBill
+            UPDATE ${account}.dbo.pda_RecBill
             SET billstates = 13
             WHERE billid = (SELECT DISTINCT d.bill_id
             FROM ${account}.dbo.pda_RecBill_D d

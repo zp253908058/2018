@@ -1,13 +1,11 @@
 package com.teeny.wms.web.service;
 
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.request.InventoryAddRequestEntity;
 import com.teeny.wms.web.model.request.InventoryRequestEntity;
 import com.teeny.wms.web.model.request.LotEntity;
 import com.teeny.wms.web.model.request.SKUAddRequestEntity;
-import com.teeny.wms.web.model.response.GoodsDetailEntity;
-import com.teeny.wms.web.model.response.InventoryGoodsEntity;
-import com.teeny.wms.web.model.response.SKUEntity;
+import com.teeny.wms.web.model.response.*;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ public interface InventoryService {
 
     List<LotEntity> getLotList(int originalId, String account);
 
-    List<KeyValueEntity> getPdType(int type, String account, int sId);
+    List<KeyValueEntity> getPdType(String account, int type, int sId);
 
     void addInventory(int type, InventoryAddRequestEntity entity, String account, int sId, int userId);
 
@@ -48,4 +46,12 @@ public interface InventoryService {
      * @param userId  用户id
      */
     void addSku(SKUAddRequestEntity entity, String account, int sId, int userId);
+
+    InventoryInitializeEntity initialize(String account, int id, boolean isMerge);
+
+    InventoryCountEntity count(String account, int pdId, int repositoryId, int areaId, boolean isMerge);
+
+    InventoryGoodsWrapperEntity getHomeData(String account, int pdId, int repositoryId, int areaId, String locationCode, boolean isMerge);
+
+    void complete(String account,List<Integer> ids,  int userId);
 }

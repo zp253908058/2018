@@ -1,7 +1,7 @@
 package com.teeny.wms.web.service.impl;
 
 import com.teeny.wms.app.exception.InnerException;
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.web.model.dto.ReceivingBillEntity;
 import com.teeny.wms.web.model.response.ReceivingAddEntity;
@@ -12,6 +12,7 @@ import com.teeny.wms.web.repository.ReceivingMapper;
 import com.teeny.wms.web.service.ReceivingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.List;
  * @since 2017/11/1
  */
 @Service
+@Transactional
 public class ReceivingServiceImpl implements ReceivingService {
 
     private ReceivingMapper mReceivingMapper;
@@ -81,6 +83,7 @@ public class ReceivingServiceImpl implements ReceivingService {
         mReceivingMapper.deleteByOriginalId(account, entity.getId());
         //得到插入的数据
         List<ReceivingBillEntity> target = convert(original, entity.getParam());
+        System.out.println(target);
         //插入新数据
         mReceivingMapper.addData(account, target, userId);
         //更新大单状态

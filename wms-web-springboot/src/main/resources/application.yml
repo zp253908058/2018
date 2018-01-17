@@ -14,7 +14,6 @@ logging:
 
 spring:
   datasource:
-    name: wms
     druid:
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 #      url: jdbc:sqlserver://localhost;databaseName=yyt
@@ -25,13 +24,30 @@ spring:
       password: yyt@123
       initial-size: 1
       min-idle: 1
-      max-active: 20
+      max-active: 100
       filters: stat,slf4j
+      name: wms
+      max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+
 mybatis:
-  config-location: classpath:mybatis-config.xml
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.teeny.wms.web.model
-  executor-type: batch
+  configuration:
+    cache-enabled: false
+    default-executor-type: batch
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-prefix: WMS
+    multiple-result-sets-enabled: true
+    jdbc-type-for-null: varchar
+
 security:
   oauth2:
     client:

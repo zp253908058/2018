@@ -1,4 +1,4 @@
-package com.teeny.wms.app.model;
+package com.teeny.wms.web.model;
 
 /**
  * Class description:

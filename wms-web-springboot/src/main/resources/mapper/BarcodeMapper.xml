@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.BarcodeMapper">
+
+    <select id="getList" resultType="BarcodeGoodsEntity">
+        SELECT
+            p.p_id       AS id,
+            p.name       AS goodsName,
+            p.barcode    AS barcode,
+            p.Standard   AS specification,
+            p.unit1Name  AS unit,
+            p.medtype    AS dosageForm,
+            p.factory    AS manufacturer,
+            p.makearea   AS makeArea,
+            p.permitcode AS approvalNumber
+        FROM ${account}.dbo.VW_PDA_Storehouse s
+            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+        WHERE l.loc_code = #{location}
+        <if test="goods != null and goods != ''">
+            AND (p.pinyin LIKE '%' + #{goods} + '%' OR p.name LIKE '%' + #{goods} + '%')
+        </if>
+    </select>
+
+    <select id="getListByGoods" resultType="BarcodeGoodsEntity">
+        SELECT
+            p.p_id       AS id,
+            p.name       AS goodsName,
+            p.barcode    AS barcode,
+            p.Standard   AS specification,
+            p.unit1Name  AS unit,
+            p.medtype    AS dosageForm,
+            p.factory    AS manufacturer,
+            p.makearea   AS makeArea,
+            p.permitcode AS approvalNumber
+        FROM ${account}.dbo.pda_Products p
+        WHERE p.pinyin LIKE '%' + #{goods} + '%' OR p.name LIKE '%' + #{goods} + '%'
+    </select>
+
+    <select id="getGoodsById" resultType="BarcodeGoodsEntity">
+        SELECT
+            p.p_id       AS id,
+            p.name       AS goodsName,
+            p.barcode    AS barcode,
+            p.Standard   AS specification,
+            p.unit1Name  AS unit,
+            p.medtype    AS dosageForm,
+            p.factory    AS manufacturer,
+            p.makearea   AS makeArea,
+            p.permitcode AS approvalNumber
+        FROM ${account}.dbo.pda_Products p
+        WHERE p.p_id = #{id}
+    </select>
+
+    <select id="getGoodsList" resultType="BarcodeGoodsEntity">
+        SELECT
+            p.p_id       AS id,
+            p.name       AS goodsName,
+            p.barcode    AS barcode,
+            p.Standard   AS specification,
+            p.unit1Name  AS unit,
+            p.medtype    AS dosageForm,
+            p.factory    AS manufacturer,
+            p.makearea   AS makeArea,
+            p.permitcode AS approvalNumber
+        FROM ${account}.dbo.pda_Products p
+        WHERE p.pinyin LIKE '%' + #{goods} + '%' OR p.name LIKE '%' + #{goods} + '%'
+    </select>
+
+    <insert id="add">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT count(*) FROM ${account}.dbo.pda_PBarcode b WHERE b.p_id = #{item.id}
+        </selectKey>
+        <if test="count > 0">
+            UPDATE ${account}.dbo.pda_PBarcode SET oldbarcode = #{item.oldBarcode,jdbcType=VARCHAR}, barcode = #{item.newBarcode,jdbcType=VARCHAR}, createtime = getdate(), ZT = 0 WHERE p_id = #{item.id}
+        </if>
+        <if test="count==0">
+            INSERT INTO ${account}.dbo.pda_PBarcode (p_id, oldbarcode, barcode, createtime, ZT) VALUES (#{item.id,jdbcType=INTEGER}, #{item.oldBarcode,jdbcType=VARCHAR}, #{item.newBarcode,jdbcType=VARCHAR}, getdate(), 0)
+        </if>
+    </insert>
+</mapper>

@@ -1,7 +1,7 @@
 package com.teeny.wms.web.controller;
 
-import com.teeny.wms.app.model.ResponseEntity;
-import com.teeny.wms.app.model.StringMapEntity;
+import com.teeny.wms.web.model.ResponseEntity;
+import com.teeny.wms.web.model.StringMapEntity;
 import com.teeny.wms.web.model.EmptyEntity;
 import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.service.SignService;

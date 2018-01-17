@@ -29,14 +29,7 @@ public class AllotEntity {
     private String number;
     private String exportName;
     private String importName;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private String pinyin;
 
     public int getOriginalId() {
         return originalId;
@@ -52,6 +45,38 @@ public class AllotEntity {
 
     public void setBillNo(String billNo) {
         this.billNo = billNo;
+    }
+
+    public String getExportName() {
+        return exportName;
+    }
+
+    public void setExportName(String exportName) {
+        this.exportName = exportName;
+    }
+
+    public String getImportName() {
+        return importName;
+    }
+
+    public void setImportName(String importName) {
+        this.importName = importName;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getGoodsId() {
@@ -142,27 +167,13 @@ public class AllotEntity {
         this.status = status;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPinyin() {
+        return pinyin;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 
-    public String getExportName() {
-        return exportName;
-    }
 
-    public void setExportName(String exportName) {
-        this.exportName = exportName;
-    }
-
-    public String getImportName() {
-        return importName;
-    }
-
-    public void setImportName(String importName) {
-        this.importName = importName;
-    }
 }

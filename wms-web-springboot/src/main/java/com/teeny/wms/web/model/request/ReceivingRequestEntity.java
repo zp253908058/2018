@@ -41,4 +41,13 @@ public class ReceivingRequestEntity {
     public void setParam(List<ReceivingAddEntity> param) {
         this.param = param;
     }
+
+    @Override
+    public String toString() {
+        return "ReceivingRequestEntity{" +
+                "id=" + id +
+                ", smbId=" + smbId +
+                ", param=" + param +
+                '}';
+    }
 }

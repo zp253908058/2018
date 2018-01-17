@@ -1,6 +1,6 @@
 package com.teeny.wms.web.service;
 
-import com.teeny.wms.app.model.StringMapEntity;
+import com.teeny.wms.web.model.StringMapEntity;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package com.teeny.wms.web.controller;
 
 import com.teeny.wms.app.annotation.User;
-import com.teeny.wms.app.model.KeyValueEntity;
-import com.teeny.wms.app.model.ResponseEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.web.model.EmptyEntity;
 import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
@@ -51,7 +51,7 @@ public class AllotController {
      * @return List<AllotListEntity>
      */
     @GetMapping("list")
-    public ResponseEntity<List<AllotEntity>> getList(@RequestParam("billCode") String billNo, @RequestParam("goodsCode") String goodsCode, @RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
+    public ResponseEntity<List<AllotEntity>> getList(@RequestParam(value = "billCode") String billNo, @RequestParam("goodsCode") String goodsCode, @RequestParam("sId") int sId, @RequestParam("saId") int saId, @RequestHeader("account") String account) {
         return new ResponseEntity<>(mAllotService.getAllotList(billNo, goodsCode, sId, saId, account));
     }
 

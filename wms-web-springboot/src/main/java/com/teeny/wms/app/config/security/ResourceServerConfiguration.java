@@ -43,4 +43,6 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 //                    .antMatchers("/product/**").access("#oauth2.hasScope('select') and hasRole('ROLE_USER')")
                 .antMatchers("/api/**").authenticated();//配置order访问控制，必须认证过后才可以访问
     }
+
+
 }

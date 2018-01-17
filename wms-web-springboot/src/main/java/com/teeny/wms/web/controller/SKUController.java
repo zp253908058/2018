@@ -1,7 +1,9 @@
 package com.teeny.wms.web.controller;
 
-import com.teeny.wms.app.model.ResponseEntity;
+import com.teeny.wms.app.annotation.User;
+import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.web.model.EmptyEntity;
+import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.request.SKUAddRequestEntity;
 import com.teeny.wms.web.model.response.GoodsDetailEntity;
 import com.teeny.wms.web.model.response.SKUEntity;
@@ -47,11 +49,9 @@ public class SKUController {
      * @return EmptyEntity
      */
     @PostMapping("/update")
-    public ResponseEntity<EmptyEntity> save(@RequestBody SKUAddRequestEntity entity, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        mInventoryService.addSku(entity, account, sId, 1);
+    public ResponseEntity<EmptyEntity> save(@RequestBody SKUAddRequestEntity entity, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @User UserEntity user) {
+        mInventoryService.addSku(entity, account, sId, user.getId());
         return new ResponseEntity<>();
-
-        //TODO user
     }
 
     /**
@@ -71,10 +71,8 @@ public class SKUController {
      * @return EmptyEntity
      */
     @PutMapping("/add")
-    public ResponseEntity<EmptyEntity> add(@RequestBody SKUAddRequestEntity entity, @RequestHeader("account") String account, @RequestHeader("sId") int sId) {
-        mInventoryService.addSku(entity, account, sId, 1);
+    public ResponseEntity<EmptyEntity> add(@RequestBody SKUAddRequestEntity entity, @RequestHeader("account") String account, @RequestHeader("sId") int sId, @User UserEntity user) {
+        mInventoryService.addSku(entity, account, sId, user.getId());
         return new ResponseEntity<>();
-
-        //TODO user
     }
 }

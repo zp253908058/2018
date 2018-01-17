@@ -1,6 +1,6 @@
 package com.teeny.wms.web.service;
 
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.AllotEntity;

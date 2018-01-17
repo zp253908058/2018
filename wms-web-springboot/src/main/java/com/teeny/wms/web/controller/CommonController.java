@@ -1,9 +1,11 @@
 package com.teeny.wms.web.controller;
 
-import com.teeny.wms.app.model.KeyValueEntity;
-import com.teeny.wms.app.model.ResponseEntity;
-import com.teeny.wms.app.model.StringMapEntity;
+import com.teeny.wms.app.annotation.User;
+import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.ResponseEntity;
+import com.teeny.wms.web.model.StringMapEntity;
 import com.teeny.wms.web.model.EmptyEntity;
+import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.response.DocumentResponseEntity;
 import com.teeny.wms.web.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +48,9 @@ public class CommonController {
     }
 
     @GetMapping("/api/home/username")
-    public ResponseEntity<String> getUsername() {
-        return new ResponseEntity<>("test");
-
-        //TODO user
+    public ResponseEntity<String> getUsername(@User UserEntity entity) {
+        System.out.println(entity);
+        return new ResponseEntity<>(entity.getUsername());
     }
 
     //获取历史货位

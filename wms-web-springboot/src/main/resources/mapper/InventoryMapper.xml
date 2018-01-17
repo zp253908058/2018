@@ -135,14 +135,14 @@
             d.Supplier_id,
             d.InstoreTime,
             d.billstates,
-            #{validateDate},
-            #{lotNo},
-            #{count},
+            #{validateDate,jdbcType=VARCHAR},
+            #{lotNo,jdbcType=VARCHAR},
+            #{count,jdbcType=REAL},
             1,
             d.pdastates,
             d.original_id,
             getdate(),
-            #{userId}
+            #{userId,jdbcType=INTEGER}
             FROM ${account}.dbo.pda_pdBill_D d
             WHERE d.smb_id = (SELECT max(d1.smb_id)
             FROM ${account}.dbo.pda_pdBill_D d1
@@ -193,21 +193,21 @@
          wctime,
          loginid)
             SELECT
-                #{item.inventoryId},
-                #{item.goodsId},
-                #{item.validateDate},
-                #{item.lotNo},
-                #{item.amount},
-                #{item.amount},
-                #{sId},
-                #{item.locationId},
+                #{item.inventoryId,jdbcType=INTEGER},
+                #{item.goodsId,jdbcType=INTEGER},
+                #{item.validateDate,jdbcType=VARCHAR},
+                #{item.lotNo,jdbcType=VARCHAR},
+                #{item.amount,jdbcType=INTEGER},
+                #{item.amount,jdbcType=INTEGER},
+                #{sId,jdbcType=INTEGER},
+                #{item.locationId,jdbcType=INTEGER},
                 p.Supplier_id,
                 getdate(),
-                #{item.billState},
+                #{item.billState,jdbcType=INTEGER},
                 1,
                 0,
                 getdate(),
-                #{userId}
+                #{userId,jdbcType=INTEGER}
             FROM ${account}.dbo.pda_Products p
             WHERE p.p_id = #{item.goodsId}
     </insert>
@@ -238,7 +238,7 @@
                 l.loc_code = #{location}
             </if>
             <if test="barcode != null and barcode != ''">
-                AND p.barcode = #{barcode}
+                AND (p.barcode = #{barcode} OR p.pinyin like '%${barcode}%')
             </if>
         </where>
     </select>
@@ -258,18 +258,104 @@
             wctime,
             loginid)
         VALUES (
-            #{item.id},
-            #{item.pId},
-            #{item.lotNo},
-            #{item.locationId},
-            #{item.amount},
-            #{item.originalAmount},
-            #{item.validateDate},
-            #{sId},
+            #{item.id,jdbcType=INTEGER},
+            #{item.pId,jdbcType=INTEGER},
+            #{item.lotNo,jdbcType=VARCHAR},
+            #{item.locationId,jdbcType=INTEGER},
+            #{item.amount,jdbcType=REAL},
+            #{item.originalAmount,jdbcType=REAL},
+            #{item.validateDate,jdbcType=VARCHAR},
+            #{sId,jdbcType=INTEGER},
             1,
             0,
             getdate(),
-            #{userId}
+            #{userId,jdbcType=INTEGER}
         )
     </insert>
+
+    <resultMap id="repositoryList" type="RepositoryEntity">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <collection property="areas" javaType="ArrayList" ofType="AreaEntity"
+                    column="{account = account, repositoryId = id}"
+                    select="com.teeny.wms.web.repository.InventoryMapper.getAreaList"/>
+    </resultMap>
+
+    <select id="getCollection" resultMap="repositoryList">
+        SELECT DISTINCT
+        sa.sa_id            AS id,
+        isnull(sa.name, '') AS name,
+        #{account}          AS account
+        FROM ${account}.dbo.pda_pdBill_D d
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
+        WHERE d.bill_id = #{id} AND sa.sa_id > 0
+        ORDER BY name
+    </select>
+
+    <select id="getAreaList" resultType="AreaEntity">
+        SELECT DISTINCT
+            a.sc_id            AS id,
+            isnull(a.name, '') AS name
+        FROM ${account}.dbo.pda_Area a
+        WHERE a.sa_id = #{repositoryId} AND a.sc_id > 0
+        ORDER BY name
+    </select>
+
+    <select id="count" resultType="InventoryCountEntity">
+        SELECT
+        sum(CASE DealStates WHEN 0 THEN 1 ELSE 0 END) AS unfinishedNumber,
+        sum(CASE DealStates WHEN 1 THEN 1 ELSE 0 END) AS finishedNumber
+        FROM ${account}.dbo.pda_pdBill_D d
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        WHERE d.bill_id = #{id}
+        <if test="repositoryId > 0">
+            AND l.sa_id = #{repositoryId}
+        </if>
+        <if test="areaId > 0">
+            AND l.sc_id = #{areaId}
+        </if>
+        <if test="barcode != null and barcode != ''">
+            AND l.loc_code = #{barcode}
+        </if>
+        <if test="isMerge">
+            AND d.smb_id = (SELECT min(smb_id) AS id FROM ${account}.dbo.pda_pdBill_D WHERE d.original_id = original_id)
+        </if>
+    </select>
+
+    <select id="getList" resultType="InventoryGoodsEntity">
+        SELECT
+            d.smb_id                               AS id,
+            d.original_id                          AS originalId,
+            d.bill_id                              AS billId,
+            d.p_id                                 AS goodsId,
+            p.name                                 AS goodsName,
+            l.loc_code                             AS location,
+            d.EligibleQty                          AS countInBill,
+            d.pdQty                                AS inventoryCount,
+            p.unit1Name                            AS unit,
+            p.standard                             AS specification,
+            p.Factory                              AS manufacturer,
+            d.DealStates                           AS status,
+            l.loc_code                             AS locationCode,
+            p.barcode                              AS goodsCode,
+            d.Batchno                              AS lotNo,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
+            CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
+            p.pinyin                               AS pinyin
+        FROM ${account}.dbo.pda_pdBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        WHERE d.bill_id = #{id} AND l.loc_code = #{locationCode}
+        <if test="repositoryId > 0">
+            AND l.sa_id = #{repositoryId}
+        </if>
+        <if test="areaId > 0">
+            AND l.sc_id = #{areaId}
+        </if>
+        <if test="isMerge">
+            AND d.smb_id = (SELECT min(smb_id) AS id FROM ${account}.dbo.pda_pdBill_D WHERE d.original_id = original_id)
+        </if>
+        ORDER BY l.l_id
+    </select>
 </mapper>

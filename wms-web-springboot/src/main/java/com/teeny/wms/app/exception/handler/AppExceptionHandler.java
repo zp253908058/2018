@@ -1,7 +1,7 @@
 package com.teeny.wms.app.exception.handler;
 
 import com.teeny.wms.app.exception.InnerException;
-import com.teeny.wms.app.model.ResponseEntity;
+import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.util.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +30,7 @@ public class AppExceptionHandler {
     @ExceptionHandler({Exception.class})
     @ResponseBody
     public ResponseEntity handleInnerException(Exception ex) {
+        ex.printStackTrace();
         int code = CODE_UNKNOWN_EXCEPTION;
         if (ex instanceof InnerException) {
             code = CODE_INNER_EXCEPTION;

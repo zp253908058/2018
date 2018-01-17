@@ -1,6 +1,6 @@
 package com.teeny.wms.web.repository;
 
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.PutawayEntity;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,7 +27,7 @@ public interface PutawayMapper {
 
     List<KeyValueEntity> getBillList(@Param("sId") int sId, @Param("saId") int saId, @Param("account") String account);
 
-    List<PutawayEntity> getGoodsDetailList(@Param("orderNoId") String orderNoId, @Param("account") String account);
+    List<PutawayEntity> getGoodsDetailList(@Param("orderNoId") String orderNoId, @Param("account") String account, @Param("sId") int sId);
 
     @Select("SELECT d.EligibleQty AS amount, l.loc_code AS locationCode FROM ${account}.dbo.pda_PutOnBill_D d LEFT JOIN ${account}.dbo.pda_location l ON d.Location_id = l.l_id WHERE d.original_id = #{id}")
     List<AllocationEntity> getLocationListById(@Param("id") int id, @Param("account") String account);

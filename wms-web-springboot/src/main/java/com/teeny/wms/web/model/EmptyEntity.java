@@ -9,4 +9,5 @@ package com.teeny.wms.web.model;
  * @since 2017/11/1
  */
 public class EmptyEntity {
+
 }

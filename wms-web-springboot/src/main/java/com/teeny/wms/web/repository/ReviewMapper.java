@@ -1,6 +1,6 @@
 package com.teeny.wms.web.repository;
 
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.dto.ReviewBillEntity;
 import com.teeny.wms.web.model.response.ExWarehouseReviewEntity;
 import com.teeny.wms.web.model.response.RecipientEntity;
@@ -39,6 +39,6 @@ public interface ReviewMapper {
 
     int getReplenishmentCount(@Param("account") String account, @Param("sId") int sId);
 
-    @Update("UPDATE ${account}.dbo.pda_CheckBill SET diff_remark=#{remark}, recipient_id=#{recipientId}, billstates=13 WHERE billnumber=#{billNo}")
+    @Update("UPDATE ${account}.dbo.pda_CheckBill SET diff_remark=#{remark,jdbcType=VARCHAR}, recipient_id=#{recipientId,jdbcType=INTEGER}, billstates=13 WHERE billnumber=#{billNo}")
     void complete(@Param("billNo") String billNo, @Param("recipientId") int recipientId, @Param("remark") String remark, @Param("account") String account);
 }

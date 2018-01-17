@@ -1,8 +1,10 @@
 package com.teeny.wms.web.controller;
 
-import com.teeny.wms.app.model.KeyValueEntity;
-import com.teeny.wms.app.model.ResponseEntity;
+import com.teeny.wms.app.annotation.User;
+import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.web.model.EmptyEntity;
+import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.PutawayEntity;
@@ -61,8 +63,8 @@ public class PutawayController {
      * @return List<Entity>
      */
     @GetMapping("/goodsDetailList/{orderNo}")
-    public ResponseEntity<List<PutawayEntity>> getGoodsDetailList(@PathVariable("orderNo") String orderNo, @RequestHeader("account") String account) {
-        List<PutawayEntity> result = mPutawayService.getGoodsDetailList(orderNo, account);
+    public ResponseEntity<List<PutawayEntity>> getGoodsDetailList(@PathVariable("orderNo") String orderNo, @RequestHeader("account") String account, @RequestHeader(value = "sId", required = false, defaultValue = "0") int sId) {
+        List<PutawayEntity> result = mPutawayService.getGoodsDetailList(orderNo, account, sId);
         return new ResponseEntity<>(result);
     }
 
@@ -72,11 +74,9 @@ public class PutawayController {
      * @return List<KeyValueEntity>
      */
     @PostMapping("/all")
-    public ResponseEntity<EmptyEntity> all(@RequestBody List<Integer> ids, @RequestHeader("account") String account) {
-        mPutawayService.all(ids, account, 1);
+    public ResponseEntity<EmptyEntity> all(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @User UserEntity user) {
+        mPutawayService.all(ids, account, user.getId());
         return new ResponseEntity<>();
-
-        //TODO user
     }
 
     /**
@@ -85,11 +85,9 @@ public class PutawayController {
      * @return List<KeyValueEntity>
      */
     @PostMapping("/single")
-    public ResponseEntity<EmptyEntity> single(@RequestParam("id") int originalId, @RequestHeader("account") String account) {
-        mPutawayService.single(originalId, account, 1);
+    public ResponseEntity<EmptyEntity> single(@RequestParam("id") int originalId, @RequestHeader("account") String account, @User UserEntity user) {
+        mPutawayService.single(originalId, account, user.getId());
         return new ResponseEntity<>();
-
-        //TODO user
     }
 
     /**
@@ -98,11 +96,9 @@ public class PutawayController {
      * @return List<KeyValueEntity>
      */
     @PostMapping("/update")
-    public ResponseEntity<EmptyEntity> update(@RequestBody AllotListRequestEntity entity, @RequestHeader("account") String account) {
-        mPutawayService.update(entity, account, 1);
+    public ResponseEntity<EmptyEntity> update(@RequestBody AllotListRequestEntity entity, @RequestHeader("account") String account, @User UserEntity user) {
+        mPutawayService.update(entity, account, user.getId());
         return new ResponseEntity<>();
-
-        //TODO user
     }
 
     /**

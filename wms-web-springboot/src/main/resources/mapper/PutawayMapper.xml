@@ -38,24 +38,28 @@
 
     <select id="getGoodsDetailList" resultType="PutawayEntity">
         SELECT
-            d.smb_id      AS id,
-            d.original_id AS originalId,
-            d.DealStates  AS status,
-            p.p_id        AS goodsId,
-            p.name        AS goodsName,
-            d.Batchno     AS lotNo,
-            p.standard    AS specification,
-            d.MakeDate    AS productionDate,
-            p.unit1Name   AS unit,
-            d.EligibleQty AS amount,
-            p.Factory     AS manufacturer,
-            l.loc_code    AS locationCode,
-            p.barcode     AS goodsCode
+            d.smb_id                               AS id,
+            d.original_id                          AS originalId,
+            d.DealStates                           AS status,
+            p.p_id                                 AS goodsId,
+            p.name                                 AS goodsName,
+            d.Batchno                              AS lotNo,
+            p.standard                             AS specification,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS productionDate,
+            p.unit1Name                            AS unit,
+            d.EligibleQty                          AS amount,
+            p.Factory                              AS manufacturer,
+            l.loc_code                             AS locationCode,
+            p.barcode                              AS goodsCode,
+            p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_PutOnBill_D d
             INNER JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id = b.billid AND b.pdastates != 2
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
         WHERE b.billnumber = #{orderNoId}
+        <if test="sId !=0 ">
+            AND d.S_id=#{sId}
+        </if>
         ORDER BY l.loc_name ASC
     </select>
 
@@ -122,13 +126,13 @@
                 d.MakeDate,
                 d.Validdate,
                 d.Batchno,
-                #{amount},
+                #{amount,jdbcType=REAL},
                 d.TaxPrice,
                 d.TaxTotal,
                 d.CostPrice,
                 d.CostTotal,
                 d.S_id,
-                #{locationId},
+                #{locationId,jdbcType=INTEGER},
                 d.Supplier_id,
                 d.InstoreTime,
                 d.LineSort,
@@ -136,7 +140,7 @@
                 d.pdastates,
                 d.original_id,
                 getdate(),
-                #{userId}
+                #{userId,jdbcType=INTEGER}
             FROM ${account}.dbo.pda_PutOnBill_D d
             WHERE d.smb_id = (SELECT max(d1.smb_id)
                               FROM ${account}.dbo.pda_PutOnBill_D d1
@@ -151,7 +155,7 @@
     </delete>
 
     <update id="updateBillStatus">
-        <selectKey keyProperty="count" order="BEFORE">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
             SELECT count(*) FROM ${account}.dbo.pda_PutOnBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT
             DISTINCT d1.bill_id FROM ${account}.dbo.pda_PutOnBill_D d1 WHERE d1.original_id=#{id})
         </selectKey>

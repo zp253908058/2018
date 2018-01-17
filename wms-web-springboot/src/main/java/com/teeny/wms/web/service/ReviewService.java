@@ -1,6 +1,6 @@
 package com.teeny.wms.web.service;
 
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.request.ExWarehouseReviewRequestEntity;
 import com.teeny.wms.web.model.response.ExWarehouseReviewEntity;
 import com.teeny.wms.web.model.response.RecipientEntity;

@@ -1,7 +1,7 @@
 package com.teeny.wms.web.service.impl;
 
 import com.teeny.wms.app.exception.InnerException;
-import com.teeny.wms.app.model.KeyValueEntity;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
@@ -13,6 +13,7 @@ import com.teeny.wms.web.service.AllotService;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.List;
  * @since 2017/11/7
  */
 @Service
+@Transactional
 public class AllotServiceImpl implements AllotService {
 
     private static final String DATE_PATTERN = "yyyyMMddHHmmss";
@@ -105,7 +107,8 @@ public class AllotServiceImpl implements AllotService {
 
     @Override
     public void add(String account, int id, int userId, String serial) {
-        String billNo = serial + DateFormatUtils.format(new Date(), DATE_PATTERN);
+        String billNo = DateFormatUtils.format(new Date(), DATE_PATTERN);
+        System.out.println("account = " + account + ", id = " + id + ", billNo = " + billNo + ", userId = " + userId);
         //生成大单据
         mAllotMapper.generateBill(account, userId, billNo);
         //添加至待完成
