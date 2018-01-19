@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:divider="@drawable/shape_divider"
+    android:showDividers="middle"
+    android:background="@drawable/background_selectable_item_white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/TextViewStyle.Key"
+            android:text="@string/text_goods_allocation"/>
+
+        <TextView
+            android:id="@+id/allot_location_name"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            style="@style/TextViewStyle.Value"
+            android:gravity="center_vertical|end" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/TextViewStyle.Key"
+            android:text="@string/text_amount"/>
+
+        <TextView
+            android:id="@+id/allot_location_amount"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            style="@style/TextViewStyle.Value"
+            android:gravity="center_vertical|end" />
+    </LinearLayout>
+
+</LinearLayout>

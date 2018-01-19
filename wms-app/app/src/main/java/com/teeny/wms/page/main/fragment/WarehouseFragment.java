@@ -28,6 +28,7 @@ import com.teeny.wms.model.KeyValueEntity;
 import com.teeny.wms.model.ResponseEntity;
 import com.teeny.wms.page.allot.AllotOrderAddActivity;
 import com.teeny.wms.page.barcode.BarcodeCollectActivity;
+import com.teeny.wms.page.delivery.activity.ShopDeliveryActivity;
 import com.teeny.wms.page.receiving.ReceivingActivity;
 import com.teeny.wms.page.allot.AllotListActivity;
 import com.teeny.wms.page.document.QueryDocumentActivity;
@@ -68,7 +69,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class WarehouseFragment extends ToolbarFragment implements View.OnClickListener, RecyclerViewTouchListener.OnItemClickListener, ProgressView, TextWatcher {
     private static final String TAG = WarehouseFragment.class.getSimpleName();
 
-    private static final int INDEX_COUNT = 11;
+    private static final int INDEX_COUNT = 12;
 
     public static WarehouseFragment newInstance() {
         return new WarehouseFragment();
@@ -277,6 +278,9 @@ public class WarehouseFragment extends ToolbarFragment implements View.OnClickLi
                 case 10:
                     entity.setIcon(R.mipmap.icon_second_count);
                     break;
+                case 11:
+                    entity.setIcon(R.mipmap.icon_second_count);
+                    break;
 
             }
             list.add(entity);
@@ -319,6 +323,9 @@ public class WarehouseFragment extends ToolbarFragment implements View.OnClickLi
                 break;
             case 10:
                 AllotOrderAddActivity.startActivity(getContext());
+                break;
+            case 11:
+                ShopDeliveryActivity.startActivity(getContext());
                 break;
         }
     }

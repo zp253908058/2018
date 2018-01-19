@@ -3,6 +3,7 @@ package com.teeny.wms.datasouce.net;
 import android.content.Context;
 
 import com.teeny.wms.app.AppManager;
+import com.teeny.wms.datasouce.local.cache.UserManager;
 import com.teeny.wms.model.ResponseEntity;
 import com.teeny.wms.page.login.LoginActivity;
 import com.teeny.wms.pop.Toaster;
@@ -79,6 +80,7 @@ public abstract class ResponseSubscriber<T> implements FlowableSubscriber<Respon
         Toaster.showToast(msg);
         if (Validator.isNotEmpty(msg) && msg.contains("401")) {
             Context context = mAppManager.peek();
+            UserManager.getInstance().clear();
             LoginActivity.startActivity(context);
         }
         Logger.e(t, t.getMessage());

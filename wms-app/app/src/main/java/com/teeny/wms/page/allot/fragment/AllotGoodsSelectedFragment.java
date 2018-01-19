@@ -12,13 +12,24 @@ import com.teeny.wms.R;
 import com.teeny.wms.base.BaseFragment;
 import com.teeny.wms.base.RecyclerViewTouchListener;
 import com.teeny.wms.base.decoration.VerticalDecoration;
+import com.teeny.wms.datasouce.net.NetServiceManager;
+import com.teeny.wms.datasouce.net.ResponseSubscriber;
+import com.teeny.wms.datasouce.net.service.AllotOrderService;
+import com.teeny.wms.model.AllotGoodsEntity;
+import com.teeny.wms.model.ResponseEntity;
 import com.teeny.wms.page.allot.AllotOrderAddDetailActivity;
 import com.teeny.wms.page.allot.adapter.AllotGoodsSelectedAdapter;
 import com.teeny.wms.page.allot.helper.AllotOrderHelper;
+import com.teeny.wms.util.log.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
+
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Class description:
@@ -38,14 +49,17 @@ public class AllotGoodsSelectedFragment extends BaseFragment implements Recycler
 
     private AllotGoodsSelectedAdapter mAdapter;
 
-    private AllotOrderHelper mHelper;
     private EventBus mEventBus;
+
+    private AllotOrderService mService;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mEventBus = EventBus.getDefault();
         mAdapter = new AllotGoodsSelectedAdapter(null);
+
+        mService = NetServiceManager.getInstance().getService(AllotOrderService.class);
     }
 
     @Override
@@ -74,14 +88,43 @@ public class AllotGoodsSelectedFragment extends BaseFragment implements Recycler
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onDataChange(AllotOrderHelper helper) {
-        mHelper = helper;
-        mAdapter.setItems(helper.getSelectedItems());
+    @Override
+    protected void obtainData() {
+        Flowable<ResponseEntity<List<AllotGoodsEntity>>> flowable = mService.getSelectGoods();
+        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<List<AllotGoodsEntity>>(this) {
+            @Override
+            public void doNext(List<AllotGoodsEntity> data) {
+                mAdapter.setItems(data);
+                setLoaded(true);
+            }
+
+            @Override
+            public void doComplete() {
+
+            }
+        });
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGoodsSelected(SelectedFlag flag) {
+        setLoaded(false);
+    }
+
+    static class SelectedFlag {
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onComplete(CompleteFlag flag) {
+        setLoaded(false);
+    }
+
+    public static class CompleteFlag {
+    }
+
 
     @Override
     public void onItemClick(View view, int position) {
-        AllotOrderAddDetailActivity.startActivity(getContext(), mAdapter.getItem(position));
+        AllotGoodsEntity entity = mAdapter.getItem(position);
+        AllotOrderAddDetailActivity.startActivity(getContext(), entity);
     }
 }

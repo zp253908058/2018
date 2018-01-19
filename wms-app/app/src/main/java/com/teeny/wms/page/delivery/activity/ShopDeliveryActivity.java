@@ -1,7 +1,8 @@
-package com.teeny.wms.page.common.activity;
+package com.teeny.wms.page.delivery.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,12 +20,14 @@ import com.teeny.wms.base.BaseFragmentPagerAdapter;
 import com.teeny.wms.base.TableViewPagerActivity;
 import com.teeny.wms.datasouce.net.NetServiceManager;
 import com.teeny.wms.datasouce.net.ResponseSubscriber;
-import com.teeny.wms.datasouce.net.service.InventoryService;
+import com.teeny.wms.datasouce.net.service.ShopDeliveryService;
 import com.teeny.wms.model.EmptyEntity;
-import com.teeny.wms.model.KeyValueEntity;
 import com.teeny.wms.model.ResponseEntity;
-import com.teeny.wms.page.common.fragment.InventoryHeaderFragment;
-import com.teeny.wms.page.common.helper.InventoryHelper;
+import com.teeny.wms.model.request.ShopDeliveryRequestEntity;
+import com.teeny.wms.page.allot.AllotOrderAddActivity;
+import com.teeny.wms.page.delivery.fragment.ShopDeliveryFragment;
+import com.teeny.wms.page.delivery.fragment.ShopDeliveryHeaderFragment;
+import com.teeny.wms.page.delivery.helper.ShopDeliveryHelper;
 import com.teeny.wms.pop.DialogFactory;
 import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.Validator;
@@ -43,34 +46,40 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  *
  * @author zp
  * @version 1.0
- * @see InventoryActivity
- * @since 2017/12/27
+ * @see ShopDeliveryActivity
+ * @since 2018/1/18
  */
 
-public abstract class InventoryActivity extends TableViewPagerActivity implements BaseFragmentPagerAdapter.Callback, ViewPager.OnPageChangeListener {
+public class ShopDeliveryActivity extends TableViewPagerActivity implements BaseFragmentPagerAdapter.Callback, ViewPager.OnPageChangeListener {
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, ShopDeliveryActivity.class);
+        context.startActivity(intent);
+    }
 
     private String[] mTitles;
     private SparseArrayCompat<Fragment> mFragmentHolder = new SparseArrayCompat<>();
 
-    private InventoryHeaderFragment mHeaderFragment;
+    private ShopDeliveryHeaderFragment mHeaderFragment;
 
     private AlertDialog mSubmitDialog;
-    private InventoryHelper mHelper;
+    private ShopDeliveryHelper mHelper;
 
-    private InventoryService mService;
+    private ShopDeliveryService mService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setupHeader();
-        mTitles = getResources().getStringArray(R.array.pd_status);
+        mTitles = getResources().getStringArray(R.array.delivery);
         setupViewPager(new BaseFragmentPagerAdapter(getSupportFragmentManager(), this), this);
 
         registerEventBus();
 
         mSubmitDialog = DialogFactory.createAlertDialog(this, getString(R.string.prompt_complete_all), this::onSubmit);
-        mService = NetServiceManager.getInstance().getService(InventoryService.class);
+        mService = NetServiceManager.getInstance().getService(ShopDeliveryService.class);
     }
 
     @Override
@@ -91,6 +100,9 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
     }
 
     private void complete() {
+        if (mHelper == null) {
+            return;
+        }
         List<Integer> ids = mHelper.getAchievableIds();
         if (Validator.isEmpty(ids)) {
             Toaster.showToast("没有可以完成的商品.");
@@ -113,7 +125,14 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
 
     private void submit() {
         List<Integer> ids = mHelper.getAchievableIds();
-        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.complete(ids);
+        if (Validator.isEmpty(ids)) {
+            Toaster.showToast("没有可完成数据");
+            return;
+        }
+        ShopDeliveryRequestEntity entity = new ShopDeliveryRequestEntity();
+        entity.setId(mHelper.getBillId());
+        entity.setIds(ids);
+        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.complete(entity);
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override
             public void doNext(EmptyEntity data) {
@@ -127,34 +146,6 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.add:
-                if (mHeaderFragment == null || mHeaderFragment.getSpinner() == null) {
-                    return false;
-                }
-                Object object = mHeaderFragment.getSpinner().getSelectedItem();
-                if (object == null) {
-                    Toaster.showToast("请先选择盘点类型.");
-                    return false;
-                }
-                int key = ((KeyValueEntity) object).getKey();
-                startAdd(this, key, mHeaderFragment.getLocationCode());
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    protected abstract void startAdd(Context context, int key, String locationCode);
-
     private void setupHeader() {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
@@ -165,7 +156,9 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
         ft.commitAllowingStateLoss();
     }
 
-    protected abstract InventoryHeaderFragment createHeaderFragment();
+    private ShopDeliveryHeaderFragment createHeaderFragment() {
+        return ShopDeliveryHeaderFragment.newInstance();
+    }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -176,7 +169,7 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
     public void onPageSelected(int position) {
         if (mHelper != null) {
             setCountValue(mHelper.getNumber(position));
-        }else {
+        } else {
             Logger.e("mHelper == null");
         }
     }
@@ -196,7 +189,9 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
         return fragment;
     }
 
-    protected abstract Fragment createFragment(int position);
+    protected Fragment createFragment(int position) {
+        return ShopDeliveryFragment.newInstance(position);
+    }
 
     @Override
     public int getCount() {
@@ -209,8 +204,8 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onNumberChanged(InventoryHelper.NumberObserver observer) {
-        mHelper = observer.getHelper();
+    public void onNumberChanged(ShopDeliveryHelper helper) {
+        mHelper = helper;
         setCountValue(mHelper.getNumber(getCurrentItem()));
     }
 }

@@ -12,6 +12,7 @@
         <item>复盘</item>
         <item>条码采集</item>
         <item>新增调拨单</item>
+        <item>门店收货</item>
     </string-array>
 
     <string-array name="sku_title">
@@ -77,5 +78,10 @@
     <string-array name="allot_tab">
         <item>商品查询</item>
         <item>已选商品</item>
+    </string-array>
+
+    <string-array name="delivery">
+        <item>待收货</item>
+        <item>已收货</item>
     </string-array>
 </resources>

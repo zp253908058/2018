@@ -106,7 +106,7 @@ public class AllotGoodsQueryFragment extends BaseFragment implements RecyclerVie
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override
             public void doNext(EmptyEntity data) {
-                mHelper.addSelectedItem(entity);
+                mEventBus.post(new AllotGoodsSelectedFragment.SelectedFlag());
             }
 
             @Override

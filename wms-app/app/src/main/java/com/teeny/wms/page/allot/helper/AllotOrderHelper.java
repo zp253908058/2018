@@ -19,11 +19,9 @@ import java.util.List;
 public class AllotOrderHelper {
 
     private List<AllotGoodsEntity> mItems;
-    private List<AllotGoodsEntity> mSelectedItems;
     private EventBus mEventBus;
 
     public AllotOrderHelper() {
-        mSelectedItems = new ArrayList<>();
         mEventBus = EventBus.getDefault();
     }
 
@@ -40,14 +38,6 @@ public class AllotOrderHelper {
             mItems = new ArrayList<>();
         }
         notifyChanged();
-    }
-
-    public void addSelectedItem(AllotGoodsEntity entity){
-
-    }
-
-    public void setSelectedItems(List<AllotGoodsEntity> selectedItems) {
-        mSelectedItems = selectedItems;
     }
 
     public List<AllotGoodsEntity> getSelectedItems() {

@@ -57,6 +57,7 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
 
     private EditText mGoodsTextView;
     private EditText mLocationTextView;
+    private EditText mFocusView;
 
     private BarcodeGoodsAdapter mAdapter;
 
@@ -72,7 +73,11 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
     }
 
     private void handleResult(String result) {
-        mLocationTextView.setText(result);
+        if (mFocusView != null) {
+            mFocusView.setText(result);
+        } else {
+            Toaster.showToast("当前没有焦点.");
+        }
     }
 
     @Override
@@ -84,8 +89,10 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
     private void initView() {
         mGoodsTextView = (EditText) findViewById(R.id.barcode_collect_goods);
         mGoodsTextView.setOnEditorActionListener(this::onEditorAction);
+        mGoodsTextView.setOnFocusChangeListener(this::onFocusChanged);
         mLocationTextView = (EditText) findViewById(R.id.barcode_collect_allocation);
         mLocationTextView.setOnEditorActionListener(this::onEditorAction);
+        mGoodsTextView.setOnFocusChangeListener(this::onFocusChanged);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new BarcodeGoodsAdapter(null);
@@ -103,6 +110,12 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(this.getContext(), this));
 
         mService = NetServiceManager.getInstance().getService(BarcodeService.class);
+    }
+
+    private void onFocusChanged(View view, boolean hasFocus) {
+        if (hasFocus) {
+            mFocusView = (EditText) view;
+        }
     }
 
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

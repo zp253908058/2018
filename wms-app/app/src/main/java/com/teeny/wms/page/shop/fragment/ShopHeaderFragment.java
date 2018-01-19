@@ -3,8 +3,6 @@ package com.teeny.wms.page.shop.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.teeny.wms.datasouce.net.NetServiceManager;
-import com.teeny.wms.datasouce.net.service.ShopService;
 import com.teeny.wms.page.common.fragment.InventoryHeaderFragment;
 import com.teeny.wms.page.common.helper.InventoryHelper;
 import com.teeny.wms.page.shop.helper.ShopFirstHelper;

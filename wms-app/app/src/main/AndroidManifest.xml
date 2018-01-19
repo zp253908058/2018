@@ -34,6 +34,7 @@
             android:name=".page.login.LoginActivity"
             android:exported="false"
             android:label="@string/text_login"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
@@ -283,6 +284,26 @@
             android:label="@string/text_allot_order_add_detail"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".page.allot.AllotOrderLocationAddActivity"
+            android:exported="false"
+            android:label="@string/text_location_add"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity android:name=".page.delivery.activity.ShopDeliveryActivity"
+            android:exported="false"
+            android:label="@string/text_shop_delivery"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".page.delivery.activity.ShopDeliveryEditActivity"
+            android:exported="false"
+            android:label="@string/text_shop_delivery_edit"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <service
             android:name=".service.PollingService"

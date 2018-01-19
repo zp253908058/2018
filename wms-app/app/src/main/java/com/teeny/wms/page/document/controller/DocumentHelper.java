@@ -47,7 +47,7 @@ public class DocumentHelper {
         synchronized (mLock) {
             mEntity = entity;
             if (mEntity == null) {
-                throw new NullPointerException("entity == null.");
+                mEntity = new DocumentResponseEntity();
             }
             notifyChanged();
         }
@@ -59,24 +59,36 @@ public class DocumentHelper {
 
     public int getAcceptanceCount() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return 0;
+            }
             return CollectionsUtils.sizeOf(mEntity.getAcceptanceList());
         }
     }
 
     public int getPutawayCount() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return 0;
+            }
             return CollectionsUtils.sizeOf(mEntity.getPutawayList());
         }
     }
 
     public int getAllotCount() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return 0;
+            }
             return CollectionsUtils.sizeOf(mEntity.getAllotList());
         }
     }
 
     public int getReviewCount() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return 0;
+            }
             return CollectionsUtils.sizeOf(mEntity.getReviewList());
         }
     }
@@ -100,6 +112,9 @@ public class DocumentHelper {
 
     private List<DocumentEntity> getAll() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return new ArrayList<>();
+            }
             ArrayList<DocumentEntity> result = new ArrayList<>();
             if (Validator.isNotEmpty(mEntity.getAcceptanceList())) {
                 result.addAll(mEntity.getAcceptanceList());
@@ -120,24 +135,36 @@ public class DocumentHelper {
 
     private List<DocumentEntity> getAcceptanceList() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return new ArrayList<>();
+            }
             return mEntity.getAcceptanceList();
         }
     }
 
     private List<DocumentEntity> getPutawayList() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return new ArrayList<>();
+            }
             return mEntity.getPutawayList();
         }
     }
 
     private List<DocumentEntity> getAllotList() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return new ArrayList<>();
+            }
             return mEntity.getAllotList();
         }
     }
 
     private List<DocumentEntity> getReviewList() {
         synchronized (mLock) {
+            if (mEntity == null){
+                return new ArrayList<>();
+            }
             return mEntity.getReviewList();
         }
     }

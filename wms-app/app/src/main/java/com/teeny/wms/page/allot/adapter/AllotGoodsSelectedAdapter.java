@@ -36,11 +36,6 @@ public class AllotGoodsSelectedAdapter extends RecyclerAdapter<AllotGoodsEntity>
     }
 
     @Override
-    public int getItemCount() {
-        return 20;
-    }
-
-    @Override
     protected void onBindViewHolder(RecyclerViewHolder holder, int position, AllotGoodsEntity item) {
 
         KeyValueTextView export = holder.get(R.id.allot_goods_selected_export_location);
@@ -54,15 +49,15 @@ public class AllotGoodsSelectedAdapter extends RecyclerAdapter<AllotGoodsEntity>
         KeyValueTextView manufacturer = holder.get(R.id.allot_goods_selected_manufacturer);
 
         if (Validator.isNotNull(item)) {
-//            export.setValue(item.getExportName());
-//            importLocation.setValue(item.getImportName());
-//            name.setValue(item.getGoodsName());
-//            lot.setValue(item.getLotNo());
-//            specification.setValue(item.getSpecification());
-//            productionDate.setValue(item.getProductDate());
-//            validityDate.setValue(item.getValidateDate());
-//            amount.setValue(String.valueOf(item.getAmount()));
-//            manufacturer.setValue(item.getManufacturer());
+            export.setValue(item.getExportLocation());
+            importLocation.setValue(item.getImportLocation());
+            name.setValue(item.getGoodsName());
+            lot.setValue(item.getLotNo());
+            specification.setValue(item.getSpecification());
+            productionDate.setValue(item.getProductionDate());
+            validityDate.setValue(item.getValidityDate());
+            amount.setValue(String.valueOf(item.getAmount()));
+            manufacturer.setValue(item.getManufacturer());
         }
     }
 }

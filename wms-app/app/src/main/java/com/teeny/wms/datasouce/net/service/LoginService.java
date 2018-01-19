@@ -47,7 +47,7 @@ public interface LoginService {
      */
     @GET("/wms/oauth/token")
     @Headers("Content-Type: application/json;charset=UTF-8")
-    Flowable<UserEntity> login(@Query(value = "username") String username, @Query("password") String password, @Query("client_id") String clientId, @Query("grant_type") String grantType);
+    Flowable<UserEntity> login(@Query(value = "username") String username, @Query("password") String password, @Query("grant_type") String grantType, @Query("scope") String scope, @Query("client_id") String clientId, @Query("client_secret") String secret);
 
     /**
      * 登出接口

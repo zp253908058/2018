@@ -1,5 +1,6 @@
 package com.teeny.wms.datasouce.net;
 
+import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.Converter;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.util.log.Logger;
@@ -51,6 +52,10 @@ public class NetServiceManager {
     }
 
     public void initialize(String host, String port) {
+        if (Validator.isEmpty(host)){
+            Toaster.showToast("服务器地址为空.");
+            return;
+        }
         synchronized (mLock) {
             Retrofit.Builder builder = new Retrofit.Builder();
             OkHttpClient client = createOkHttpClient();
@@ -80,7 +85,7 @@ public class NetServiceManager {
     private OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.retryOnConnectionFailure(true);
-        builder.authenticator(new TokenAuthenticator());
+//        builder.authenticator(new TokenAuthenticator());
         builder.connectTimeout(TIMEOUT, TimeUnit.SECONDS);
         mHeaderInterceptor = new HeaderInterceptor();
         builder.addInterceptor(mHeaderInterceptor);

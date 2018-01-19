@@ -24,6 +24,7 @@ import com.teeny.wms.page.common.adapter.GoodsChoiceAdapter;
 import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.util.WindowUtils;
+import com.teeny.wms.util.log.Logger;
 import com.teeny.wms.widget.KeyValueEditView;
 
 import java.util.List;
@@ -97,6 +98,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
     private void initView() {
         Intent intent = getIntent();
         mId = intent.getIntExtra(KEY_ID, 0);
+
         mOldBarcode = intent.getStringExtra(KEY_OLD_BARCODE);
 
         mBarcodeView = (AppCompatEditText) findViewById(R.id.barcode_add_barcode);
@@ -127,6 +129,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
         mApprovalNumberView = (KeyValueEditView) findViewById(R.id.barcode_add_approval_number);
 
         mService = NetServiceManager.getInstance().getService(BarcodeService.class);
+
 
         if (mId > 0) {
             obtainData();

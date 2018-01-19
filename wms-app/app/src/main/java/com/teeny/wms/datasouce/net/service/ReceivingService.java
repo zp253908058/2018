@@ -28,7 +28,7 @@ import retrofit2.http.Query;
 
 public interface ReceivingService {
 
-    @GET("acceptance/unit")
+    @GET("receiving/unit")
     Flowable<ResponseEntity<List<KeyValueEntity>>> getUnitList();
 
     /**
@@ -37,7 +37,7 @@ public interface ReceivingService {
      * @param id 单位id
      * @return List<ReceivingEntity>
      */
-    @GET("acceptance/detail/{id}")
+    @GET("receiving/detail/{id}")
     Flowable<ResponseEntity<List<ReceivingEntity>>> getDetail(@Path("id") int id);
 
     /**
@@ -46,12 +46,12 @@ public interface ReceivingService {
      * @param billNo 单位id
      * @return List<ReceivingEntity>
      */
-    @GET("acceptance/detail")
+    @GET("receiving/detail")
     Flowable<ResponseEntity<List<ReceivingEntity>>> getDetailOrderNo(@Query("orderNo") String billNo);
 
-    @GET("acceptance/lots/{id}")
+    @GET("receiving/lots/{id}")
     Flowable<ResponseEntity<List<ReceivingLotEntity>>> getLotList(@Path("id") int id);
 
-    @POST("acceptance/complete")
+    @POST("receiving/complete")
     Flowable<ResponseEntity<EmptyEntity>> complete(@Body ReceivingRequestEntity entity);
 }

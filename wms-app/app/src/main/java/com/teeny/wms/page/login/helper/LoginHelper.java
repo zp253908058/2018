@@ -23,6 +23,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class LoginHelper {
 
+    private static final String CLIENT_ID = "wms";
+    private static final String SCOPES = "secret";
+    private static final String GRANT_TYPE = "password";
+    private static final String CLIENT_SECRET = "secret";
+
     private LoginService mLoginService;
 
     public LoginHelper() {
@@ -31,11 +36,11 @@ public class LoginHelper {
 
     public void login(String dbName, String username, String password, FlowableSubscriber<UserEntity> subscriber) {
         synchronizeLoginService();
-        Flowable<UserEntity> flowable = mLoginService.login(username + "@" + dbName, password, "wms", "password");
+        Flowable<UserEntity> flowable = mLoginService.login(username + "@" + dbName, password, GRANT_TYPE, SCOPES, CLIENT_ID, CLIENT_SECRET);
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);
     }
 
-    public void getAccountSets(FlowableSubscriber<ResponseEntity<List<AccountSetEntity>>> subscriber){
+    public void getAccountSets(FlowableSubscriber<ResponseEntity<List<AccountSetEntity>>> subscriber) {
         synchronizeLoginService();
         Flowable<ResponseEntity<List<AccountSetEntity>>> flowable = mLoginService.getAccountSets();
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(subscriber);

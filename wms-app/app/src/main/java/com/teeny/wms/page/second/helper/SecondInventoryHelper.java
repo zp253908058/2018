@@ -1,16 +1,6 @@
 package com.teeny.wms.page.second.helper;
 
-import android.support.v4.util.SparseArrayCompat;
-
-import com.teeny.wms.model.SecondInventoryGoodsEntity;
 import com.teeny.wms.page.common.helper.InventoryHelper;
-import com.teeny.wms.util.ObjectUtils;
-import com.teeny.wms.util.Validator;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class description:

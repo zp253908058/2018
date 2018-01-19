@@ -168,5 +168,12 @@
     <string name="text_goods_search">商品搜索</string>
     <string name="text_dosage_form">剂型</string>
     <string name="text_approval_number">批准文号</string>
+    <string name="text_current_location">当前货位</string>
+    <string name="text_current_inventory">当前库存</string>
+    <string name="text_shop_delivery">门店收货</string>
+    <string name="text_temporary">暂存</string>
+    <string name="text_receiving_number">收货数量</string>
+    <string name="text_delivery_number">配送数量</string>
+    <string name="text_shop_delivery_edit">门店收货编辑</string>
 
 </resources>

@@ -14,15 +14,23 @@ import android.widget.TextView;
 import com.teeny.wms.R;
 import com.teeny.wms.app.ScannerHelper;
 import com.teeny.wms.base.BaseFragment;
+import com.teeny.wms.datasouce.local.Preferences;
+import com.teeny.wms.datasouce.local.SharedPreferencesManager;
 import com.teeny.wms.datasouce.net.NetServiceManager;
 import com.teeny.wms.datasouce.net.ResponseSubscriber;
 import com.teeny.wms.datasouce.net.service.AllotOrderService;
 import com.teeny.wms.model.AllotGoodsEntity;
 import com.teeny.wms.model.ResponseEntity;
+import com.teeny.wms.page.allot.AllotOrderFilterActivity;
 import com.teeny.wms.page.allot.helper.AllotOrderHelper;
 import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.util.WindowUtils;
+import com.teeny.wms.util.log.Logger;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -52,13 +60,29 @@ public class AllotOrderHeaderFragment extends BaseFragment {
     private AllotOrderService mService;
     private AllotOrderHelper mHelper;
 
+    private int mWarehouseId = 0;
+    private int mRepositoryId = 0;
+    private int mAreaId = 0;
+
+    private boolean mChanged;
+
+    private EventBus mEventBus;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mEventBus = EventBus.getDefault();
+        mEventBus.register(this);
         mScannerHelper = ScannerHelper.getInstance();
         mScannerHelper.openScanner(getContext(), this::handleResult);
 
         mService = NetServiceManager.getInstance().getService(AllotOrderService.class);
+
+        Preferences preferences = SharedPreferencesManager.getInstance().getAllotOrderFilterPreferences();
+        mWarehouseId = preferences.getInt(AllotOrderFilterActivity.KEY_WAREHOUSE_ID, 0);
+        mRepositoryId = preferences.getInt(AllotOrderFilterActivity.KEY_REPOSITORY_ID, 0);
+        mAreaId = preferences.getInt(AllotOrderFilterActivity.KEY_AREA_ID, 0);
+
         mHelper = new AllotOrderHelper();
     }
 
@@ -72,6 +96,7 @@ public class AllotOrderHeaderFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
+        mEventBus.unregister(this);
         super.onDestroy();
         mScannerHelper.unregisterReceiver(getContext());
     }
@@ -112,11 +137,14 @@ public class AllotOrderHeaderFragment extends BaseFragment {
     private void search() {
         String location = mLocationView.getText().toString();
         String goods = mGoodsView.getText().toString();
-        if (Validator.isEmpty(location) && Validator.isEmpty(goods)){
+        if (Validator.isEmpty(location) && Validator.isEmpty(goods)) {
+            if (mChanged) {
+                return;
+            }
             Toaster.showToast("货位和商品不能同时为空.");
             return;
         }
-        Flowable<ResponseEntity<List<AllotGoodsEntity>>> flowable = mService.getAllotGoodsList(location, goods);
+        Flowable<ResponseEntity<List<AllotGoodsEntity>>> flowable = mService.getAllotGoodsList(location, goods, mWarehouseId, mRepositoryId, mAreaId);
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<List<AllotGoodsEntity>>(this) {
             @Override
             public void doNext(List<AllotGoodsEntity> data) {
@@ -125,8 +153,24 @@ public class AllotOrderHeaderFragment extends BaseFragment {
 
             @Override
             public void doComplete() {
-
+                mChanged = false;
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mChanged) {
+            search();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onFiltered(AllotOrderFilterActivity.FilterFlag flag) {
+        mWarehouseId = flag.getWarehouseId();
+        mRepositoryId = flag.getRepositoryId();
+        mAreaId = flag.getAreaId();
+        mChanged = true;
     }
 }

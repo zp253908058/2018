@@ -30,7 +30,7 @@
 
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/barcode_collect_goods"
-                style="@style/TextViewStyle.Dark.RightDrawable"
+                style="@style/TextViewStyle.Dark.RightDrawable.Scan"
                 android:hint="@string/text_goods"
                 android:imeOptions="actionSearch" />
 

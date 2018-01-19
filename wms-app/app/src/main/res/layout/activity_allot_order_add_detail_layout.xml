@@ -40,7 +40,7 @@
                         android:text="@string/text_goods_name" />
 
                     <TextView
-                        android:id="@+id/receiving_acceptance_order_detail_name"
+                        android:id="@+id/allot_order_add_detail_name"
                         style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -60,7 +60,7 @@
                         android:text="@string/text_specification" />
 
                     <TextView
-                        android:id="@+id/receiving_acceptance_order_detail_specification"
+                        android:id="@+id/allot_order_add_detail_specification"
                         style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -80,7 +80,7 @@
                         android:text="@string/text_manufacturer" />
 
                     <TextView
-                        android:id="@+id/receiving_acceptance_order_detail_manufacturer"
+                        android:id="@+id/allot_order_add_detail_manufacturer"
                         style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -97,10 +97,91 @@
                         style="@style/TextViewStyle.Grey"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/text_make_area" />
+                        android:text="@string/text_unit" />
 
                     <TextView
-                        android:id="@+id/receiving_acceptance_order_detail_make_area"
+                        android:id="@+id/allot_order_add_detail_unit"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_lot_number" />
+
+                    <TextView
+                        android:id="@+id/allot_order_add_detail_lot"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_validity" />
+
+                    <TextView
+                        android:id="@+id/allot_order_add_detail_validity"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_current_location" />
+
+                    <TextView
+                        android:id="@+id/allot_order_add_detail_current_location"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_current_inventory" />
+
+                    <!--库存-->
+                    <TextView
+                        android:id="@+id/allot_order_add_detail_current_inventory"
                         style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"

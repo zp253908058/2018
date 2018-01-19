@@ -135,7 +135,6 @@ public abstract class InventoryHelper {
     }
 
     public void reverseStatus(int id) {
-        Logger.e(String.valueOf(id));
         List<InventoryGoodsEntity> list = getDataByType(0);
         if (Validator.isEmpty(list)) {
             return;
@@ -176,7 +175,6 @@ public abstract class InventoryHelper {
     }
 
     public void clear() {
-        Logger.e("sssssssssssssssssssssssssssssssssssssssssss");
         mDataList = new ArrayList<>();
         mOriginalData = null;
         mFinishedNumber = 0;

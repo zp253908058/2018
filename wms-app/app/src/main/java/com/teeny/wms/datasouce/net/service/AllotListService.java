@@ -38,7 +38,7 @@ public interface AllotListService {
      * @param saId      库区id
      * @return List<AllotListEntity>
      */
-    @GET("transfer/list")
+    @GET("allot/list")
     Flowable<ResponseEntity<List<AllotListEntity>>> getList(@Query("billCode") String billCode, @Query("goodsCode") String goodsCode, @Query("sId") int sId, @Query("saId") int saId);
 
 
@@ -47,7 +47,7 @@ public interface AllotListService {
      *
      * @return List<KeyValueEntity>
      */
-    @GET("transfer/warehouseList")
+    @GET("allot/warehouseList")
     Flowable<ResponseEntity<List<KeyValueEntity>>> getWarehouseList();
 
     /**
@@ -55,7 +55,7 @@ public interface AllotListService {
      *
      * @return List<KeyValueEntity>
      */
-    @GET("transfer/saList/{id}")
+    @GET("allot/saList/{id}")
     Flowable<ResponseEntity<List<KeyValueEntity>>> getSaList(@Path("id") int warehouseId);
 
     /**
@@ -63,7 +63,7 @@ public interface AllotListService {
      *
      * @return null
      */
-    @POST("transfer/updateAll")
+    @POST("allot/updateAll")
     Flowable<ResponseEntity<EmptyEntity>> complete(@Body List<Integer> ids);
 
     /**
@@ -71,7 +71,7 @@ public interface AllotListService {
      *
      * @return null
      */
-    @POST("transfer/updateOne")
+    @POST("allot/updateOne")
     @FormUrlEncoded
     Flowable<ResponseEntity<EmptyEntity>> single(@Field("id") int id);
 
@@ -80,7 +80,7 @@ public interface AllotListService {
      *
      * @return null
      */
-    @POST("transfer/update")
+    @POST("allot/update")
     Flowable<ResponseEntity<EmptyEntity>> update(@Body AllotListRequestEntity entity);
 
     /**
@@ -88,7 +88,7 @@ public interface AllotListService {
      *
      * @return List<AllocationEntity>
      */
-    @GET("transfer/getLocations/{id}")
+    @GET("allot/getLocations/{id}")
     Flowable<ResponseEntity<List<AllocationEntity>>> getLocations(@Path("id") int id);
 
     /**
@@ -96,7 +96,7 @@ public interface AllotListService {
      *
      * @return List<KeyValueEntity>
      */
-    @GET("transfer/billList")
+    @GET("allot/billList")
     Flowable<ResponseEntity<List<KeyValueEntity>>> getDocumentList(@Query("sId") int sId, @Query("saId") int saId);
 
     /**
@@ -104,6 +104,6 @@ public interface AllotListService {
      *
      * @return List<KeyValueEntity>
      */
-    @GET("transfer/goodsCode")
+    @GET("allot/goodsCode")
     Flowable<ResponseEntity<List<KeyValueEntity>>> getGoodsList(@Query("sId") int sId, @Query("saId") int saId);
 }

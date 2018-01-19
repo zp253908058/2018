@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:divider="@drawable/shape_divider"
+    android:dividerPadding="@dimen/dp_16"
+    android:orientation="vertical"
+    android:showDividers="middle">
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        android:background="@color/divider_color" />
+
+    <android.support.v7.widget.AppCompatAutoCompleteTextView
+        android:id="@+id/shop_delivery_bill_number"
+        style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        android:completionThreshold="0"
+        android:dropDownWidth="match_parent"
+        android:gravity="center_vertical"
+        android:hint="@string/text_bill_number"
+        android:imeOptions="actionDone"
+        android:lines="1"
+        android:paddingEnd="@dimen/dp_16"
+        android:paddingLeft="@dimen/dp_16"
+        android:paddingRight="@dimen/dp_16"
+        android:paddingStart="@dimen/dp_16"
+        android:singleLine="true"
+        android:theme="@style/AutoCompleteTextView" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/shop_delivery_goods"
+        style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+        android:hint="@string/text_goods"
+        android:imeOptions="actionDone"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_16"
+        android:background="@color/divider_color" />
+
+</LinearLayout>
