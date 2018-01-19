@@ -13,6 +13,8 @@ import org.apache.ibatis.type.Alias;
 @Alias("AllotGoodsEntity")
 public class AllotGoodsEntity {
     private int id;
+    private int detailId;           //调拨单明细id
+    private int billId;             //调拨单据id
     private int goodsId;
     private String goodsName;
     private String lotNo;
@@ -28,12 +30,30 @@ public class AllotGoodsEntity {
     private String exportLocation;
     private String importLocation;
 
+    private float currentInventory;   //当前库存
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getDetailId() {
+        return detailId;
+    }
+
+    public void setDetailId(int detailId) {
+        this.detailId = detailId;
+    }
+
+    public int getBillId() {
+        return billId;
+    }
+
+    public void setBillId(int billId) {
+        this.billId = billId;
     }
 
     public int getGoodsId() {
@@ -138,5 +158,13 @@ public class AllotGoodsEntity {
 
     public void setImportLocation(String importLocation) {
         this.importLocation = importLocation;
+    }
+
+    public float getCurrentInventory() {
+        return currentInventory;
+    }
+
+    public void setCurrentInventory(float currentInventory) {
+        this.currentInventory = currentInventory;
     }
 }

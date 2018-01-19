@@ -7,34 +7,34 @@
 
     <select id="getInventoryList" resultType="InventoryGoodsEntity">
         SELECT
-        d.smb_id AS id,
-        d.original_id AS originalId,
-        d.bill_id AS billId,
-        d.p_id AS goodsId,
-        p.name AS goodsName,
-        l.loc_code AS location,
-        d.EligibleQty AS countInBill,
-        d.pdQty AS inventoryCount,
-        p.unit1Name AS unit,
-        p.standard AS specification,
-        c.name AS manufacturer,
-        d.DealStates AS status,
-        l.loc_code AS locationCode,
-        p.barcode AS goodsCode,
-        d.Batchno AS lotNo,
-        CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
-        CONVERT(VARCHAR(100), d.MakeDate, 23) AS productionDate,
-        isnull(sa.name, '') AS repositoryName,
-        isnull(a.name, '') AS areaName,
-        p.pinyin AS pinyin
+            d.smb_id                               AS id,
+            d.original_id                          AS originalId,
+            d.bill_id                              AS billId,
+            d.p_id                                 AS goodsId,
+            p.name                                 AS goodsName,
+            l.loc_code                             AS location,
+            d.EligibleQty                          AS countInBill,
+            d.pdQty                                AS inventoryCount,
+            p.unit1Name                            AS unit,
+            p.standard                             AS specification,
+            c.name                                 AS manufacturer,
+            d.DealStates                           AS status,
+            l.loc_code                             AS locationCode,
+            p.barcode                              AS goodsCode,
+            d.Batchno                              AS lotNo,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
+            CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
+            isnull(sa.name, '')                    AS repositoryName,
+            isnull(a.name, '')                     AS areaName,
+            p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_pdBill_D d
-        LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
-        LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
-        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
-        LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = l.sc_id
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+            LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
+            LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = l.sc_id
         WHERE
-        d.bill_id = #{id}
+            d.bill_id = #{id}
         <if test="isMerge">
             AND d.smb_id = (SELECT min(smb_id) AS id FROM ${account}.dbo.pda_pdBill_D WHERE d.original_id = original_id)
         </if>

@@ -1,9 +1,11 @@
 package com.teeny.wms.web.repository;
 
 import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.AllotEntity;
 import com.teeny.wms.web.model.response.AllotGoodsEntity;
+import com.teeny.wms.web.model.response.AllotLocationEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -56,5 +58,9 @@ public interface AllotMapper {
 
     void generateAllotOrder(@Param("account") String account, @Param("id") int id, @Param("userId") int userId);
 
-    List<AllotGoodsEntity> getTempleGoodsList(@Param("account")String account, @Param("userId")int userId);
+    List<AllotGoodsEntity> getTempleGoodsList(@Param("account") String account, @Param("userId") int userId);
+
+    void completeAllot(@Param("account") String account, @Param("id") int id, @Param("billId") int billId, @Param("list") List<AllotLocationEntity> list);
+
+    List<AllotLocationEntity> getLocationList(@Param("account") String account, @Param("id") int id);
 }

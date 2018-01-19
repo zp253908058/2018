@@ -34,6 +34,9 @@ public class ReceivingItemEntity {
     private String zhUnit;
     private String lhUnit;
 
+    private int goodsId;
+    private String pinyin;
+
     public int getId() {
         return id;
     }
@@ -176,5 +179,21 @@ public class ReceivingItemEntity {
 
     public void setLhUnit(String lhUnit) {
         this.lhUnit = lhUnit;
+    }
+
+    public int getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(int goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

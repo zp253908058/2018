@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.ShopDeliveryMapper">
+
+    <resultMap id="keyValue" type="keyValue">
+        <result column="id" property="key" javaType="int"/>
+        <result column="name" property="value"/>
+    </resultMap>
+
+    <select id="getOrderList" resultMap="keyValue">
+        SELECT
+            bill_id AS id,
+            barcode AS name
+        FROM ${account}.dbo.pda_ShopRecBarcode c
+            INNER JOIN ${account}.dbo.pda_ShopRecBill b ON b.billid = c.bill_id
+        WHERE b.billstates = 10
+    </select>
+
+    <select id="getDeliveryGoodsList" resultType="ShopDeliveryGoodsEntity">
+        SELECT
+            d.smb_id                               AS id,
+            d.bill_id                              AS billId,
+            p.name                                 AS goodsName,
+            p.barcode                              AS goodsCode,
+            p.pinyin                               AS pinyin,
+            p.standard                             AS specification,
+            p.unit1Name                            AS unit,
+            d.Yqty                                 AS deliveryNumber,
+            d.EligibleQty                          AS receivingNumber,
+            d.Batchno                              AS lotNumber,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
+            p.Factory                              AS manufacturer,
+            d.DealStates                           AS state
+        FROM ${account}.dbo.pda_RecShopBill_D d
+            INNER JOIN ${account}.dbo.pda_ShopRecBill b ON b.billid = d.bill_id
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+        WHERE b.billstates = 10 AND d.bill_id = #{id}
+    </select>
+
+    <update id="complete">
+        UPDATE ${account}.dbo.pda_RecShopBill_D SET EligibleQty = Yqty , DealStates = 1, wctime = getdate(), loginid = #{userId} WHERE smb_id IN
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+        <selectKey resultType="int" keyProperty="count" order="AFTER">
+            SELECT count(d.DealStates) FROM ${account}.dbo.pda_RecShopBill_D d WHERE d.DealStates = 0 AND d.bill_id = #{billId}
+        </selectKey>
+        <if test="count == 0">
+            UPDATE ${account}.dbo.pda_ShopRecBill SET billstates = 13, rec_eid = 0 WHERE billid = #{billId}
+        </if>
+    </update>
+
+    <update id="single">
+        UPDATE ${account}.dbo.pda_RecShopBill_D SET EligibleQty = #{amount}, remark = #{remark}, DealStates = 1, wctime = getdate(), loginid = #{userId} WHERE smb_id = #{id}
+
+        <selectKey resultType="int" keyProperty="count" order="AFTER">
+            SELECT count(d.DealStates) FROM ${account}.dbo.pda_RecShopBill_D d WHERE d.DealStates = 0 AND d.bill_id = #{billId}
+        </selectKey>
+        <if test="count == 0">
+            UPDATE ${account}.dbo.pda_ShopRecBill SET billstates = 13, rec_eid = 0 WHERE billid = #{billId}
+        </if>
+    </update>
+</mapper>

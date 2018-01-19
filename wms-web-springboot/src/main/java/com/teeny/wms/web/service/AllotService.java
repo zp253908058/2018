@@ -2,9 +2,11 @@ package com.teeny.wms.web.service;
 
 import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
+import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.AllotEntity;
 import com.teeny.wms.web.model.response.AllotGoodsEntity;
+import com.teeny.wms.web.model.response.AllotLocationEntity;
 
 import java.util.List;
 
@@ -37,4 +39,8 @@ public interface AllotService {
     void add(String account, int id, int userId, String serial);
 
     List<AllotGoodsEntity> getTempleGoodsList(String account, int userId);
+
+    void completeAllot(String account, AllotLocationRequestEntity entity);
+
+    List<AllotLocationEntity> getLocationList(String account, int id);
 }

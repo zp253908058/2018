@@ -23,4 +23,10 @@ public interface CommonService {
     List<StringMapEntity> getHistoryLocation(String account, int pId);
 
     DocumentResponseEntity getDocumentList(String account, int sId);
+
+    List<KeyValueEntity> obtainWarehouseList(String account);
+
+    List<KeyValueEntity> obtainRepositoryList(String account, int warehouseId);
+
+    List<KeyValueEntity> obtainAreaList(String account, int repositoryId);
 }

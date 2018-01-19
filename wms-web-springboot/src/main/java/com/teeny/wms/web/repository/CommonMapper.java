@@ -36,4 +36,10 @@ public interface CommonMapper {
 
     @Select("SELECT TOP 1 l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code=#{locationCode}")
     Integer getLocationIdByCode(@Param("locationCode") String locationCode,@Param("account") String account);
+
+    List<KeyValueEntity> obtainWarehouseList(@Param("account") String account);
+
+    List<KeyValueEntity> obtainRepositoryList(@Param("account") String account, @Param("warehouseId") int warehouseId);
+
+    List<KeyValueEntity> obtainAreaList(@Param("account") String account, @Param("repositoryId") int repositoryId);
 }

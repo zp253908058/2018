@@ -9,6 +9,7 @@ import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.response.DocumentResponseEntity;
 import com.teeny.wms.web.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,7 +50,6 @@ public class CommonController {
 
     @GetMapping("/api/home/username")
     public ResponseEntity<String> getUsername(@User UserEntity entity) {
-        System.out.println(entity);
         return new ResponseEntity<>(entity.getUsername());
     }
 
@@ -57,5 +57,38 @@ public class CommonController {
     @GetMapping(value = "/api/common/historyLocation")
     public ResponseEntity<List<StringMapEntity>> getHistoryLocation(@RequestHeader("account") String account, @RequestParam("goodsId") int pId) {
         return new ResponseEntity<>(mCommonService.getHistoryLocation(account, pId));
+    }
+
+    //获取仓库
+    @ResponseBody
+    @RequestMapping(value = "/api/common/warehouseList", method = RequestMethod.GET)
+    public ResponseEntity<List<KeyValueEntity>> getWarehouses(@RequestHeader("account") String account) {
+        return new ResponseEntity<>(mCommonService.obtainWarehouseList(account));
+    }
+
+    /**
+     * 获取库区
+     *
+     * @param id      仓库id
+     * @param account 账套
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/api/common/repositoryList/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<KeyValueEntity>> getRepositoryList(@PathVariable("id") int id, @RequestHeader("account") String account) {
+        return new ResponseEntity<>(mCommonService.obtainRepositoryList(account, id));
+    }
+
+    /**
+     * 获取区域
+     *
+     * @param id      库区id
+     * @param account 账套
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/api/common/areaList/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<KeyValueEntity>> getAreaList(@PathVariable("id") int id, @RequestHeader("account") String account) {
+        return new ResponseEntity<>(mCommonService.obtainAreaList(account, id));
     }
 }

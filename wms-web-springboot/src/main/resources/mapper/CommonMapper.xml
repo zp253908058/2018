@@ -133,4 +133,26 @@
         </if>
         ORDER BY documentDate DESC
     </select>
+
+    <select id="obtainWarehouseList" resultMap="keyValue">
+        SELECT s.s_id AS id, s.name FROM ${account}.dbo.pda_storages s
+    </select>
+
+    <select id="obtainRepositoryList" resultMap="keyValue">
+        SELECT s.sa_id AS id, s.name FROM ${account}.dbo.pda_stockArea s
+        <where>
+            <if test="warehouseId != 0">
+                s.s_id=#{warehouseId}
+            </if>
+        </where>
+    </select>
+
+    <select id="obtainAreaList" resultMap="keyValue">
+        SELECT a.sc_id AS id, a.name FROM ${account}.dbo.pda_Area a
+        <where>
+            <if test="repositoryId != 0">
+                a.sa_id=#{repositoryId}
+            </if>
+        </where>
+    </select>
 </mapper>

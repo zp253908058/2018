@@ -2,6 +2,7 @@ package com.teeny.wms.app.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 
@@ -17,9 +18,14 @@ import java.util.Set;
  * @version 1.0
  * @see AllowedMethodConfig
  * @since 2018/1/17
- */
+// */
 @Configuration
 public class AllowedMethodConfig {
+
+    public AllowedMethodConfig() {
+
+    }
+
     private TokenEndpoint mTokenEndpoint;
 
     @Autowired

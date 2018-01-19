@@ -1,14 +1,16 @@
 package com.teeny.wms.web.controller;
 
 import com.teeny.wms.app.annotation.User;
+import com.teeny.wms.web.model.EmptyEntity;
 import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.ResponseEntity;
-import com.teeny.wms.web.model.EmptyEntity;
 import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
+import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.AllotEntity;
 import com.teeny.wms.web.model.response.AllotGoodsEntity;
+import com.teeny.wms.web.model.response.AllotLocationEntity;
 import com.teeny.wms.web.service.AllotService;
 import com.teeny.wms.web.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,5 +156,16 @@ public class AllotController {
     @GetMapping(value = "getTempleGoodsList")
     public ResponseEntity<List<AllotGoodsEntity>> getTempleGoodsList(@RequestHeader("account") String account, @User UserEntity userEntity) {
         return new ResponseEntity<>(mAllotService.getTempleGoodsList(account, userEntity.getId()));
+    }
+
+    @PostMapping("complete")
+    public ResponseEntity finish(@RequestHeader("account") String account, @RequestBody AllotLocationRequestEntity entity) {
+        mAllotService.completeAllot(account, entity);
+        return new ResponseEntity();
+    }
+
+    @GetMapping("locationList/{id}")
+    public ResponseEntity<List<AllotLocationEntity>> getLocationList(@RequestHeader("account") String account, @PathVariable("id") int id) {
+        return new ResponseEntity<>(mAllotService.getLocationList(account, id));
     }
 }

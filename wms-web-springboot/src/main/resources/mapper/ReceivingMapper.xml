@@ -73,6 +73,7 @@
             d.EligibleQty                          AS quantity,
             c.name                                 AS manufacturer,
             d.Batchno                              AS lotNo,
+            p.p_id                                 AS goodsId,
             p.name                                 AS goodsName,
             p.standard                             AS specification,
             CONVERT(VARCHAR(100), d.Validdate, 23) AS validityDate,
@@ -81,7 +82,8 @@
             d.DealStates                           AS status,
             p.WholeUnitName                        AS zhUnit,
             p.unit1Name                            AS lhUnit,
-            p.WholeRate                            AS rate
+            p.WholeRate                            AS rate,
+            p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_RecBill_D d
             LEFT JOIN ${account}.dbo.pda_RecBill b ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id

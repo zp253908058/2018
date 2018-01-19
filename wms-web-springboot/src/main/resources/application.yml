@@ -24,7 +24,7 @@ spring:
       password: yyt@123
       initial-size: 1
       min-idle: 1
-      max-active: 100
+      max-active: 20
       filters: stat,slf4j
       name: wms
       max-wait: 60000
@@ -42,21 +42,33 @@ mybatis:
   type-aliases-package: com.teeny.wms.web.model
   configuration:
     cache-enabled: false
-    default-executor-type: batch
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     log-prefix: WMS
     multiple-result-sets-enabled: true
     jdbc-type-for-null: varchar
-
 security:
   oauth2:
     client:
       authentication-scheme: header
       access-token-validity-seconds: 43200
       refresh-token-validity-seconds: 43200
-
-
-
+      access-token-uri: /oauth/token
+      authorities: PLATFORM
+      authorized-grant-types: password, refresh_token
+      client-authentication-scheme: header
+      client-id: wms
+      client-secret: secret
+      scope: secret
+      resource-ids: resource_id
+  basic:
+    authorize-mode: role
+    enabled: true
+    path: /api/**
+  headers:
+    cache: true
+    content-type: false
+  sessions: stateless
+debug: false
 
 
 

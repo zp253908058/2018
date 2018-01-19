@@ -54,4 +54,19 @@ public class CommonServiceImpl implements CommonService {
         result.setReviewList(mCommonMapper.getReviewList(account, sId));
         return result;
     }
+
+    @Override
+    public List<KeyValueEntity> obtainWarehouseList(String account) {
+        return mCommonMapper.obtainWarehouseList(account);
+    }
+
+    @Override
+    public List<KeyValueEntity> obtainRepositoryList(String account, int warehouseId) {
+        return mCommonMapper.obtainRepositoryList(account, warehouseId);
+    }
+
+    @Override
+    public List<KeyValueEntity> obtainAreaList(String account, int repositoryId) {
+        return mCommonMapper.obtainAreaList(account, repositoryId);
+    }
 }

@@ -34,7 +34,7 @@ public class UserWrapper implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthorityImpl> authorities = new ArrayList<GrantedAuthorityImpl>();
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
         GrantedAuthorityImpl authority = new GrantedAuthorityImpl();
         authorities.add(authority);
         return authorities;
@@ -68,5 +68,10 @@ public class UserWrapper implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return mUserEntity.toString();
     }
 }

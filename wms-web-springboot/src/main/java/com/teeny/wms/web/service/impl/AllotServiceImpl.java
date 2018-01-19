@@ -4,9 +4,11 @@ import com.teeny.wms.app.exception.InnerException;
 import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
+import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.AllotEntity;
 import com.teeny.wms.web.model.response.AllotGoodsEntity;
+import com.teeny.wms.web.model.response.AllotLocationEntity;
 import com.teeny.wms.web.repository.AllotMapper;
 import com.teeny.wms.web.repository.CommonMapper;
 import com.teeny.wms.web.service.AllotService;
@@ -118,5 +120,15 @@ public class AllotServiceImpl implements AllotService {
     @Override
     public List<AllotGoodsEntity> getTempleGoodsList(String account, int userId) {
         return mAllotMapper.getTempleGoodsList(account, userId);
+    }
+
+    @Override
+    public void completeAllot(String account, AllotLocationRequestEntity entity) {
+        mAllotMapper.completeAllot(account, entity.getId(), entity.getBillId(), entity.getParam());
+    }
+
+    @Override
+    public List<AllotLocationEntity> getLocationList(String account, int id) {
+        return mAllotMapper.getLocationList(account, id);
     }
 }
