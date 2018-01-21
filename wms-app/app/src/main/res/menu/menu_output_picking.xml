@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_turnover_box"
+        android:title="@string/text_turnover_box_add"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/goods_allot"
+        android:title="@string/text_goods_allot"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/inventory_detail"
+        android:title="@string/text_inventory_detail"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/barcode_collect"
+        android:title="@string/text_barcode_collect"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/work_task"
+        android:title="@string/text_work_task"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/document_detail"
+        android:title="@string/text_document_detail"
+        app:showAsAction="never" />
+</menu>

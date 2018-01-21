@@ -11,7 +11,7 @@
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:background">?attr/colorPrimary</item>
-        <item name="navigationIcon">@null</item>
+        <item name="navigationIcon">@drawable/icon_vector_arrow_left</item>
         <item name="elevation">4dp</item>
         <item name="titleTextAppearance">@style/ToolbarTextAppearance.Title</item>
         <item name="subtitleTextAppearance">@style/ToolbarTextAppearance.Subtitle</item>

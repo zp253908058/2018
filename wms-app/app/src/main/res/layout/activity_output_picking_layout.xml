@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/divider_color">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/output_picking_scan"
+                style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:completionThreshold="0"
+                android:dropDownWidth="match_parent"
+                android:hint="@string/text_document_number"
+                android:imeOptions="actionDone"
+                android:theme="@style/AutoCompleteTextView" />
+
+            <com.teeny.wms.widget.ExpandableLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:showDividers="middle"
+                app:expandableViewIndex="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/output_picking_location"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key=""
+                        app:keySize="@dimen/sp_14"
+                        app:separator=""
+                        app:separatorSize="@dimen/sp_14"
+                        app:valueSize="@dimen/sp_14" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/output_picking_progress"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="@string/text_progress"
+                        app:keySize="@dimen/sp_14"
+                        app:separatorSize="@dimen/sp_14"
+                        app:valueSize="@dimen/sp_14" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/output_picking_next_location"
+                        android:layout_width="@dimen/dp_0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:key="NEXT"
+                        app:keySize="@dimen/sp_14"
+                        app:separatorSize="@dimen/sp_14"
+                        app:valueSize="@dimen/sp_14" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:orientation="horizontal">
+
+                        <com.teeny.wms.widget.KeyValueTextView
+                            android:id="@+id/output_picking_warehouse"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:key="@string/text_warehouse"
+                            app:keySize="@dimen/sp_14"
+                            app:separatorSize="@dimen/sp_14"
+                            app:valueSize="@dimen/sp_14" />
+
+                        <com.teeny.wms.widget.KeyValueTextView
+                            android:id="@+id/output_picking_clerk"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:key="@string/text_clerk"
+                            app:keySize="@dimen/sp_14"
+                            app:separatorSize="@dimen/sp_14"
+                            app:valueSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:orientation="horizontal">
+
+                        <com.teeny.wms.widget.KeyValueTextView
+                            android:id="@+id/output_picking_shop"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:key=""
+                            app:keySize="@dimen/sp_14"
+                            app:separator=""
+                            app:separatorSize="@dimen/sp_14"
+                            app:valueSize="@dimen/sp_14" />
+
+                        <com.teeny.wms.widget.KeyValueTextView
+                            android:id="@+id/output_picking_total_money"
+                            android:layout_width="@dimen/dp_0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:key="@string/text_total_money"
+                            app:keySize="@dimen/sp_14"
+                            app:separatorSize="@dimen/sp_14"
+                            app:valueSize="@dimen/sp_14" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </com.teeny.wms.widget.ExpandableLinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:divider="@drawable/shape_divider"
+                android:orientation="vertical"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_goods_name" />
+
+                    <TextView
+                        android:id="@+id/output_picking_name"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_specification" />
+
+                    <TextView
+                        android:id="@+id/output_picking_specification"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_manufacturer" />
+
+                    <TextView
+                        android:id="@+id/output_picking_manufacturer"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_unit" />
+
+                    <TextView
+                        android:id="@+id/output_picking_unit"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_lot_number" />
+
+                    <TextView
+                        android:id="@+id/output_picking_lot"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_validity" />
+
+                    <TextView
+                        android:id="@+id/output_picking_validity"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_production_date" />
+
+                    <TextView
+                        android:id="@+id/output_picking_production_date"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_barcode" />
+
+                    <TextView
+                        android:id="@+id/output_picking_barcode"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end"
+                        android:hint="@string/hint_barcode_collect" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_unit_price" />
+
+                    <TextView
+                        android:id="@+id/output_picking_unit_price"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_money" />
+
+                    <TextView
+                        android:id="@+id/output_picking_money"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_order_count" />
+
+                    <TextView
+                        android:id="@+id/output_picking_order_count"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_16" />
+
+            <include layout="@layout/common_recycler_view" />
+
+            <android.support.v4.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_64" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/dp_16"
+        android:onClick="onClick"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:fabSize="normal"
+        app:rippleColor="@color/colorPrimary"
+        app:srcCompat="@drawable/icon_vector_check" />
+
+</FrameLayout>

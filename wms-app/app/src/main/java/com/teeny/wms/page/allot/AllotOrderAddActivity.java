@@ -30,9 +30,18 @@ import com.teeny.wms.util.Validator;
 
 public class AllotOrderAddActivity extends TableViewPagerActivity implements BaseFragmentPagerAdapter.Callback {
 
+    private static final String KEY_GOODS = "goods";
+
     public static void startActivity(Context context) {
+        startActivity(context, "");
+    }
+
+    public static void startActivity(Context context, String goods) {
         Intent intent = new Intent();
         intent.setClass(context, AllotOrderAddActivity.class);
+        if (Validator.isNotEmpty(goods)) {
+            intent.putExtra(KEY_GOODS, goods);
+        }
         context.startActivity(intent);
     }
 
@@ -47,24 +56,26 @@ public class AllotOrderAddActivity extends TableViewPagerActivity implements Bas
 
         hideFloatingActionButton();
         hideCounterView();
-        setupHeader();
+        Intent intent = getIntent();
+        String goods = intent.hasExtra(KEY_GOODS) ? intent.getStringExtra(KEY_GOODS) : "";
+        setupHeader(goods);
 
         mTitles = getResources().getStringArray(R.array.allot_tab);
         setupViewPager(new BaseFragmentPagerAdapter(getSupportFragmentManager(), this));
     }
 
-    private void setupHeader() {
+    private void setupHeader(String goods) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
         if (mHeaderFragment == null) {
-            mHeaderFragment = createHeaderFragment();
+            mHeaderFragment = createHeaderFragment(goods);
         }
         ft.replace(getHeaderLayoutId(), mHeaderFragment);
         ft.commitAllowingStateLoss();
     }
 
-    private Fragment createHeaderFragment() {
-        return AllotOrderHeaderFragment.newInstance();
+    private Fragment createHeaderFragment(String goods) {
+        return AllotOrderHeaderFragment.newInstance(goods);
     }
 
     @Override
@@ -90,7 +101,7 @@ public class AllotOrderAddActivity extends TableViewPagerActivity implements Bas
     }
 
     protected Fragment createFragment(int position) {
-        if (position == 0){
+        if (position == 0) {
             return AllotGoodsQueryFragment.newInstance();
         }
         return AllotGoodsSelectedFragment.newInstance();

@@ -49,9 +49,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SKUCheckActivity extends ToolbarActivity implements RecyclerViewTouchListener.OnItemClickListener {
 
+    private static final String KEY_GOODS = "goods";
+
     public static void startActivity(Context context) {
+        startActivity(context, null);
+    }
+
+    public static void startActivity(Context context, String goods) {
         Intent intent = new Intent();
         intent.setClass(context, SKUCheckActivity.class);
+        if (Validator.isNotEmpty(goods)) {
+            intent.putExtra(KEY_GOODS, goods);
+        }
         context.startActivity(intent);
     }
 
@@ -95,7 +104,11 @@ public class SKUCheckActivity extends ToolbarActivity implements RecyclerViewTou
     }
 
     private void initView() {
+        Intent intent = getIntent();
+        String goods = intent.hasExtra(KEY_GOODS) ? intent.getStringExtra(KEY_GOODS) : "";
+
         mGoodsTextView = (EditText) findViewById(R.id.sku_check_goods);
+        mGoodsTextView.setText(goods);
         mGoodsTextView.setOnFocusChangeListener(this::onFocusChanged);
         mGoodsTextView.setOnEditorActionListener(this::onEditorAction);
         mAllocationTextView = (EditText) findViewById(R.id.sku_check_goods_allocation);
@@ -120,6 +133,9 @@ public class SKUCheckActivity extends ToolbarActivity implements RecyclerViewTou
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(this.getContext(), this));
 
         mService = NetServiceManager.getInstance().getService(SKUService.class);
+        if (Validator.isNotEmpty(goods)) {
+            obtainData();
+        }
     }
 
     private void onFocusChanged(View view, boolean hasFocus) {
@@ -194,7 +210,7 @@ public class SKUCheckActivity extends ToolbarActivity implements RecyclerViewTou
     public void onDataAdded(DataAddedFlag flag) {
         String location = mAllocationTextView.getText().toString();
         String barcode = mGoodsTextView.getText().toString();
-        if (Validator.isNotEmpty(location) || Validator.isNotEmpty(barcode)){
+        if (Validator.isNotEmpty(location) || Validator.isNotEmpty(barcode)) {
             obtainData();
         }
     }

@@ -57,9 +57,20 @@ public class ObjectUtils {
         return o.toString();
     }
 
-    public static String concat(Object o1, Object o2) {
-        String first = o1 == null ? "" : o1.toString();
-        String second = o2 == null ? "" : o2.toString();
-        return first.concat(second);
+//    public static String concat(Object o1, Object o2) {
+//        String first = o1 == null ? "" : o1.toString();
+//        String second = o2 == null ? "" : o2.toString();
+//        return first.concat(second);
+//    }
+
+    public static String concat(Object... objects) {
+        String result = "";
+        if (Validator.isNotEmpty(objects)) {
+            for (Object object : objects) {
+                String value = object == null ? "" : object.toString();
+                result = result.concat(value);
+            }
+        }
+        return result;
     }
 }

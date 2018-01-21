@@ -47,9 +47,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  */
 
 public class AllotOrderHeaderFragment extends BaseFragment {
+    private static final String KEY_GOODS = "goods";
 
-    public static AllotOrderHeaderFragment newInstance() {
-        return new AllotOrderHeaderFragment();
+    public static AllotOrderHeaderFragment newInstance(String goods) {
+        AllotOrderHeaderFragment fragment = new AllotOrderHeaderFragment();
+        if (Validator.isNotEmpty(goods)) {
+            Bundle bundle = new Bundle();
+            bundle.putString(KEY_GOODS, goods);
+            fragment.setArguments(bundle);
+        }
+        return fragment;
     }
 
     private AppCompatEditText mLocationView;
@@ -68,9 +75,12 @@ public class AllotOrderHeaderFragment extends BaseFragment {
 
     private EventBus mEventBus;
 
+    private String mGoods;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mGoods = getArguments().getString(KEY_GOODS);
         mEventBus = EventBus.getDefault();
         mEventBus.register(this);
         mScannerHelper = ScannerHelper.getInstance();
@@ -116,6 +126,10 @@ public class AllotOrderHeaderFragment extends BaseFragment {
         mGoodsView = findView(R.id.allot_order_header_goods);
         mGoodsView.setOnFocusChangeListener(this::onFocusChanged);
         mGoodsView.setOnEditorActionListener(this::onEditorAction);
+        if (Validator.isNotEmpty(mGoods)) {
+            mGoodsView.setText(mGoods);
+            search();
+        }
     }
 
     private void onFocusChanged(View view, boolean hasFocus) {

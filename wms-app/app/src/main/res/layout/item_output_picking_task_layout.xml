@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/output_picking_task_document"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_document_number"
+        app:keySize="@dimen/sp_14"
+        app:separatorSize="@dimen/sp_14"
+        app:valueSize="@dimen/sp_14" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/output_picking_task_username"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:key="@string/text_username"
+            app:keySize="@dimen/sp_14"
+            app:separatorSize="@dimen/sp_14"
+            app:valueSize="@dimen/sp_14" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/output_picking_task_detail_row"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:key="@string/text_detail_row"
+            app:keySize="@dimen/sp_14"
+            app:separatorSize="@dimen/sp_14"
+            app:valueSize="@dimen/sp_14" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/output_picking_task_money"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:key="@string/text_total_money"
+            app:keySize="@dimen/sp_14"
+            app:separatorSize="@dimen/sp_14"
+            app:valueSize="@dimen/sp_14" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/output_picking_task_status"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:key="@string/text_status"
+            app:keySize="@dimen/sp_14"
+            app:separatorSize="@dimen/sp_14"
+            app:valueSize="@dimen/sp_14" />
+    </LinearLayout>
+</LinearLayout>

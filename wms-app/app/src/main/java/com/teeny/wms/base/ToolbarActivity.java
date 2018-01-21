@@ -1,9 +1,12 @@
 package com.teeny.wms.base;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -42,11 +45,19 @@ public abstract class ToolbarActivity extends BaseActivity {
         mContentLayout.setOnClickListener(WindowUtils::hideInputSoft);
         //Toolbar 初始化 获取toolbar的方式是getSupportActionBar()
         //有些操作通过ActionBar来设置也是一样的，注意要在setSupportActionBar(toolbar);之后，不然就报错了
+        Drawable drawable = mToolbar.getNavigationIcon();
+        if (drawable != null) {
+            DrawableCompat.setTint(drawable, ResourcesCompat.getColor(getResources(), R.color.white, null));
+        }
         this.setSupportActionBar(mToolbar);
+        showNavigationIcon(false);
+    }
+
+    public void showNavigationIcon(boolean isShow) {
         ActionBar bar = getSupportActionBar();
         if (Validator.isNotNull(bar)) {
-            bar.setDisplayHomeAsUpEnabled(false);
-            bar.setHomeButtonEnabled(false);
+            bar.setDisplayHomeAsUpEnabled(isShow);
+            bar.setHomeButtonEnabled(isShow);
         }
     }
 
@@ -95,6 +106,10 @@ public abstract class ToolbarActivity extends BaseActivity {
 
     protected FrameLayout getContentLayout() {
         return mContentLayout;
+    }
+
+    protected void setNavigationOnClickListener(View.OnClickListener listener) {
+        mToolbar.setNavigationOnClickListener(listener);
     }
 
 }

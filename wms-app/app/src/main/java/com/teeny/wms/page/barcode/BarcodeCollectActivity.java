@@ -49,9 +49,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerViewTouchListener.OnItemClickListener {
 
+    private static final String KEY_GOODS = "goods";
+
     public static void startActivity(Context context) {
+        startActivity(context, null);
+    }
+
+    public static void startActivity(Context context, String goods) {
         Intent intent = new Intent();
         intent.setClass(context, BarcodeCollectActivity.class);
+        if (Validator.isNotEmpty(goods)) {
+            intent.putExtra(KEY_GOODS, goods);
+        }
         context.startActivity(intent);
     }
 
@@ -87,7 +96,12 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
     }
 
     private void initView() {
+
+        Intent intent = getIntent();
+        String goods = intent.hasExtra(KEY_GOODS) ? intent.getStringExtra(KEY_GOODS) : "";
+
         mGoodsTextView = (EditText) findViewById(R.id.barcode_collect_goods);
+        mGoodsTextView.setText(goods);
         mGoodsTextView.setOnEditorActionListener(this::onEditorAction);
         mGoodsTextView.setOnFocusChangeListener(this::onFocusChanged);
         mLocationTextView = (EditText) findViewById(R.id.barcode_collect_allocation);
@@ -110,6 +124,9 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(this.getContext(), this));
 
         mService = NetServiceManager.getInstance().getService(BarcodeService.class);
+        if (Validator.isNotEmpty(goods)) {
+            obtainData();
+        }
     }
 
     private void onFocusChanged(View view, boolean hasFocus) {

@@ -1,7 +1,10 @@
 package com.teeny.wms.base;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,8 @@ public abstract class ToolbarFragment extends BaseFragment {
     @Override
     protected View onCreateHolderView(LayoutInflater inflater, @Nullable ViewGroup container) {
         View view = inflater.inflate(R.layout.activity_base_toolbar_layout, container, false);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
         FrameLayout contentLayout = (FrameLayout) view.findViewById(R.id.base_toolbar_content_layout);
         contentLayout.setOnClickListener(WindowUtils::hideInputSoft);
         inflater.inflate(getContentLayoutId(), contentLayout);

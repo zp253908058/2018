@@ -305,6 +305,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 
+        <activity android:name=".page.picking.activity.OutputPickingActivity"
+            android:exported="false"
+            android:label="@string/text_output_picking"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity android:name=".page.picking.activity.OutputPickingAddActivity" />
+        <activity android:name=".page.picking.activity.OrderDetailActivity" />
+        <activity android:name=".page.picking.activity.TaskActivity" />
+
         <service
             android:name=".service.PollingService"
             android:exported="false" />

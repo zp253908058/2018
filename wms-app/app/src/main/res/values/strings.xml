@@ -150,6 +150,9 @@
     <string name="prompt_input_password">请输入密码!</string>
     <string name="prompt_select_unit">请选择单位!</string>
     <string name="prompt_complete_all">确定要完成全部吗?</string>
+
+    <string name="hint_barcode_collect">请采集条码</string>
+
     <string name="text_review_complete">复核完成</string>
     <string name="text_price">价格</string>
     <string name="text_allot_list_update">调拨单修改</string>
@@ -175,5 +178,19 @@
     <string name="text_receiving_number">收货数量</string>
     <string name="text_delivery_number">配送数量</string>
     <string name="text_shop_delivery_edit">门店收货编辑</string>
-
+    <string name="text_output_picking">出库拣选</string>
+    <string name="text_unit_price">单价</string>
+    <string name="text_money">金额</string>
+    <string name="text_order_count">订单数量</string>
+    <string name="text_picking_number">拣货数量</string>
+    <string name="text_turnover_box">周转箱</string>
+    <string name="text_turnover_box_add">添加周转箱</string>
+    <string name="text_goods_allot">商品调拨</string>
+    <string name="text_inventory_detail">库存详情</string>
+    <string name="text_work_task">工作任务</string>
+    <string name="text_document_detail">单据详情</string>
+    <string name="text_username">用户名</string>
+    <string name="text_detail_row">明细行数</string>
+    <string name="text_total_money">总金额</string>
+    <string name="text_clerk">业务员</string>
 </resources>

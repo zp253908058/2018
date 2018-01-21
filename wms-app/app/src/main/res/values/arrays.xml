@@ -13,6 +13,7 @@
         <item>条码采集</item>
         <item>新增调拨单</item>
         <item>门店收货</item>
+        <item>出库拣选</item>
     </string-array>
 
     <string-array name="sku_title">
