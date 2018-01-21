@@ -40,6 +40,10 @@
         WHERE b.billstates = 10 AND d.bill_id = #{id}
     </select>
 
+    <update id="updateState">
+        UPDATE ${account}.dbo.pda_ShopRecBill SET pdastates = 1, pdaReTime = getdate() WHERE billid = #{id}
+    </update>
+
     <update id="complete">
         UPDATE ${account}.dbo.pda_RecShopBill_D SET EligibleQty = Yqty , DealStates = 1, wctime = getdate(), loginid = #{userId} WHERE smb_id IN
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">

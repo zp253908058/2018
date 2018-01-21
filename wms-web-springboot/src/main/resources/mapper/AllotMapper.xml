@@ -4,7 +4,7 @@
 <mapper namespace="com.teeny.wms.web.repository.AllotMapper">
 
     <resultMap id="keyValue" type="keyValue">
-        <id column="id" property="key" javaType="int"/>
+        <result column="id" property="key" javaType="int"/>
         <result column="name" property="value"/>
     </resultMap>
 

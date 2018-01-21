@@ -36,7 +36,9 @@ public class ShopDeliveryServiceImpl implements ShopDeliveryService {
 
     @Override
     public List<ShopDeliveryGoodsEntity> getDeliveryGoodsList(String account, int id) {
-        return mMapper.getDeliveryGoodsList(account, id);
+        List<ShopDeliveryGoodsEntity> result = mMapper.getDeliveryGoodsList(account, id);
+        mMapper.updateState(account, id);
+        return result;
     }
 
     @Override

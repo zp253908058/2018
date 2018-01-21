@@ -60,8 +60,7 @@ public class CommonController {
     }
 
     //获取仓库
-    @ResponseBody
-    @RequestMapping(value = "/api/common/warehouseList", method = RequestMethod.GET)
+    @GetMapping(value = "/api/common/warehouseList")
     public ResponseEntity<List<KeyValueEntity>> getWarehouses(@RequestHeader("account") String account) {
         return new ResponseEntity<>(mCommonService.obtainWarehouseList(account));
     }
@@ -73,8 +72,7 @@ public class CommonController {
      * @param account 账套
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "/api/common/repositoryList/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/api/common/repositoryList/{id}")
     public ResponseEntity<List<KeyValueEntity>> getRepositoryList(@PathVariable("id") int id, @RequestHeader("account") String account) {
         return new ResponseEntity<>(mCommonService.obtainRepositoryList(account, id));
     }
@@ -86,8 +84,7 @@ public class CommonController {
      * @param account 账套
      * @return
      */
-    @ResponseBody
-    @RequestMapping(value = "/api/common/areaList/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/api/common/areaList/{id}")
     public ResponseEntity<List<KeyValueEntity>> getAreaList(@PathVariable("id") int id, @RequestHeader("account") String account) {
         return new ResponseEntity<>(mCommonService.obtainAreaList(account, id));
     }

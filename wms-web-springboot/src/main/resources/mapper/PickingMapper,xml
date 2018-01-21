@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teeny.wms.web.repository.PickingMapper">
+
+    <resultMap id="keyValue" type="keyValue">
+        <result column="id" property="key" javaType="int"/>
+        <result column="name" property="value"/>
+    </resultMap>
+
+    <select id="getOrderList" resultMap="keyValue">
+        SELECT
+            b.id         AS id,
+            b.billnumber AS name
+        FROM ${account}.dbo.pda_pickBill b
+        WHERE b.pickEid = #{userId} AND b.billstates = 10
+    </select>
+
+    <resultMap id="data" type="OutputPickingOrderEntity">
+        <collection property="dataList" javaType="ArrayList" ofType="OutputPickingItemEntity"
+                    column="{account = account, id = id}"
+                    select="com.teeny.wms.web.repository.PickingMapper.getDetail"/>
+    </resultMap>
+
+    <select id="getData" resultMap="data">
+        SELECT
+            b.billid            AS id,
+            sum(d.DealStates)   AS completed,
+            count(d.DealStates) AS total,
+            s.name              AS warehouse,
+            e.name              AS clerk,
+            b.cname             AS shopName,
+            b.total             AS totalMoney,
+            #{account}          AS account
+        FROM ${account}.dbo.pda_pickBill b
+            INNER JOIN ${account}.dbo.pda_pickBill_D d ON b.billid = d.bill_id
+            LEFT JOIN ${account}.dbo.pda_storages s ON b.s_id = s.s_id
+            LEFT JOIN ${account}.dbo.pda_employees e ON e.e_id = b.e_id
+        WHERE b.id = #{id}
+    </select>
+
+    <resultMap id="detail" type="OutputPickingItemEntity">
+        <collection property="list" javaType="ArrayList" ofType="OutputPickingEntity"
+                    column="{account = account, id = id}"
+                    select="com.teeny.wms.web.repository.PickingMapper.getTurnover"/>
+    </resultMap>
+
+    <select id="getDetail" resultMap="detail">
+        SELECT
+            d.smb_id     AS id,
+            p.name       AS goodsName,
+            p.pinyin     AS pinyin,
+            p.barcode    AS goodsBarcode,
+            p.standard   AS specification,
+            p.unit1Name  AS unit,
+            d.MakeDate   AS productionDate,
+            l.loc_code   AS location,
+            d.Qty        AS orderCount,
+            d.Batchno    AS lot,
+            d.Validdate  AS validate,
+            p.Factory    AS manufacturer,
+            d.TaxPrice   AS unitPrice,
+            d.TaxTotal   AS money,
+            d.DealStates AS status,
+            #{account}   AS account
+        FROM ${account}.dbo.pda_pickBill_D d
+            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON d.Location_id = l.l_id
+        WHERE d.bill_id = #{id}
+        ORDER BY d.bill_id
+    </select>
+
+    <select id="getTurnover" resultType="OutputPickingEntity">
+        SELECT
+            t.number,
+            t.turnover
+        FROM ${account}.dbo.pda_pickBill_D_Turnover t WHERE t.smb_id = #{id}
+    </select>
+
+    <select id="getTaskList">
+        SELECT
+            b.id          AS id,
+            b.billnumber  AS documentNo,
+            e.name        AS username,
+            b.detailcount AS detailRow,
+            b.total       AS totalMoney,
+            b.billstates  AS status
+        FROM ${account}.dbo.pda_pickBill b
+            LEFT JOIN ${account}.dbo.pda_employees e ON b.pickEid = e.e_id
+        WHERE b.pickEid = #{userId} AND b.billstates = 10
+    </select>
+
+    <delete id="delete">
+        DELETE FROM ${account}.dbo.pda_pickBill_D_Turnover WHERE smb_id = #{id}
+    </delete>
+
+    <insert id="add">
+        INSERT INTO ${account}.dbo.pda_pickBill_D_Turnover (smb_id,number, turnover) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{id}, #{item.number}, #{item.turnover})
+        </foreach>
+    </insert>
+
+    <update id="updateDetailDate">
+        UPDATE ${account}.dbo.pda_PutOnBill_D SET loginid = #{userId}, wctime = getdate(), DealStates = 1 WHERE smb_id = #{id}
+        <selectKey keyProperty="count" resultType="int" order="BEFORE" keyColumn="count">
+            SELECT count(1) FROM ${account}.dbo.pda_pickBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
+        </selectKey>
+
+        <if test="count == 0">
+            UPDATE ${account}.dbo.pda_pickBill SET billstates = 13 WHERE billid = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
+        </if>
+    </update>
+
+    <update id="updateDate">
+        UPDATE ${account}.dbo.pda_pickBill SET pdaWrTime = getdate() WHERE billid = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
+    </update>
+</mapper>

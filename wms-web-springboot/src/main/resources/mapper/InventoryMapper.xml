@@ -238,7 +238,7 @@
                 l.loc_code = #{location}
             </if>
             <if test="barcode != null and barcode != ''">
-                AND (p.barcode = #{barcode} OR p.pinyin like '%${barcode}%')
+                AND (p.barcode = #{barcode} OR p.pinyin LIKE '%' + #{barcode} + '%' OR p.name LIKE '%' + #{barcode} + '%')
             </if>
         </where>
     </select>
