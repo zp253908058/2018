@@ -105,6 +105,9 @@
 
     <update id="updateDetailDate">
         UPDATE ${account}.dbo.pda_PutOnBill_D SET loginid = #{userId}, wctime = getdate(), DealStates = 1 WHERE smb_id = #{id}
+    </update>
+
+    <update id="updateBillState">
         <selectKey keyProperty="count" resultType="int" order="BEFORE" keyColumn="count">
             SELECT count(1) FROM ${account}.dbo.pda_pickBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
         </selectKey>

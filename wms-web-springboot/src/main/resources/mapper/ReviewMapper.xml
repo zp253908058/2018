@@ -9,8 +9,10 @@
         UPDATE ${account}.dbo.pda_CheckBill_B
         SET DealStates = 1, EligibleQty = 1, wctime = getdate(), loginid = #{userId}
         WHERE smb_id = #{smbId}
+    </update>
 
-        <selectKey keyProperty="status" resultType="int" order="AFTER">
+    <update id="updateState">
+        <selectKey keyProperty="status" resultType="int" order="BEFORE">
             SELECT b.pdastates FROM ${account}.dbo.pda_CheckBill b WHERE b.billid=#{billId}
         </selectKey>
 

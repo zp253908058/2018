@@ -49,19 +49,14 @@
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>
-
-        <selectKey resultType="int" keyProperty="count" order="AFTER">
-            SELECT count(d.DealStates) FROM ${account}.dbo.pda_RecShopBill_D d WHERE d.DealStates = 0 AND d.bill_id = #{billId}
-        </selectKey>
-        <if test="count == 0">
-            UPDATE ${account}.dbo.pda_ShopRecBill SET billstates = 13, rec_eid = 0 WHERE billid = #{billId}
-        </if>
     </update>
 
     <update id="single">
         UPDATE ${account}.dbo.pda_RecShopBill_D SET EligibleQty = #{amount}, remark = #{remark}, DealStates = 1, wctime = getdate(), loginid = #{userId} WHERE smb_id = #{id}
+    </update>
 
-        <selectKey resultType="int" keyProperty="count" order="AFTER">
+    <update id="updateStatus">
+        <selectKey resultType="int" keyProperty="count" order="BEFORE">
             SELECT count(d.DealStates) FROM ${account}.dbo.pda_RecShopBill_D d WHERE d.DealStates = 0 AND d.bill_id = #{billId}
         </selectKey>
         <if test="count == 0">

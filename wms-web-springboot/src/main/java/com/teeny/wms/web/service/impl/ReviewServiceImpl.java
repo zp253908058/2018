@@ -51,6 +51,8 @@ public class ReviewServiceImpl implements ReviewService {
         }
         mReviewMapper.updateStatus(bill.getSmbId(), account, userId);
 
+        mReviewMapper.updateState(bill.getBillId(), account);
+
         mReviewMapper.updateBillStatus(bill.getBillId(), account);
 
         return mReviewMapper.getDetail(billNo, account);

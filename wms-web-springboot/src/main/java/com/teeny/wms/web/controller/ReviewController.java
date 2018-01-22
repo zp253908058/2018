@@ -1,8 +1,10 @@
 package com.teeny.wms.web.controller;
 
+import com.teeny.wms.app.annotation.User;
 import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.web.model.EmptyEntity;
+import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.request.ExWarehouseReviewRequestEntity;
 import com.teeny.wms.web.model.response.ExWarehouseReviewEntity;
 import com.teeny.wms.web.model.response.RecipientEntity;
@@ -37,10 +39,8 @@ public class ReviewController {
      * @return 复核单详情
      */
     @GetMapping("/exWarehouseReview/{billNo}")
-    public ResponseEntity<ExWarehouseReviewEntity> detail(@RequestHeader("account") String account, @PathVariable("billNo") String billNo) {
-        return new ResponseEntity<>(mReviewService.getWarehouseReview(account, billNo, 1));
-
-        //TODO  user
+    public ResponseEntity<ExWarehouseReviewEntity> detail(@RequestHeader("account") String account, @PathVariable("billNo") String billNo, @User UserEntity entity) {
+        return new ResponseEntity<>(mReviewService.getWarehouseReview(account, billNo, entity.getId()));
     }
 
     /**

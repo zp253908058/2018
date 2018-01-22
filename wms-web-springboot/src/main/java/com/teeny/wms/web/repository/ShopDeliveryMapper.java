@@ -29,4 +29,6 @@ public interface ShopDeliveryMapper {
     void complete(@Param("account") String account, @Param("list") List<Integer> ids, @Param("billId") int billId, @Param("userId") int userId);
 
     void single(@Param("account") String account, @Param("id") int id, @Param("billId") int billId, @Param("amount") float amount, @Param("remark") String remark, @Param("userId") int userId);
+
+    void updateStatus(@Param("account") String account, @Param("billId") int billId);
 }

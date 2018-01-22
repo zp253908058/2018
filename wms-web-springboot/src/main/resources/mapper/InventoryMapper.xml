@@ -45,21 +45,21 @@
         UPDATE ${account}.dbo.pda_pdBill_D
         SET DealStates = 1, pdQty = EligibleQty, wctime = getdate(), loginid = #{userId}
         WHERE original_id = #{originalId}
+    </update>
 
-        <selectKey keyProperty="count" resultType="int" order="AFTER">
-            SELECT count(*)
+    <select id="getBillId" resultType="int">
+        SELECT TOP 1 d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId}
+    </select>
+
+    <update id="updateState">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            SELECT count(*) AS count
             FROM ${account}.dbo.pda_pdBill_D d
-            WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id
-            FROM ${account}.dbo.pda_pdBill_D d1
-            WHERE d1.original_id = #{originalId})
+            WHERE d.DealStates = 0 AND d.bill_id = #{id}
         </selectKey>
 
         <if test="count==0">
-            UPDATE ${account}.dbo.pda_pdBill
-            SET pdastates = 2
-            WHERE billid = (SELECT DISTINCT d.bill_id
-            FROM ${account}.dbo.pda_pdBill_D d
-            WHERE d.original_id = #{originalId})
+            UPDATE ${account}.dbo.pda_pdBill SET pdastates = 2 WHERE billid = #{id}
         </if>
     </update>
 
@@ -70,22 +70,6 @@
         <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>
-
-        <selectKey keyProperty="count" resultType="int" order="AFTER">
-            SELECT count(*)
-            FROM ${account}.dbo.pda_pdBill_D d
-            WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id
-            FROM ${account}.dbo.pda_pdBill_D d1
-            WHERE d1.original_id = #{originalId})
-        </selectKey>
-
-        <if test="count==0">
-            UPDATE ${account}.dbo.pda_pdBill
-            SET pdastates = 2
-            WHERE billid = (SELECT DISTINCT d.bill_id
-            FROM ${account}.dbo.pda_pdBill_D d
-            WHERE d.original_id = #{originalId})
-        </if>
     </update>
 
 

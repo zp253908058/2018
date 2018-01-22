@@ -53,6 +53,8 @@ public class InventoryServiceImpl implements InventoryService {
     @Override
     public int single(int originalId, String account, int userId) {
         mInventoryMapper.single(originalId, account, userId);
+        Integer id = mInventoryMapper.getBillId(account, originalId);
+        mInventoryMapper.updateState(account, id);
         return originalId;
     }
 
@@ -60,7 +62,11 @@ public class InventoryServiceImpl implements InventoryService {
     public void complete(List<Integer> ids, String account, int userId) {
         if (Validator.isNotEmpty(ids)) {
             mInventoryMapper.complete(account, ids, userId);
+            Integer id = mInventoryMapper.getBillId(account, ids.get(0));
+            mInventoryMapper.updateState(account, id);
+            return;
         }
+        throw new InnerException("没有可完成对象.");
     }
 
     @Override

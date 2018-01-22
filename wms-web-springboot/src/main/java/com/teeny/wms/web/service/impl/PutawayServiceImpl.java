@@ -64,11 +64,13 @@ public class PutawayServiceImpl implements PutawayService {
             return;
         }
         mPutawayMapper.all(ids.get(0), ids, account, userId);
+        mPutawayMapper.updateBillStatus(ids.get(0), account);
     }
 
     @Override
     public void single(int originalId, String account, int userId) {
         mPutawayMapper.single(originalId, account, userId);
+        mPutawayMapper.updateBillStatus(originalId, account);
     }
 
     @Override

@@ -51,6 +51,14 @@ public interface InventoryMapper {
 
     void complete(@Param("account") String account, @Param("list") List<Integer> ids, @Param("userId") int userId);
 
+    Integer getBillId(@Param("account") String account, @Param("originalId") int originalId);
+
+    /**
+     * @param account 账套
+     * @param id      bill_id
+     */
+    void updateState(@Param("account") String account, @Param("id") int id);
+
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);
 

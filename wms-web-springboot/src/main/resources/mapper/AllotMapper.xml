@@ -55,61 +55,25 @@
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
-
-        <selectKey keyProperty="count" resultType="int" order="AFTER">
-            SELECT count(*) AS total
-            FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.DealStates = 0
-            AND d.bill_id = (SELECT DISTINCT d1.bill_id
-            FROM ${account}.dbo.pda_TranBill_D d1
-            WHERE d1.original_id = #{id})
-        </selectKey>
-
-        <if test="count==0">
-            UPDATE ${account}.dbo.pda_TranBill
-            SET billstates = 3
-            WHERE billid = (SELECT DISTINCT d.bill_id
-            FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.original_id = #{id})
-        </if>
     </update>
 
     <update id="updateOne">
         UPDATE ${account}.dbo.pda_TranBill_D
         SET DealStates = 1, wctime = getdate(), loginid = #{userId}
         WHERE original_id = #{id}
-
-        <selectKey keyProperty="count" resultType="int" order="AFTER">
-            SELECT count(*) AS total
-            FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.DealStates = 0
-            AND d.bill_id = (SELECT DISTINCT d1.bill_id
-            FROM ${account}.dbo.pda_TranBill_D d1
-            WHERE d1.original_id = #{id})
-        </selectKey>
-
-        <if test="count==0">
-            UPDATE ${account}.dbo.pda_TranBill
-            SET billstates = 3
-            WHERE billid = (SELECT DISTINCT d.bill_id
-            FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.original_id = #{id})
-        </if>
     </update>
 
     <select id="getOrderList" resultMap="keyValue">
         SELECT
         b.billid AS id,
         b.billnumber AS name
-        FROM ${account}.dbo.pda_TranBill b
-        <where>
-            <if test="saId!=0">
-                b.sa_outid = #{saId}
-            </if>
-            <if test="sId!=0">
-                AND b.sout_id = #{sId}
-            </if>
-        </where>
+        FROM ${account}.dbo.pda_TranBill b WHERE b.billstates != 3
+        <if test="saId!=0">
+            AND b.sa_outid = #{saId}
+        </if>
+        <if test="sId!=0">
+            AND b.sout_id = #{sId}
+        </if>
     </select>
 
     <insert id="copyData">

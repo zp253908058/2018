@@ -29,6 +29,8 @@ public interface ReviewMapper {
 
     void updateStatus(@Param("smbId") int smbId, @Param("account") String account, @Param("userId") int userId);
 
+    void updateState(@Param("billId") int billId, @Param("account") String account);
+
     void updateBillStatus(@Param("billId") int billId, @Param("account") String account);
 
     ExWarehouseReviewEntity getDetail(@Param("billNo") String billNo, @Param("account") String account);

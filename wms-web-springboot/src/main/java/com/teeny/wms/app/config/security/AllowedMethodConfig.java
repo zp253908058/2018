@@ -22,10 +22,6 @@ import java.util.Set;
 @Configuration
 public class AllowedMethodConfig {
 
-    public AllowedMethodConfig() {
-
-    }
-
     private TokenEndpoint mTokenEndpoint;
 
     @Autowired

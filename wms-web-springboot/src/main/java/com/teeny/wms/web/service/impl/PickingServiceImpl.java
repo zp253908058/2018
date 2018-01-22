@@ -52,6 +52,7 @@ public class PickingServiceImpl implements PickingService {
         mMapper.delete(account, entity.getId());
         mMapper.add(account, entity.getId(), entity.getList());
         mMapper.updateDetailDate(account, entity.getId(), userId);
+        mMapper.updateBillState(account, entity.getId());
         mMapper.updateDate(account, entity.getId());
     }
 }

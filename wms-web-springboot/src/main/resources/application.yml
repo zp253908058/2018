@@ -1,7 +1,6 @@
 server:
   port: 8080
   address: 192.168.1.3
-#  address: 192.168.31.60
   context-path: /wms
 
 logging:
@@ -16,9 +15,6 @@ spring:
   datasource:
     druid:
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-#      url: jdbc:sqlserver://localhost;databaseName=yyt
-#      username: sa
-#      password: zhupeng123
       url: jdbc:sqlserver://yyt8812.gnway.cc:1344;databaseName=nmgce
       username: sa
       password: yyt@123
@@ -44,7 +40,6 @@ mybatis:
     cache-enabled: false
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     log-prefix: WMS
-    multiple-result-sets-enabled: true
     jdbc-type-for-null: varchar
 security:
   oauth2:

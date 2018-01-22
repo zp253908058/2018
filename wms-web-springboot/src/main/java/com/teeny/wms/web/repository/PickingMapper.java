@@ -34,5 +34,7 @@ public interface PickingMapper {
 
     void updateDetailDate(@Param("account") String account, @Param("id") int id, @Param("userId") int userId);
 
+    void updateBillState(@Param("account") String account, @Param("id") int id);
+
     void updateDate(@Param("account") String account, @Param("id") int id);
 }

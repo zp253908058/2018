@@ -37,8 +37,8 @@ public class SKUController {
      *
      * @return List<SKUEntity>
      */
-    @GetMapping("/getList")
-    ResponseEntity<List<SKUEntity>> getList(@RequestHeader("sId") int sId, @RequestHeader("account") String account, @RequestParam("location") String locationCode, @RequestParam("barcode") String barcode) {
+    @GetMapping("/list")
+    ResponseEntity<List<SKUEntity>> getList(@RequestHeader("sId") int sId, @RequestHeader("account") String account, @RequestParam(value = "location", required = false) String locationCode, @RequestParam(value = "barcode", required = false) String barcode) {
         List<SKUEntity> result = mInventoryService.getSKUList(sId, account, locationCode, barcode);
         return new ResponseEntity<>(result);
     }

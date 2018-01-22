@@ -44,6 +44,7 @@ public class ShopDeliveryServiceImpl implements ShopDeliveryService {
     @Override
     public void complete(String account, List<Integer> ids, int billId, int userId) {
         mMapper.complete(account, ids, billId, userId);
+        mMapper.updateStatus(account, billId);
     }
 
     @Override
@@ -54,5 +55,6 @@ public class ShopDeliveryServiceImpl implements ShopDeliveryService {
     @Override
     public void single(String account, int id, float amount, String remark, int billId, int userId) {
         mMapper.single(account, id, billId, amount, remark, userId);
+        mMapper.updateStatus(account, billId);
     }
 }

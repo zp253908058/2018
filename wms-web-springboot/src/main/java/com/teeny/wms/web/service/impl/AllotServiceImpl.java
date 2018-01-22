@@ -58,12 +58,14 @@ public class AllotServiceImpl implements AllotService {
     public void updateAll(List<Integer> ids, String account, int userId) {
         if (Validator.isNotEmpty(ids)) {
             mAllotMapper.updateAll(ids.get(0), ids, account, userId);
+            mAllotMapper.updateBillStatus(account, ids.get(0));
         }
     }
 
     @Override
     public void updateOne(int id, String account, int userId) {
         mAllotMapper.updateOne(id, account, userId);
+        mAllotMapper.updateBillStatus(account, id);
     }
 
     @Override
