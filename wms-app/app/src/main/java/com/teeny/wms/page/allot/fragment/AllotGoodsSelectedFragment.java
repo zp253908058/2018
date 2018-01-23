@@ -57,6 +57,7 @@ public class AllotGoodsSelectedFragment extends BaseFragment implements Recycler
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mEventBus = EventBus.getDefault();
+        mEventBus.register(this);
         mAdapter = new AllotGoodsSelectedAdapter(null);
 
         mService = NetServiceManager.getInstance().getService(AllotOrderService.class);

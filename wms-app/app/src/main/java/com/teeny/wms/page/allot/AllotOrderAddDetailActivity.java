@@ -196,13 +196,14 @@ public class AllotOrderAddDetailActivity extends ToolbarActivity implements Dial
         for (AllotLocationEntity entity : result) {
             amount += entity.getAmount();
         }
-        if (amount > mEntity.getAmount()){
+        if (amount > mEntity.getAmount()) {
             Toaster.showToast("当前数量不能大于库存数量.");
             return;
         }
         AllotLocationRequestEntity entity = new AllotLocationRequestEntity();
         entity.setId(mEntity.getDetailId());
         entity.setBillId(mEntity.getBillId());
+        entity.setParam(result);
         Flowable<ResponseEntity<EmptyEntity>> flowable = mService.complete(entity);
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override
