@@ -290,8 +290,8 @@
     <insert id="completeAllot">
         INSERT INTO ${account}.dbo.pda_AddTranBillLoc_D (bill_id, smb_id, quantity, location_id2)
         VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{billId}, #{id}, #{item.amount}, SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code = #{item.locationCode})
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{billId}, #{id}, #{item.amount}, (SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code = #{item.locationCode})
         </foreach>
     </insert>
 
