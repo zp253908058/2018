@@ -311,9 +311,27 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
-        <activity android:name=".page.picking.activity.OutputPickingAddActivity" />
-        <activity android:name=".page.picking.activity.OrderDetailActivity" />
-        <activity android:name=".page.picking.activity.TaskActivity" />
+
+        <activity android:name=".page.picking.activity.OutputPickingAddActivity"
+            android:exported="false"
+            android:label="@string/text_turnover_box_add"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity android:name=".page.picking.activity.OrderDetailActivity"
+            android:exported="false"
+            android:label="@string/text_document_detail"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity android:name=".page.picking.activity.TaskActivity"
+            android:exported="false"
+            android:label="@string/text_work_task"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <service
             android:name=".service.PollingService"

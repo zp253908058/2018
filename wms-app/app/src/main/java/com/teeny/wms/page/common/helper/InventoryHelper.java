@@ -1,5 +1,6 @@
 package com.teeny.wms.page.common.helper;
 
+import android.graphics.Rect;
 import android.support.v4.util.SparseArrayCompat;
 
 import com.teeny.wms.model.InventoryGoodsEntity;
@@ -146,7 +147,14 @@ public abstract class InventoryHelper {
             }
         }
         mDataHolder.clear();
+        inset(1);
         notifyChanged();
+    }
+
+    private void inset(int i) {
+        mUnfinishedNumber -= i;
+        mFinishedNumber += i;
+        mEventBus.post(new NumberObserver(this));
     }
 
     public void reverseAllStatus() {
@@ -158,6 +166,7 @@ public abstract class InventoryHelper {
             entity.setStatus(1);
         }
         mDataHolder.clear();
+        inset(mUnfinishedNumber);
         notifyChanged();
     }
 

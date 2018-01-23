@@ -274,16 +274,16 @@ public class WarehouseFragment extends ToolbarFragment implements View.OnClickLi
                     entity.setIcon(R.mipmap.icon_second_count);
                     break;
                 case 9:
-                    entity.setIcon(R.mipmap.icon_second_count);
+                    entity.setIcon(R.mipmap.icon_barcode_collect);
                     break;
                 case 10:
-                    entity.setIcon(R.mipmap.icon_second_count);
+                    entity.setIcon(R.mipmap.icon_allot_add);
                     break;
                 case 11:
-                    entity.setIcon(R.mipmap.icon_second_count);
+                    entity.setIcon(R.mipmap.icon_shop_receiving);
                     break;
                 case 12:
-                    entity.setIcon(R.mipmap.icon_second_count);
+                    entity.setIcon(R.mipmap.icon_output_picking);
                     break;
 
             }

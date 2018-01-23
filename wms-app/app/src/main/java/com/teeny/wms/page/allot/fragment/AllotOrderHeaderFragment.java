@@ -51,11 +51,11 @@ public class AllotOrderHeaderFragment extends BaseFragment {
 
     public static AllotOrderHeaderFragment newInstance(String goods) {
         AllotOrderHeaderFragment fragment = new AllotOrderHeaderFragment();
+        Bundle bundle = new Bundle();
         if (Validator.isNotEmpty(goods)) {
-            Bundle bundle = new Bundle();
             bundle.putString(KEY_GOODS, goods);
-            fragment.setArguments(bundle);
         }
+        fragment.setArguments(bundle);
         return fragment;
     }
 
