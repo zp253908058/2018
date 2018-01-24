@@ -83,7 +83,7 @@ public interface InventoryMapper {
     void addProduct(@Param("item") SKUAddRequestEntity dto, @Param("account") String account, @Param("sId") int sId, @Param("userId") int userId);
 
     @Select("SELECT p.p_id AS pId, p.name AS goodsName, p.unit1Name AS unit, p.standard, p.serial_number AS number ,p.Factory AS manufacturers FROM ${account}.dbo.pda_Products p WHERE p.barcode=#{goodsCode}")
-    GoodsDetailEntity getGoodsDetailByCode(@Param("goodsCode") String goodsCode, @Param("account") String account);
+    List<GoodsDetailEntity> getGoodsDetailByCode(@Param("goodsCode") String goodsCode, @Param("account") String account);
 
     /**
      * 获取库区和区域的级联

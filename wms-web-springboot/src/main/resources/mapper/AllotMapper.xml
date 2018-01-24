@@ -281,9 +281,9 @@
         FROM ${account}.dbo.VW_PDA_Storehouse s
             INNER JOIN ${account}.dbo.pda_AddTranBill_D d ON d.storehouse_id = s.storehouse_id
             INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
-            LEFT JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
+            INNER JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
-            LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+            INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
         WHERE b.e_id = #{userId} AND b.billstates = 0
     </select>
 
@@ -291,7 +291,7 @@
         INSERT INTO ${account}.dbo.pda_AddTranBillLoc_D (bill_id, smb_id, quantity, location_id2)
         VALUES
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
-            #{billId}, #{id}, #{item.amount}, (SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code = #{item.locationCode})
+            #{billId}, #{id}, #{item.amount}, #{item.locationId}
         </foreach>
     </insert>
 
@@ -302,5 +302,9 @@
         FROM ${account}.dbo.pda_AddTranBillLoc_D ld
             INNER JOIN ${account}.dbo.pda_location l ON ld.location_id2 = l.l_id
         WHERE ld.smb_id = #{id}
+    </select>
+
+    <select id="getLocationId" resultType="int">
+        SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code = #{location}
     </select>
 </mapper>

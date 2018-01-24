@@ -107,8 +107,8 @@
         pdastates,
         original_id,
         wctime,
-        loginid) VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
+        loginid)
+        <foreach collection="list" item="item" index="index" separator="union all" open="(" close=")">
             (SELECT
             d.bill_id,
             d.p_id,
@@ -119,9 +119,9 @@
             d.Supplier_id,
             d.InstoreTime,
             d.billstates,
-            #{validateDate,jdbcType=VARCHAR},
-            #{lotNo,jdbcType=VARCHAR},
-            #{count,jdbcType=REAL},
+            #{item.validateDate,jdbcType=VARCHAR},
+            #{item.lotNo,jdbcType=VARCHAR},
+            #{item.count,jdbcType=REAL},
             1,
             d.pdastates,
             d.original_id,
@@ -142,7 +142,7 @@
     </delete>
 
     <update id="updateBillStatus">
-        <selectKey keyProperty="count" order="BEFORE">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
             SELECT count(*)
             FROM ${account}.dbo.pda_pdBill_D d
             WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id

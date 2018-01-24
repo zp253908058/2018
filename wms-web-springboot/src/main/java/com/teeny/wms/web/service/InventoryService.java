@@ -35,7 +35,7 @@ public interface InventoryService {
 
     List<SKUEntity> getSKUList(int sId, String account, String locationCode, String barcode);
 
-    GoodsDetailEntity getGoodsDetailByCode(String goodsCode, String account);
+    List<GoodsDetailEntity> getGoodsDetailByCode(String goodsCode, String account);
 
     /**
      * 单品盘点添加数据

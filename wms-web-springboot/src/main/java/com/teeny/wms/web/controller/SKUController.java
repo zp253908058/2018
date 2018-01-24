@@ -60,9 +60,9 @@ public class SKUController {
      * @return EmptyEntity
      */
     @GetMapping("/detail")
-    public ResponseEntity<GoodsDetailEntity> getGoodsDetail(@RequestParam("goodsCode") String goodsCode, @RequestHeader("account") String account) {
-        GoodsDetailEntity entity = mInventoryService.getGoodsDetailByCode(goodsCode, account);
-        return new ResponseEntity<>(entity);
+    public ResponseEntity<List<GoodsDetailEntity>> getGoodsDetail(@RequestParam("goodsCode") String goodsCode, @RequestHeader("account") String account) {
+        List<GoodsDetailEntity> list = mInventoryService.getGoodsDetailByCode(goodsCode, account);
+        return new ResponseEntity<>(list);
     }
 
     /**

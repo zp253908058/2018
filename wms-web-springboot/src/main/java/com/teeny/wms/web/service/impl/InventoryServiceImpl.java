@@ -114,7 +114,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public GoodsDetailEntity getGoodsDetailByCode(String goodsCode, String account) {
+    public List<GoodsDetailEntity> getGoodsDetailByCode(String goodsCode, String account) {
         return mInventoryMapper.getGoodsDetailByCode(goodsCode, account);
     }
 

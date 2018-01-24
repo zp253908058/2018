@@ -63,4 +63,6 @@ public interface AllotMapper {
     void completeAllot(@Param("account") String account, @Param("id") int id, @Param("billId") int billId, @Param("list") List<AllotLocationEntity> list);
 
     List<AllotLocationEntity> getLocationList(@Param("account") String account, @Param("id") int id);
+
+    Integer getLocationId(@Param("account") String account, @Param("location") String location);
 }

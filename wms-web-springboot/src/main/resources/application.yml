@@ -15,7 +15,7 @@ spring:
   datasource:
     druid:
       driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      url: jdbc:sqlserver://yyt8812.gnway.cc:1344;databaseName=nmgce
+      url: jdbc:sqlserver://yyt8812.gnway.cc:1344;databaseName=jfk
       username: sa
       password: yyt@123
       initial-size: 1

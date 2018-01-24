@@ -14,6 +14,7 @@ import org.apache.ibatis.type.Alias;
 public class AllotLocationEntity {
     private float amount;
     private String locationCode;
+    private int locationId;
 
     public float getAmount() {
         return amount;
@@ -29,5 +30,13 @@ public class AllotLocationEntity {
 
     public void setLocationCode(String locationCode) {
         this.locationCode = locationCode;
+    }
+
+    public int getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(int locationId) {
+        this.locationId = locationId;
     }
 }

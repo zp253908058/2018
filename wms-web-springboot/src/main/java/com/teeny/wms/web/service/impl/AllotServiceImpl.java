@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -126,6 +127,18 @@ public class AllotServiceImpl implements AllotService {
 
     @Override
     public void completeAllot(String account, AllotLocationRequestEntity entity) {
+        List<AllotLocationEntity> list = entity.getParam();
+        if (Validator.isEmpty(list)) {
+            throw new InnerException("请添加货位.");
+        }
+        for (AllotLocationEntity item : list) {
+            Integer id = mAllotMapper.getLocationId(account, item.getLocationCode());
+            if (id != null && id > 0) {
+                item.setLocationId(id);
+            } else {
+                throw new InnerException("货位码错误：" + item.getLocationCode());
+            }
+        }
         mAllotMapper.completeAllot(account, entity.getId(), entity.getBillId(), entity.getParam());
     }
 
