@@ -94,6 +94,10 @@ public abstract class TableViewPagerActivity extends ToolbarActivity {
         mFloatingActionButton.setVisibility(View.GONE);
     }
 
+    public void showFloatingActionButton() {
+        mFloatingActionButton.setVisibility(View.VISIBLE);
+    }
+
     public void setupFloatingActionButton(@DrawableRes int drawable) {
         mFloatingActionButton.setVisibility(View.VISIBLE);
         mFloatingActionButton.setImageResource(drawable);

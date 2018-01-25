@@ -11,6 +11,7 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -31,7 +32,7 @@ public interface AllotOrderService {
     Flowable<ResponseEntity<List<AllotGoodsEntity>>> getAllotGoodsList(@Query("location") String location, @Query("goods") String goods, @Query("warehouseId") int warehouseId, @Query("repositoryId") int repositoryId, @Query("areaId") int areaId);
 
     @POST("allot/add/{id}")
-    Flowable<ResponseEntity<EmptyEntity>> select(@Path("id") int id);
+    Flowable<ResponseEntity<AllotGoodsEntity>> select(@Path("id") int id);
 
 
     /**
@@ -66,4 +67,10 @@ public interface AllotOrderService {
 
     @GET("allot/locationList/{id}")
     Flowable<ResponseEntity<List<AllotLocationEntity>>> getLocationList(@Path("id") int id);
+
+    @DELETE("allot/remove")
+    Flowable<ResponseEntity<EmptyEntity>> remove(@Query("detailId") int detailId, @Query("locationRowId") int locationRowId);
+
+    @POST("allot/finish")
+    Flowable<ResponseEntity<EmptyEntity>> finish();
 }

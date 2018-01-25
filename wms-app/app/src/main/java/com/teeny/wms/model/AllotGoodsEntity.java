@@ -16,6 +16,7 @@ public class AllotGoodsEntity implements Parcelable {
     private int id;                 //VW_PDA_Storehouse 唯一id
     private int detailId;           //调拨单明细id
     private int billId;             //调拨单据id
+    private int locationRowId;      //调拨单出库行id
     private int goodsId;            //商品id
     private String goodsName;
     private String lotNo;
@@ -60,6 +61,14 @@ public class AllotGoodsEntity implements Parcelable {
 
     public void setBillId(int billId) {
         this.billId = billId;
+    }
+
+    public int getLocationRowId() {
+        return locationRowId;
+    }
+
+    public void setLocationRowId(int locationRowId) {
+        this.locationRowId = locationRowId;
     }
 
     public int getGoodsId() {
@@ -188,6 +197,7 @@ public class AllotGoodsEntity implements Parcelable {
         id = in.readInt();
         detailId = in.readInt();
         billId = in.readInt();
+        locationRowId = in.readInt();
         goodsId = in.readInt();
         goodsName = in.readString();
         lotNo = in.readString();
@@ -210,6 +220,7 @@ public class AllotGoodsEntity implements Parcelable {
         dest.writeInt(id);
         dest.writeInt(detailId);
         dest.writeInt(billId);
+        dest.writeInt(locationRowId);
         dest.writeInt(goodsId);
         dest.writeString(goodsName);
         dest.writeString(lotNo);

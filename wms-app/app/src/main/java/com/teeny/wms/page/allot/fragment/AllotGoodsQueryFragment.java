@@ -19,6 +19,7 @@ import com.teeny.wms.datasouce.net.service.AllotOrderService;
 import com.teeny.wms.model.AllotGoodsEntity;
 import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.ResponseEntity;
+import com.teeny.wms.page.allot.AllotOrderAddDetailActivity;
 import com.teeny.wms.page.allot.adapter.AllotGoodsQueryAdapter;
 import com.teeny.wms.page.allot.helper.AllotOrderHelper;
 import com.teeny.wms.pop.Toaster;
@@ -102,11 +103,12 @@ public class AllotGoodsQueryFragment extends BaseFragment implements RecyclerVie
     @Override
     public void onItemClick(View view, int position) {
         final AllotGoodsEntity entity = mAdapter.getItem(position);
-        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.select(entity.getId());
-        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
+        Flowable<ResponseEntity<AllotGoodsEntity>> flowable = mService.select(entity.getId());
+        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<AllotGoodsEntity>(this) {
             @Override
-            public void doNext(EmptyEntity data) {
+            public void doNext(AllotGoodsEntity data) {
                 mEventBus.post(new AllotGoodsSelectedFragment.SelectedFlag());
+                AllotOrderAddDetailActivity.startActivity(getContext(), data);
             }
 
             @Override

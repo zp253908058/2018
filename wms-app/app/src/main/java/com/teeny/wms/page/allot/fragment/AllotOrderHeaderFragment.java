@@ -99,6 +99,7 @@ public class AllotOrderHeaderFragment extends BaseFragment {
     private void handleResult(String msg) {
         if (mFocusView != null) {
             mFocusView.setText(msg);
+            mFocusView.requestFocus();
         } else {
             Toaster.showToast("当前没有焦点.");
         }
