@@ -317,11 +317,15 @@
         WHERE d.storehouse_id = #{id} AND b.e_id = #{userId} AND b.billstates = 0
     </select>
 
+    <delete id="deleteLocations">
+        DELETE FROM ${account}.dbo.pda_AddTranBillLoc_D WHERE smb_id = #{id}
+    </delete>
+
     <insert id="completeAllot">
         INSERT INTO ${account}.dbo.pda_AddTranBillLoc_D (bill_id, smb_id, quantity, location_id2)
         VALUES
-        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
-            #{billId}, #{id}, #{item.amount}, #{item.locationId}
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{billId}, #{id}, #{item.amount}, #{item.locationId})
         </foreach>
     </insert>
 

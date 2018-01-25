@@ -73,4 +73,6 @@ public interface AllotMapper {
     void removeDetail(@Param("account") String account, @Param("id") int detailId);
 
     void finish(@Param("account") String account, @Param("id") int userId);
+
+    void deleteLocations(@Param("account") String account, @Param("id")int id);
 }

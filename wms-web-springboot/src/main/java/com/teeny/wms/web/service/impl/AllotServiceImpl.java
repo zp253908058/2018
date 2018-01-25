@@ -141,6 +141,7 @@ public class AllotServiceImpl implements AllotService {
                 throw new InnerException("货位码错误：" + item.getLocationCode());
             }
         }
+        mAllotMapper.deleteLocations(account, entity.getId());
         mAllotMapper.completeAllot(account, entity.getId(), entity.getBillId(), entity.getParam());
     }
 
