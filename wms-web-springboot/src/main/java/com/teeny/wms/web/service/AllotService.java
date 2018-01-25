@@ -36,11 +36,15 @@ public interface AllotService {
 
     List<AllotGoodsEntity> getAllotGoodsList(String account, String location, String goods, int warehouseId, int repositoryId, int areaId);
 
-    void add(String account, int id, int userId, String serial);
+    AllotGoodsEntity add(String account, int id, int userId, String serial);
 
     List<AllotGoodsEntity> getTempleGoodsList(String account, int userId);
 
     void completeAllot(String account, AllotLocationRequestEntity entity);
 
     List<AllotLocationEntity> getLocationList(String account, int id);
+
+    void remove(String account, int detailId, int locationRowId);
+
+    void finishBill(String account, int userId);
 }

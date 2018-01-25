@@ -13,6 +13,7 @@ import com.teeny.wms.web.repository.AllotMapper;
 import com.teeny.wms.web.repository.CommonMapper;
 import com.teeny.wms.web.service.AllotService;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -111,13 +112,14 @@ public class AllotServiceImpl implements AllotService {
     }
 
     @Override
-    public void add(String account, int id, int userId, String serial) {
+    public AllotGoodsEntity add(String account, int id, int userId, String serial) {
         String billNo = DateFormatUtils.format(new Date(), DATE_PATTERN);
-        System.out.println("account = " + account + ", id = " + id + ", billNo = " + billNo + ", userId = " + userId);
         //生成大单据
         mAllotMapper.generateBill(account, userId, billNo);
         //添加至待完成
         mAllotMapper.generateAllotOrder(account, id, userId);
+
+        return mAllotMapper.getAllotGoods(account, id, userId);
     }
 
     @Override
@@ -145,5 +147,19 @@ public class AllotServiceImpl implements AllotService {
     @Override
     public List<AllotLocationEntity> getLocationList(String account, int id) {
         return mAllotMapper.getLocationList(account, id);
+    }
+
+    @Override
+    public void remove(String account, int detailId, int locationRowId) {
+        if (locationRowId > 0) {
+            mAllotMapper.removeLocation(account, locationRowId);
+        } else {
+            mAllotMapper.removeDetail(account, detailId);
+        }
+    }
+
+    @Override
+    public void finishBill(String account, int userId) {
+        mAllotMapper.finish(account, userId);
     }
 }

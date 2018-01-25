@@ -148,9 +148,8 @@ public class AllotController {
     }
 
     @PostMapping(value = "add/{id}")
-    public ResponseEntity add(@RequestHeader("account") String account, @PathVariable("id") int id, @User UserEntity userEntity) {
-        mAllotService.add(account, id, userEntity.getId(), userEntity.getSerialNumber());
-        return new ResponseEntity();
+    public ResponseEntity<AllotGoodsEntity> add(@RequestHeader("account") String account, @PathVariable("id") int id, @User UserEntity userEntity) {
+        return new ResponseEntity<>(mAllotService.add(account, id, userEntity.getId(), userEntity.getSerialNumber()));
     }
 
     @GetMapping(value = "getTempleGoodsList")
@@ -167,5 +166,17 @@ public class AllotController {
     @GetMapping("locationList/{id}")
     public ResponseEntity<List<AllotLocationEntity>> getLocationList(@RequestHeader("account") String account, @PathVariable("id") int id) {
         return new ResponseEntity<>(mAllotService.getLocationList(account, id));
+    }
+
+    @DeleteMapping("remove")
+    public ResponseEntity<EmptyEntity> remove(@RequestHeader("account") String account, @RequestParam("detailId") int detailId, @RequestParam("locationRowId") int locationRowId) {
+        mAllotService.remove(account, detailId, locationRowId);
+        return new ResponseEntity<>();
+    }
+
+    @PostMapping("finish")
+    public ResponseEntity<EmptyEntity> finishBill(@RequestHeader("account") String account, @User UserEntity entity) {
+        mAllotService.finishBill(account, entity.getId());
+        return new ResponseEntity<>();
     }
 }

@@ -261,12 +261,13 @@
 
     <select id="getTempleGoodsList" resultType="AllotGoodsEntity">
         SELECT
-            s.storehouse_id                       AS id,
+            d.storehouse_id                       AS id,
             d.smb_id                              AS detailId,
             b.billid                              AS billId,
+            ld.id                                 AS locationRowId,
             p.p_id                                AS goodsId,
             p.name                                AS goodsName,
-            s.batchno                             AS lotNo,
+            d.Batchno                             AS lotNo,
             p.standard                            AS specification,
             CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
             CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
@@ -278,13 +279,42 @@
             l.loc_code                            AS exportLocation,
             ld.location_id2                       AS importLocation,
             s.quantity                            AS currentInventory
-        FROM ${account}.dbo.VW_PDA_Storehouse s
-            INNER JOIN ${account}.dbo.pda_AddTranBill_D d ON d.storehouse_id = s.storehouse_id
+        FROM ${account}.dbo.pda_AddTranBill_D d
+            INNER JOIN ${account}.dbo.VW_PDA_Storehouse s ON d.storehouse_id = s.storehouse_id
             INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
-            INNER JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
-            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
             INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+            LEFT JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
         WHERE b.e_id = #{userId} AND b.billstates = 0
+    </select>
+
+    <select id="getAllotGoods" resultType="AllotGoodsEntity">
+        SELECT
+            d.storehouse_id                       AS id,
+            d.smb_id                              AS detailId,
+            d.bill_id                             AS billId,
+            ld.id                                 AS locationRowId,
+            p.p_id                                AS goodsId,
+            p.name                                AS goodsName,
+            d.Batchno                             AS lotNo,
+            p.standard                            AS specification,
+            CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
+            CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
+            p.unit1Name                           AS unit,
+            s.quantity                            AS amount,
+            p.Factory                             AS manufacturer,
+            l.loc_code                            AS locationCode,
+            p.barcode                             AS goodsCode,
+            l.loc_code                            AS exportLocation,
+            ld.location_id2                       AS importLocation,
+            s.quantity                            AS currentInventory
+        FROM ${account}.dbo.pda_AddTranBill_D d
+            INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
+            INNER JOIN ${account}.dbo.VW_PDA_Storehouse s ON d.storehouse_id = s.storehouse_id
+            INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+            LEFT JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
+        WHERE d.storehouse_id = #{id} AND b.e_id = #{userId} AND b.billstates = 0
     </select>
 
     <insert id="completeAllot">
@@ -307,4 +337,16 @@
     <select id="getLocationId" resultType="int">
         SELECT l.l_id FROM ${account}.dbo.pda_location l WHERE l.loc_code = #{location}
     </select>
+
+    <delete id="removeLocation">
+        DELETE FROM ${account}.dbo.pda_AddTranBillLoc_D WHERE id = #{id}
+    </delete>
+
+    <delete id="removeDetail">
+        DELETE FROM ${account}.dbo.pda_AddTranBill_D WHERE smb_id = #{id}
+    </delete>
+
+    <update id="finish">
+        UPDATE ${account}.dbo.pda_AddTranBill SET billstates = 1 WHERE e_id = #{id}
+    </update>
 </mapper>

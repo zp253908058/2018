@@ -15,6 +15,7 @@ public class AllotGoodsEntity {
     private int id;
     private int detailId;           //调拨单明细id
     private int billId;             //调拨单据id
+    private int locationRowId;      //调拨单出库行id
     private int goodsId;
     private String goodsName;
     private String lotNo;
@@ -54,6 +55,14 @@ public class AllotGoodsEntity {
 
     public void setBillId(int billId) {
         this.billId = billId;
+    }
+
+    public int getLocationRowId() {
+        return locationRowId;
+    }
+
+    public void setLocationRowId(int locationRowId) {
+        this.locationRowId = locationRowId;
     }
 
     public int getGoodsId() {
