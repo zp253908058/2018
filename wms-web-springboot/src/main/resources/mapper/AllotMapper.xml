@@ -212,7 +212,7 @@
 
     <insert id="generateBill">
         <selectKey keyProperty="count" resultType="int" order="BEFORE" keyColumn="count">
-            SELECT count(*) AS count FROM ${account}.dbo.pda_AddTranBill b WHERE b.pdastates = 0 AND b.e_id = #{userId}
+            SELECT count(*) AS count FROM ${account}.dbo.pda_AddTranBill b WHERE b.billstates = 0 AND b.e_id = #{userId}
         </selectKey>
 
         <if test="count==0">
@@ -277,7 +277,7 @@
             l.loc_code                            AS locationCode,
             p.barcode                             AS goodsCode,
             l.loc_code                            AS exportLocation,
-            ld.location_id2                       AS importLocation,
+            l2.loc_code                           AS importLocation,
             s.quantity                            AS currentInventory
         FROM ${account}.dbo.pda_AddTranBill_D d
             INNER JOIN ${account}.dbo.VW_PDA_Storehouse s ON d.storehouse_id = s.storehouse_id
@@ -285,6 +285,7 @@
             INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
             LEFT JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
+            LEFT JOIN ${account}.dbo.pda_location l2 ON ld.location_id2 = l2.l_id
         WHERE b.e_id = #{userId} AND b.billstates = 0
     </select>
 
@@ -306,7 +307,7 @@
             l.loc_code                            AS locationCode,
             p.barcode                             AS goodsCode,
             l.loc_code                            AS exportLocation,
-            ld.location_id2                       AS importLocation,
+            l2.loc_code                           AS importLocation,
             s.quantity                            AS currentInventory
         FROM ${account}.dbo.pda_AddTranBill_D d
             INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
@@ -314,6 +315,7 @@
             INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
             LEFT JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
+            LEFT JOIN ${account}.dbo.pda_location l2 ON ld.location_id2 = l2.l_id
         WHERE d.storehouse_id = #{id} AND b.e_id = #{userId} AND b.billstates = 0
     </select>
 
