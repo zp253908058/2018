@@ -82,6 +82,7 @@ public class ShelveAndStorageActivity extends ToolbarActivity implements BaseFra
     private String[] mTitles;
 
     private ArrayAdapter<KeyValueEntity> mAdapter;
+    private KeyValueEntity mSelectedRepository;
 
     private AutoCompleteTextView mOrderTextView;
     private KeyValueListAdapter mOrderAdapter;
@@ -160,9 +161,11 @@ public class ShelveAndStorageActivity extends ToolbarActivity implements BaseFra
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 KeyValueEntity entity = mAdapter.getItem(pos);
-                if (entity != null) {
-                    obtainOrders(entity.getKey());
+                if (mSelectedRepository == entity || entity == null) {
+                    return;
                 }
+                mSelectedRepository = entity;
+                obtainOrders();
                 if (mOrderAdapter.getCount() > 0) {
                     mOrderAdapter.removes();
                 }
@@ -256,11 +259,11 @@ public class ShelveAndStorageActivity extends ToolbarActivity implements BaseFra
         });
     }
 
-    /**
-     * @param id 库区id
-     */
-    private void obtainOrders(int id) {
-        Flowable<ResponseEntity<List<KeyValueEntity>>> flowable = mService.getOrderNoList(id);
+    private void obtainOrders() {
+        if (mSelectedRepository == null) {
+            return;
+        }
+        Flowable<ResponseEntity<List<KeyValueEntity>>> flowable = mService.getOrderNoList(mSelectedRepository.getKey());
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<List<KeyValueEntity>>(this) {
             @Override
             public void doNext(List<KeyValueEntity> data) {
@@ -321,6 +324,7 @@ public class ShelveAndStorageActivity extends ToolbarActivity implements BaseFra
             public void doNext(List<ShelveEntity> data) {
                 if (Validator.isEmpty(data)) {
                     Toaster.showToast("获取到商品为空.");
+                    obtainOrders();
                 }
                 mHelper.setDataSource(data);
             }
@@ -369,6 +373,7 @@ public class ShelveAndStorageActivity extends ToolbarActivity implements BaseFra
                 DocumentHelper.getInstance().notifyDocumentChanged();
                 mLocationTextView.setText("");
                 mGoodsTextView.setText("");
+                obtainOrders();
             }
         });
     }

@@ -258,7 +258,7 @@ public class ExWarehouseReviewActivity extends ToolbarActivity {
 
             @Override
             public void doComplete() {
-
+                obtainBills();
             }
         });
     }

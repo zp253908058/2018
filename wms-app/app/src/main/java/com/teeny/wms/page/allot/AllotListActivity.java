@@ -406,6 +406,7 @@ public class AllotListActivity extends ToolbarActivity implements RecyclerViewTo
         AllotListEntity entity = mAdapter.getItem(mSelectPosition);
         mAdapter.remove(mSelectPosition);
         mHelper.remove(entity);
+        obtainDocument();
     }
 
     public void onClick(View view) {
@@ -452,6 +453,7 @@ public class AllotListActivity extends ToolbarActivity implements RecyclerViewTo
             public void doComplete() {
                 mAdapter.removes();
                 mAdapter.notifyDataSetChanged();
+                obtainDocument();
             }
         });
     }
