@@ -134,6 +134,7 @@
         FROM ${account}.dbo.pda_TranBill_D d
         INNER JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
         LEFT JOIN ${account}.dbo.pda_TranBill b ON d.bill_id = b.billid
+        WHere d.DealStates = 0
         <where>
             <if test="saId!=0">
                 b.sa_outid = #{saId}

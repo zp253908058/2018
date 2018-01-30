@@ -16,7 +16,7 @@
             a.name
         FROM ${account}.dbo.pda_PutOnBill b
             INNER JOIN ${account}.dbo.pda_stockArea a ON b.sa_id = a.sa_id
-        WHERE b.billstates = 10
+        WHERE b.pdastates != 2 AND b.billstates = 10
         <if test="sId != 0">
             AND b.s_id = #{sId}
         </if>
@@ -27,7 +27,7 @@
             b.billid     AS id,
             b.billnumber AS name
         FROM ${account}.dbo.pda_PutOnBill b
-        WHERE b.pdastates != 2
+        WHERE b.pdastates != 2 AND b.billstates = 10
         <if test="saId!=0">
             AND b.sa_id=#{saId}
         </if>
