@@ -348,6 +348,10 @@
         DELETE FROM ${account}.dbo.pda_AddTranBillLoc_D WHERE id = #{id}
     </delete>
 
+    <select id="getLocationCount" resultType="int">
+        SELECT count(1) FROM ${account}.dbo.pda_AddTranBillLoc_D WHERE smb_id = #{id}
+    </select>
+
     <delete id="removeDetail">
         DELETE FROM ${account}.dbo.pda_AddTranBill_D WHERE smb_id = #{id}
     </delete>

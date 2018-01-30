@@ -154,6 +154,10 @@ public class AllotServiceImpl implements AllotService {
     public void remove(String account, int detailId, int locationRowId) {
         if (locationRowId > 0) {
             mAllotMapper.removeLocation(account, locationRowId);
+            Integer count = mAllotMapper.getLocationCount(account, detailId);
+            if (count == null || count == 0) {
+                mAllotMapper.removeDetail(account, detailId);
+            }
         } else {
             mAllotMapper.removeDetail(account, detailId);
         }
