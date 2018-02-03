@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
+import com.teeny.wms.util.Validator;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +16,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,10 +60,10 @@ public class ScannerHelper {
     private static final String SCANNER_ACTION_START = "android.intent.action.SCANNER_BUTTON_DOWN";
     private static final String SCANNER_ACTION_CANCEL = "android.intent.action.SCANNER_BUTTON_UP";
 
-    private final Map<Class, BroadcastReceiver> mReceiverHolder;
+    private static final Map<Class, BroadcastReceiver> mReceiverHolder = new HashMap<>();
+    private static final List<Class> mClassHolder = new ArrayList<>();
 
     private ScannerHelper() {
-        mReceiverHolder = new HashMap<>();
     }
 
     private void setScannerAvailable(boolean available) {
@@ -113,12 +118,14 @@ public class ScannerHelper {
         ScannerBroadcastReceiver receiver = new ScannerBroadcastReceiver(handler);
         context.registerReceiver(receiver, intentFilter);
         mReceiverHolder.put(context.getClass(), receiver);
+        mClassHolder.add(context.getClass());
     }
 
     public void unregisterReceiver(Context context) {
         BroadcastReceiver receiver = mReceiverHolder.get(context.getClass());
         context.unregisterReceiver(receiver);
         mReceiverHolder.remove(context.getClass());
+        mClassHolder.remove(context.getClass());
     }
 
     public void startScan(Context context) {
@@ -147,11 +154,20 @@ public class ScannerHelper {
         public void onReceive(Context context, Intent intent) {
 
             String action = intent.getAction();
+            if (Validator.isEmpty(action)) {
+                return;
+            }
+            boolean isLast = mReceiverHolder.get(mClassHolder.get(mClassHolder.size() - 1)) == this;
 
             switch (action) {
                 case SCANNER_ACTION_FILTER:
+                    if (!isLast) {
+                        break;
+                    }
                     String message = intent.getStringExtra(SCANNER_RESULT_DATA);
                     mResultHandler.handleResult(message);
+                    break;
+                default:
                     break;
             }
         }
