@@ -102,6 +102,7 @@ public class InventoryServiceImpl implements InventoryService {
             } else {
                 entity.setBillState(2);
             }
+            entity.setBillState(type);
             mInventoryMapper.addInventory(entity, type, account, sId, userId);
         } else {
             throw new InnerException("找不此货位:" + entity.getLocationCode());
