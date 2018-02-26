@@ -166,8 +166,6 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     public void complete(String account, List<Integer> ids, int userId) {
-        if (Validator.isNotEmpty(ids)) {
-            mInventoryMapper.complete(account, ids, userId);
-        }
+        complete(ids, account, userId);
     }
 }
