@@ -185,11 +185,11 @@
             CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
             CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
             p.unit1Name                           AS unit,
-            s.quantity                            AS amount,
+            s.AvlQty                              AS amount,
             p.Factory                             AS manufacturer,
             l.loc_code                            AS locationCode,
             p.barcode                             AS goodsCode
-        FROM ${account}.dbo.VW_PDA_Storehouse s
+        FROM ${account}.dbo.VW_PDA_Storehouse_AvlQty s
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
         <where>
@@ -249,7 +249,7 @@
                 s.batchno,
                 getdate(),
                 0
-                FROM ${account}.dbo.VW_PDA_Storehouse s
+                FROM ${account}.dbo.VW_PDA_Storehouse_AvlQty s
                 WHERE s.storehouse_id = #{id}
             </when>
             <otherwise>
@@ -273,15 +273,15 @@
             CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
             CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
             p.unit1Name                           AS unit,
-            s.quantity                            AS amount,
+            s.AvlQty                              AS amount,
             p.Factory                             AS manufacturer,
             l.loc_code                            AS locationCode,
             p.barcode                             AS goodsCode,
             l.loc_code                            AS exportLocation,
             l2.loc_code                           AS importLocation,
-            s.quantity                            AS currentInventory
+            s.AvlQty                              AS currentInventory
         FROM ${account}.dbo.pda_AddTranBill_D d
-            INNER JOIN ${account}.dbo.VW_PDA_Storehouse s ON d.storehouse_id = s.storehouse_id
+            INNER JOIN ${account}.dbo.VW_PDA_Storehouse_AvlQty s ON d.storehouse_id = s.storehouse_id
             INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
             INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
@@ -303,16 +303,16 @@
             CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
             CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
             p.unit1Name                           AS unit,
-            s.quantity                            AS amount,
+            s.AvlQty                              AS amount,
             p.Factory                             AS manufacturer,
             l.loc_code                            AS locationCode,
             p.barcode                             AS goodsCode,
             l.loc_code                            AS exportLocation,
             l2.loc_code                           AS importLocation,
-            s.quantity                            AS currentInventory
+            s.AvlQty                              AS currentInventory
         FROM ${account}.dbo.pda_AddTranBill_D d
             INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
-            INNER JOIN ${account}.dbo.VW_PDA_Storehouse s ON d.storehouse_id = s.storehouse_id
+            INNER JOIN ${account}.dbo.VW_PDA_Storehouse_AvlQty s ON d.storehouse_id = s.storehouse_id
             INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
             LEFT JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
