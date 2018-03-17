@@ -42,7 +42,6 @@ public class OutputPickingAddActivity extends ToolbarActivity {
     }
 
     private EditText mTurnoverBoxText;
-    private EditText mAmountText;
     private OutputPickingEntity mEntity;
 
     @Override
@@ -66,13 +65,11 @@ public class OutputPickingAddActivity extends ToolbarActivity {
 
     private void initView() {
         mTurnoverBoxText = (EditText) findViewById(R.id.output_picking_add_turnover_box);
-        mAmountText = (EditText) findViewById(R.id.output_picking_add_picking_number);
 
         Intent intent = getIntent();
         if (intent.hasExtra(KEY_ENTITY)) {
             mEntity = intent.getParcelableExtra(KEY_ENTITY);
             mTurnoverBoxText.setText(mEntity.getTurnover());
-            mAmountText.setText(String.valueOf(mEntity.getNumber()));
         } else {
             mEntity = new OutputPickingEntity();
         }
@@ -88,14 +85,7 @@ public class OutputPickingAddActivity extends ToolbarActivity {
             Toaster.showToast("请扫描或输入周转箱.");
             return;
         }
-        String amount = mAmountText.getText().toString();
-        if (Validator.isEmpty(amount)) {
-            Toaster.showToast("请输入数量.");
-            mAmountText.requestFocus();
-            return;
-        }
         mEntity.setTurnover(turnover);
-        mEntity.setNumber(Converter.toInt(amount));
         getEventBus().post(mEntity);
         finish();
     }

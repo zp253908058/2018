@@ -27,11 +27,11 @@
             app:key="@string/text_goods_barcode" />
 
         <com.teeny.wms.widget.KeyValueTextView
-            android:id="@+id/barcode_collect_goods_specification"
+            android:id="@+id/barcode_collect_goods_new_barcode"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_32"
             android:layout_weight="1"
-            app:key="@string/text_specification" />
+            app:key="@string/text_new_goods_barcode" />
     </LinearLayout>
 
     <LinearLayout
@@ -47,13 +47,19 @@
             app:key="@string/text_unit" />
 
         <com.teeny.wms.widget.KeyValueTextView
-            android:id="@+id/barcode_collect_goods_dosage_form"
+            android:id="@+id/barcode_collect_goods_specification"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_32"
             android:layout_weight="1"
-            app:key="@string/text_dosage_form" />
+            app:key="@string/text_specification" />
 
     </LinearLayout>
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/barcode_collect_goods_dosage_form"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_dosage_form" />
 
     <com.teeny.wms.widget.KeyValueTextView
         android:id="@+id/barcode_collect_goods_manufacturer"

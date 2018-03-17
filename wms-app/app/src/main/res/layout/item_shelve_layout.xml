@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:background="@drawable/background_selectable_item_white"
     android:clickable="true"
     android:focusable="true"
@@ -11,27 +13,35 @@
     android:paddingRight="@dimen/dp_16"
     android:paddingStart="@dimen/dp_16">
 
-    <com.teeny.wms.widget.KeyValueTextView
-        android:id="@+id/shelve_article_no_view"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_32"
-        app:key="@string/text_goods_allocation" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/shelve_status_view"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_32"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:gravity="center_vertical"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/sp_14" />
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/shelve_article_no_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_8"
+            app:key="@string/text_goods_allocation" />
+
+        <TextView
+            android:id="@+id/shelve_status_view"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp_32"
+            android:gravity="center_vertical|end"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/sp_14"
+            android:layout_weight="0"
+            tools:text="sss"/>
+    </LinearLayout>
 
     <com.teeny.wms.widget.KeyValueTextView
         android:id="@+id/shelve_goods_name_view"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_32"
-        android:layout_below="@+id/shelve_article_no_view"
         android:paddingBottom="@dimen/dp_8"
         android:paddingTop="@dimen/dp_8"
         app:key="@string/text_goods_name" />
@@ -39,7 +49,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/shelve_goods_name_view"
+        android:orientation="horizontal">
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/shelve_production_date_view"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_8"
+            app:key="@string/text_validity" />
+
+        <com.teeny.wms.widget.KeyValueTextView
+            android:id="@+id/shelve_barcode"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_32"
+            android:layout_weight="1"
+            android:paddingBottom="@dimen/dp_8"
+            android:paddingTop="@dimen/dp_8"
+            app:key="@string/text_barcode" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <com.teeny.wms.widget.KeyValueTextView
@@ -61,18 +94,9 @@
             app:key="@string/text_specification" />
     </LinearLayout>
 
-    <com.teeny.wms.widget.KeyValueTextView
-        android:id="@+id/shelve_production_date_view"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_32"
-        android:layout_below="@+id/shelve_goods_name_view"
-        android:layout_marginTop="@dimen/dp_32"
-        app:key="@string/text_validity" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/shelve_production_date_view"
         android:orientation="horizontal">
 
         <com.teeny.wms.widget.KeyValueTextView
@@ -99,8 +123,6 @@
         android:id="@+id/shelve_manufacturer_view"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_32"
-        android:layout_below="@+id/shelve_production_date_view"
-        android:layout_marginTop="@dimen/dp_32"
         app:key="@string/text_manufacturer" />
 
-</RelativeLayout>
+</LinearLayout>

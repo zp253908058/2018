@@ -44,6 +44,7 @@ public class BarcodeGoodsAdapter extends RecyclerAdapter<BarcodeGoodsEntity> {
         LinearLayout container = holder.get(R.id.barcode_collect_container);
         KeyValueTextView name = holder.get(R.id.barcode_collect_goods_name);
         KeyValueTextView barcode = holder.get(R.id.barcode_collect_goods_barcode);
+        KeyValueTextView newBarcode = holder.get(R.id.barcode_collect_goods_new_barcode);
         KeyValueTextView specification = holder.get(R.id.barcode_collect_goods_specification);
         KeyValueTextView unit = holder.get(R.id.barcode_collect_goods_unit);
         KeyValueTextView manufacturer = holder.get(R.id.barcode_collect_goods_manufacturer);
@@ -54,13 +55,16 @@ public class BarcodeGoodsAdapter extends RecyclerAdapter<BarcodeGoodsEntity> {
         if (Validator.isNotNull(item)) {
             name.setValue(item.getGoodsName());
             barcode.setValue(item.getBarcode());
+            newBarcode.setValue(item.getNewBarcode());
             specification.setValue(item.getSpecification());
             unit.setValue(item.getUnit());
             manufacturer.setValue(item.getManufacturer());
             dosageForm.setValue(item.getDosageForm());
             if (Validator.isEmpty(item.getBarcode())) {
                 container.setBackgroundColor(ResourcesCompat.getColor(holder.getItemView().getResources(), R.color.orange_300, null));
-            }else {
+            } else if (Validator.isEmpty(item.getNewBarcode())) {
+                container.setBackgroundColor(ResourcesCompat.getColor(holder.getItemView().getResources(), R.color.green_300, null));
+            } else {
                 container.setBackgroundColor(ResourcesCompat.getColor(holder.getItemView().getResources(), R.color.white, null));
             }
         }

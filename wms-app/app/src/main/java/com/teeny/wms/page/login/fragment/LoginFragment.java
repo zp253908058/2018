@@ -4,9 +4,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
 import com.teeny.wms.R;
@@ -22,6 +24,7 @@ import com.teeny.wms.page.main.MainActivity;
 import com.teeny.wms.pop.DialogFactory;
 import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.Validator;
+import com.teeny.wms.util.WindowUtils;
 import com.teeny.wms.util.log.Logger;
 import com.teeny.wms.view.ProgressView;
 
@@ -74,6 +77,15 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         mAccountSetView.setOnClickListener(this);
         mUsernameView = findView(R.id.login_account_text_view);
         mPasswordView = findView(R.id.login_password_text_view);
+        mPasswordView.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                //执行登陆的代码
+                login();
+                WindowUtils.hideInputSoft(v);
+                return true;
+            }
+            return false;
+        });
         mLoginHelper = new LoginHelper();
     }
 

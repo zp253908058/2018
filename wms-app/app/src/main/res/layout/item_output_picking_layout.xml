@@ -18,26 +18,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             style="@style/TextViewStyle.Key"
-            android:text="@string/text_picking_number"/>
-
-        <TextView
-            android:id="@+id/output_picking_number"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            style="@style/TextViewStyle.Value"
-            android:gravity="center_vertical|end" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_48"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            style="@style/TextViewStyle.Key"
             android:text="@string/text_turnover_box"/>
 
         <TextView

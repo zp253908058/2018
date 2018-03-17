@@ -16,16 +16,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/output_picking_scan"
-                style="@style/TextViewStyle.Dark.RightDrawable.Scan"
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/output_picking_document_no"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_marginTop="@dimen/dp_16"
                 android:background="@color/white"
-                android:completionThreshold="0"
-                android:dropDownWidth="match_parent"
-                android:hint="@string/text_document_number"
-                android:imeOptions="actionDone"
-                android:theme="@style/AutoCompleteTextView" />
+                app:key="@string/text_document_number"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                app:value="sss"/>
 
             <com.teeny.wms.widget.ExpandableLinearLayout
                 android:layout_width="match_parent"
@@ -242,6 +244,48 @@
                         style="@style/TextViewStyle.Grey"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:text="@string/text_order_count" />
+
+                    <TextView
+                        android:id="@+id/output_picking_order_count"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_order_count" />
+
+                    <EditText
+                        android:id="@+id/output_picking_pick_count"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:inputType="numberDecimal"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="@string/text_lot_number" />
 
                     <TextView
@@ -354,25 +398,7 @@
                         android:gravity="center_vertical|end" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_order_count" />
-
-                    <TextView
-                        android:id="@+id/output_picking_order_count"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
             </LinearLayout>
 
             <android.support.v4.widget.Space

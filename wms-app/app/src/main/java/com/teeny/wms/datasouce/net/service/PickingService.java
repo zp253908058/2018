@@ -26,21 +26,12 @@ import retrofit2.http.Path;
 
 public interface PickingService {
 
-    /**
-     * 获取订单
-     *
-     * @return List<KeyValueEntity>
+    /***
+     * 执行初始化操作
+     * @return OutputPickingOrderEntity
      */
-    @GET("picking/orderList")
-    Flowable<ResponseEntity<List<KeyValueEntity>>> getOrderList();
-
-    /**
-     * 获取详情
-     *
-     * @return List<KeyValueEntity>
-     */
-    @GET("picking/list/{id}")
-    Flowable<ResponseEntity<OutputPickingOrderEntity>> getList(@Path("id") int id);
+    @GET("picking/initialize")
+    Flowable<ResponseEntity<OutputPickingOrderEntity>> initialize();
 
     /**
      * 获取工作任务

@@ -2,10 +2,12 @@ package com.teeny.wms.page.picking.helper;
 
 import com.teeny.wms.model.OutputPickingItemEntity;
 import com.teeny.wms.model.OutputPickingOrderEntity;
+import com.teeny.wms.util.CollectionsUtils;
 import com.teeny.wms.util.Validator;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,36 +55,15 @@ public class OutputPickingHelper {
 
     public String getNextLocation() {
         List<OutputPickingItemEntity> list = mData.getDataList();
-        int index = list.indexOf(mCurrent);
-        int size = list.size();
-        OutputPickingItemEntity result = null;
-        for (int i = index; i < size; i++) {
-            OutputPickingItemEntity entity = list.get(i);
-            if (entity.getStatus() == 0) {
-                result = entity;
-                break;
-            }
+        int size = CollectionsUtils.sizeOf(list);
+        int next = list.indexOf(mCurrent) + 1;
+        if (next < size) {
+            return list.get(next).getLocation();
         }
-        if (result == null) {
-            for (int i = 0; i < index; i++) {
-                OutputPickingItemEntity entity = list.get(i);
-                if (entity.getStatus() == 0) {
-                    result = entity;
-                    break;
-                }
-            }
-            if (result == null) {
-                return "无";
-            }
-        }
-        return result.getLocation();
+        return "无";
     }
 
     public boolean hasNext() {
-        return hasNext(true);
-    }
-
-    private boolean hasNext(boolean change) {
         if (mData == null) {
             return false;
         }
@@ -90,35 +71,18 @@ public class OutputPickingHelper {
         if (Validator.isEmpty(list)) {
             return false;
         }
-        int index = list.indexOf(mCurrent);
-        int size = list.size();
-        OutputPickingItemEntity result = null;
-        for (int i = index; i < size; i++) {
-            OutputPickingItemEntity entity = list.get(i);
-            if (entity.getStatus() == 0) {
-                result = entity;
-                break;
-            }
+        if (mCurrent == null) {
+            return true;
         }
-        if (result == null) {
-            for (int i = 0; i < index; i++) {
-                OutputPickingItemEntity entity = list.get(i);
-                if (entity.getStatus() == 0) {
-                    result = entity;
-                    break;
-                }
-            }
-            if (result == null) {
-                return false;
-            }
-        }
-        if (change) {
-            this.mCurrent = result;
-        }
-        return true;
+        int size = CollectionsUtils.sizeOf(list);
+        int next = list.indexOf(mCurrent) + 1;
+        return next != size;
     }
 
     public void next() {
+        List<OutputPickingItemEntity> list = mData.getDataList();
+        int index = list.indexOf(mCurrent);
+        mCurrent = list.get(index + 1);
         post();
     }
 
@@ -148,13 +112,20 @@ public class OutputPickingHelper {
         mData.setCompleted(mData.getCompleted() + 1);
     }
 
-    public void post() {
-        mEventBus.post(mCurrent);
+    public boolean isLast() {
+        List<OutputPickingItemEntity> list = mData.getDataList();
+        int size = CollectionsUtils.sizeOf(list);
+        int next = list.indexOf(mCurrent) + 1;
+        return size == next;
     }
 
     public void clear() {
         mData = null;
         mCurrent = null;
+    }
+
+    private void post() {
+        mEventBus.post(mCurrent);
     }
 
     public void notifyChanged() {

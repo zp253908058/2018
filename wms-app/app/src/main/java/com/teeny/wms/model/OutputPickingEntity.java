@@ -68,4 +68,12 @@ public class OutputPickingEntity implements Parcelable {
             return new OutputPickingEntity[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "OutputPickingEntity{" +
+                "number=" + number +
+                ", turnover='" + turnover + '\'' +
+                '}';
+    }
 }

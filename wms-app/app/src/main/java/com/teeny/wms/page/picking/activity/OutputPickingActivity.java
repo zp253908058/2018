@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.teeny.wms.R;
@@ -21,7 +22,6 @@ import com.teeny.wms.base.decoration.VerticalDecoration;
 import com.teeny.wms.datasouce.net.NetServiceManager;
 import com.teeny.wms.datasouce.net.ResponseSubscriber;
 import com.teeny.wms.datasouce.net.service.PickingService;
-import com.teeny.wms.model.AllotLocationEntity;
 import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.KeyValueEntity;
 import com.teeny.wms.model.OutputPickingEntity;
@@ -31,13 +31,16 @@ import com.teeny.wms.model.ResponseEntity;
 import com.teeny.wms.model.request.OutputPickingRequestEntity;
 import com.teeny.wms.page.allot.AllotOrderAddActivity;
 import com.teeny.wms.page.barcode.BarcodeCollectActivity;
+import com.teeny.wms.page.common.adapter.AllocationAdapter;
 import com.teeny.wms.page.common.adapter.SimpleAdapter;
 import com.teeny.wms.page.picking.adapter.OutputPickingAdapter;
 import com.teeny.wms.page.picking.helper.OutputPickingHelper;
 import com.teeny.wms.page.sku.SKUCheckActivity;
 import com.teeny.wms.pop.DialogFactory;
 import com.teeny.wms.pop.Toaster;
+import com.teeny.wms.util.Converter;
 import com.teeny.wms.util.Validator;
+import com.teeny.wms.util.log.Logger;
 import com.teeny.wms.widget.KeyValueTextView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -68,9 +71,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
 
     private static final int INVALID_POSITION = -1;
 
-    private AutoCompleteTextView mAutoCompleteTextView;
-    private SimpleAdapter<KeyValueEntity> mOrderAdapter;
-    private KeyValueEntity mSelectedOrder;
+    private KeyValueTextView mDocumentNoView;
 
     private KeyValueTextView mLocationView;
     private KeyValueTextView mProgressView;
@@ -91,6 +92,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     private TextView mUnitPriceView;
     private TextView mMoneyView;
     private TextView mOrderCountView;
+    private EditText mPickCountView;
 
     private OutputPickingAdapter mAdapter;
 
@@ -110,18 +112,12 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         showNavigationIcon(true);
         initView();
         registerEventBus();
-        mScannerHelper.openScanner(this, this::handleResult);
-    }
-
-    private void handleResult(String result) {
-        mAutoCompleteTextView.setText(result);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterEventBus();
-        mScannerHelper.unregisterReceiver(this);
         mHelper.clear();
     }
 
@@ -133,23 +129,10 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
                 Toaster.showToast("前面没有更多了.");
             }
         });
-        mAutoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.output_picking_scan);
-        mAutoCompleteTextView.setOnItemClickListener((parent, view, position, id) -> {
-            KeyValueEntity entity = mOrderAdapter.getItem(position);
-            if (mSelectedOrder == entity) {
-                return;
-            }
-            mSelectedOrder = entity;
-            if (mSelectedOrder == null) {
-                return;
-            }
-            obtainData();
-        });
-        mOrderAdapter = new SimpleAdapter<>(getContext());
-        mAutoCompleteTextView.setAdapter(mOrderAdapter);
-        mAutoCompleteTextView.setOnClickListener(v -> {
-            if (!mAutoCompleteTextView.isPopupShowing()) {
-                mAutoCompleteTextView.showDropDown();
+        mDocumentNoView = (KeyValueTextView) findViewById(R.id.output_picking_document_no);
+        mDocumentNoView.setOnClickListener(v -> {
+            if (Validator.isEmpty(mDocumentNoView.getValue())) {
+                initialize();
             }
         });
 
@@ -172,16 +155,12 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mUnitPriceView = (TextView) findViewById(R.id.output_picking_unit_price);
         mMoneyView = (TextView) findViewById(R.id.output_picking_money);
         mOrderCountView = (TextView) findViewById(R.id.output_picking_order_count);
+        mPickCountView = (EditText) findViewById(R.id.output_picking_pick_count);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new OutputPickingAdapter(new ArrayList<>());
         recyclerView.setAdapter(mAdapter);
-        recyclerView.setNestedScrollingEnabled(false);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager manager = new LinearLayoutManager(this.getContext());
-        manager.setSmoothScrollbarEnabled(true);
-        manager.setAutoMeasureEnabled(true);
-        recyclerView.setLayoutManager(manager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         VerticalDecoration decoration = new VerticalDecoration(this.getContext());
         decoration.setHeight(this.getContext().getResources().getDimensionPixelSize(R.dimen.dp_16));
         decoration.setNeedDraw(false);
@@ -195,35 +174,11 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
 
         mService = NetServiceManager.getInstance().getService(PickingService.class);
         mHelper = OutputPickingHelper.getInstance();
-        obtainOrders();
+        initialize();
     }
 
-    private void obtainOrders() {
-        if (mSelectedOrder == null) {
-            Toaster.showToast("请选择订单.");
-            return;
-        }
-        Flowable<ResponseEntity<List<KeyValueEntity>>> flowable = mService.getOrderList();
-        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<List<KeyValueEntity>>(this) {
-            @Override
-            public void doNext(List<KeyValueEntity> data) {
-                if (Validator.isEmpty(data)) {
-                    Toaster.showToast("未获取到仓库.");
-                } else {
-                    mOrderAdapter.clear();
-                    mOrderAdapter.addAll(data);
-                }
-            }
-
-            @Override
-            public void doComplete() {
-
-            }
-        });
-    }
-
-    private void obtainData() {
-        Flowable<ResponseEntity<OutputPickingOrderEntity>> flowable = mService.getList(mSelectedOrder.getKey());
+    private void initialize() {
+        Flowable<ResponseEntity<OutputPickingOrderEntity>> flowable = mService.initialize();
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<OutputPickingOrderEntity>(this) {
             @Override
             public void doNext(OutputPickingOrderEntity data) {
@@ -240,11 +195,13 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataChanged(OutputPickingHelper helper) {
         OutputPickingOrderEntity entity = helper.getData();
+        mDocumentNoView.setValue(entity.getNumber());
         mProgressView.setValue(entity.getProgress());
         mWarehouseView.setValue(entity.getWarehouse());
         mClerkView.setValue(entity.getClerk());
         mShopView.setValue(entity.getShopName());
         mTotalMoneyView.setValue(String.valueOf(entity.getTotalMoney()));
+        mAdapter.setItems(entity.getTurnoverList());
         if (mHelper.hasNext()) {
             mHelper.next();
         }
@@ -263,9 +220,9 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mUnitPriceView.setText(String.valueOf(entity.getUnitPrice()));
         mMoneyView.setText(String.valueOf(entity.getMoney()));
         mOrderCountView.setText(String.valueOf(entity.getOrderCount()));
+        mPickCountView.setText(String.valueOf(entity.getPickCount()));
         mLocationView.setValue(entity.getLocation());
         mNextLocationView.setValue(mHelper.getNextLocation());
-        mAdapter.setItems(entity.getList());
     }
 
     @Override
@@ -277,6 +234,14 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        if (id == R.id.work_task) {
+            TaskActivity.startActivity(this);
+            return true;
+        }
+        if (mHelper.getCurrent() == null) {
+            Toaster.showToast("没有单据.");
+            return true;
+        }
         switch (id) {
             case R.id.add_turnover_box:
                 OutputPickingAddActivity.startActivity(this);
@@ -289,9 +254,6 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
                 return true;
             case R.id.barcode_collect:
                 BarcodeCollectActivity.startActivity(this, mHelper.getCurrent().getGoodsName());
-                return true;
-            case R.id.work_task:
-                TaskActivity.startActivity(this);
                 return true;
             case R.id.document_detail:
                 OrderDetailActivity.startActivity(this);
@@ -309,37 +271,34 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         if (entity == null) {
             return;
         }
-        List<OutputPickingEntity> list = mAdapter.getItems();
-        if (Validator.isEmpty(list)) {
-            Toaster.showToast("请添加周转箱和数量.");
-            return;
-        }
-        int count = 0;
-        for (OutputPickingEntity item : list) {
-            count += item.getNumber();
-        }
-        if (count > entity.getOrderCount()) {
-            Toaster.showToast("拣货总数不能大于订单数量.");
-            return;
-        }
         OutputPickingRequestEntity requestEntity = new OutputPickingRequestEntity();
-        requestEntity.setId(entity.getId());
+        List<OutputPickingEntity> list = mAdapter.getItems();
         requestEntity.setList(list);
+        if (mHelper.isLast()) {
+            if (Validator.isEmpty(list)) {
+                Toaster.showToast("请添加周转箱.");
+                return;
+            }
+        }
+        requestEntity.setId(mHelper.getData().getId());
+        requestEntity.setDetailId(entity.getId());
+        int number = Converter.toInt(mPickCountView.getText().toString());
+        if (number > entity.getOrderCount()) {
+            Toaster.showToast("拣货数量不能大于订单数量.");
+            return;
+        }
+        requestEntity.setNumber(number);
         Flowable<ResponseEntity<EmptyEntity>> flowable = mService.complete(requestEntity);
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override
             public void doNext(EmptyEntity data) {
-                OutputPickingItemEntity entity = mHelper.getCurrent();
-                List<OutputPickingEntity> list = mAdapter.getItems();
-                entity.setList(list);
                 mHelper.addCount();
                 if (mHelper.hasNext()) {
                     mHelper.next();
                 } else {
-                    mOrderAdapter.remove(mSelectedOrder);
-                    mSelectedOrder = null;
                     clear();
                     mHelper.clear();
+                    initialize();
                 }
             }
 
@@ -351,7 +310,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     }
 
     public void clear() {
-        mProgressView.setValue("/");
+        mProgressView.setValue("");
         mWarehouseView.setValue("");
         mClerkView.setValue("");
         mShopView.setValue("");
@@ -375,12 +334,14 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLocationAdd(OutputPickingEntity entity) {
+
+        Logger.e(entity.toString());
+
         if (mSelectPosition != INVALID_POSITION) {
             mAdapter.update(entity, mSelectPosition);
         } else {
             mAdapter.append(entity);
         }
-        mAdapter.notifyDataSetChanged();
     }
 
     private void onItemClick(View view, int position) {

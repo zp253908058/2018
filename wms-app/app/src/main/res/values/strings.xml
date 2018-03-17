@@ -169,6 +169,7 @@
     <string name="text_allot_order_add">调拨单新增</string>
     <string name="text_allot_order_add_detail">调拨单新增详情</string>
     <string name="text_goods_barcode">商品条码</string>
+    <string name="text_new_goods_barcode">新条码</string>
     <string name="text_goods_search">商品搜索</string>
     <string name="text_dosage_form">剂型</string>
     <string name="text_approval_number">批准文号</string>

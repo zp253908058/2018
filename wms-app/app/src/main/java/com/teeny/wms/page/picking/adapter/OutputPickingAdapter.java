@@ -36,11 +36,9 @@ public class OutputPickingAdapter extends RecyclerAdapter<OutputPickingEntity> {
 
     @Override
     protected void onBindViewHolder(RecyclerViewHolder holder, int position, OutputPickingEntity item) {
-        TextView number = holder.get(R.id.output_picking_number);
         TextView turnover = holder.get(R.id.output_picking_turnover);
 
         if (item != null) {
-            number.setText(String.valueOf(item.getNumber()));
             turnover.setText(item.getTurnover());
         }
     }
