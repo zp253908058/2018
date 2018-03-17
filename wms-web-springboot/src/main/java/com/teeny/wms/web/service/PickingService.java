@@ -1,6 +1,5 @@
 package com.teeny.wms.web.service;
 
-import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.request.OutputPickingRequestEntity;
 import com.teeny.wms.web.model.response.OutPickingTaskEntity;
 import com.teeny.wms.web.model.response.OutputPickingOrderEntity;
@@ -16,9 +15,7 @@ import java.util.List;
  * @since 2018/1/21
  */
 public interface PickingService {
-    List<KeyValueEntity> getOrderList(String account, int userId);
-
-    OutputPickingOrderEntity getData(String account, int id);
+    OutputPickingOrderEntity initialize(String account, int userId);
 
     List<OutPickingTaskEntity> getTaskList(String account, int userId);
 

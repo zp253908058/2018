@@ -24,6 +24,8 @@ public class BarcodeGoodsEntity {
     private String makeArea;              //产地
     private String approvalNumber;        //批准文号
 
+    private String newBarcode;            //新条码
+
     public int getId() {
         return id;
     }
@@ -94,5 +96,13 @@ public class BarcodeGoodsEntity {
 
     public void setApprovalNumber(String approvalNumber) {
         this.approvalNumber = approvalNumber;
+    }
+
+    public String getNewBarcode() {
+        return newBarcode;
+    }
+
+    public void setNewBarcode(String newBarcode) {
+        this.newBarcode = newBarcode;
     }
 }

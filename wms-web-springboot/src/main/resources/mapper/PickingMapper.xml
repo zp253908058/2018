@@ -5,28 +5,30 @@
 
 <mapper namespace="com.teeny.wms.web.repository.PickingMapper">
 
-    <resultMap id="keyValue" type="keyValue">
-        <result column="id" property="key" javaType="int"/>
-        <result column="name" property="value"/>
-    </resultMap>
-
-    <select id="getOrderList" resultMap="keyValue">
-        SELECT
-            b.id         AS id,
-            b.billnumber AS name
-        FROM ${account}.dbo.pda_pickBill b
-        WHERE b.pickEid = #{userId} AND b.billstates = 10
+    <select id="getIdByTrigger" resultType="int" statementType="CALLABLE">
+        exec ${account}.dbo.ts_pda_getPickbill #{userId}
     </select>
 
     <resultMap id="data" type="OutputPickingOrderEntity">
+        <result property="id" column="id"/>
+        <result property="number" column="number"/>
+        <result property="completed" column="completed"/>
+        <result property="total" column="total"/>
+        <result property="warehouse" column="warehouse"/>
+        <result property="clerk" column="clerk"/>
+        <result property="shopName" column="shopName"/>
+        <result property="totalMoney" column="totalMoney"/>
         <collection property="dataList" javaType="ArrayList" ofType="OutputPickingItemEntity"
                     column="{account = account, id = id}"
                     select="com.teeny.wms.web.repository.PickingMapper.getDetail"/>
+        <collection property="turnoverList" javaType="ArrayList" ofType="OutputPickingEntity"
+                    column="{account = account, id = id}"
+                    select="com.teeny.wms.web.repository.PickingMapper.getTurnover"/>
     </resultMap>
-
-    <select id="getData" resultMap="data">
+    <select id="getDataById" resultMap="data">
         SELECT
             b.billid            AS id,
+            b.billnumber        AS number,
             sum(d.DealStates)   AS completed,
             count(d.DealStates) AS total,
             s.name              AS warehouse,
@@ -38,16 +40,11 @@
             INNER JOIN ${account}.dbo.pda_pickBill_D d ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_storages s ON b.s_id = s.s_id
             LEFT JOIN ${account}.dbo.pda_employees e ON e.e_id = b.e_id
-        WHERE b.id = #{id}
+        WHERE b.billid = #{id} AND b.billstates = 10
+        GROUP BY b.billid, b.billnumber, s.name, e.name, b.cname, b.total
     </select>
 
-    <resultMap id="detail" type="OutputPickingItemEntity">
-        <collection property="list" javaType="ArrayList" ofType="OutputPickingEntity"
-                    column="{account = account, id = id}"
-                    select="com.teeny.wms.web.repository.PickingMapper.getTurnover"/>
-    </resultMap>
-
-    <select id="getDetail" resultMap="detail">
+    <select id="getDetail" resultType="OutputPickingItemEntity">
         SELECT
             d.smb_id     AS id,
             p.name       AS goodsName,
@@ -58,6 +55,7 @@
             d.MakeDate   AS productionDate,
             l.loc_code   AS location,
             d.Qty        AS orderCount,
+            d.pickQty    AS pickCount,
             d.Batchno    AS lot,
             d.Validdate  AS validate,
             p.Factory    AS manufacturer,
@@ -69,15 +67,22 @@
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON d.Location_id = l.l_id
         WHERE d.bill_id = #{id}
-        ORDER BY d.bill_id
+        ORDER BY id
     </select>
 
     <select id="getTurnover" resultType="OutputPickingEntity">
-        SELECT
-            t.number,
-            t.turnover
-        FROM ${account}.dbo.pda_pickBill_D_Turnover t WHERE t.smb_id = #{id}
+        SELECT t.turnover FROM ${account}.dbo.pda_pickBill_D_Turnover t WHERE t.smb_id = #{id}
     </select>
+
+    <update id="updateBillState">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE" keyColumn="count">
+            SELECT count(1) FROM ${account}.dbo.pda_pickBill_D d WHERE d.DealStates = 0 AND d.bill_id = #{id}
+        </selectKey>
+
+        <if test="count == 0">
+            UPDATE ${account}.dbo.pda_pickBill SET billstates = 13 WHERE billid = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
+        </if>
+    </update>
 
     <select id="getTaskList">
         SELECT
@@ -104,20 +109,10 @@
     </insert>
 
     <update id="updateDetailDate">
-        UPDATE ${account}.dbo.pda_PutOnBill_D SET loginid = #{userId}, wctime = getdate(), DealStates = 1 WHERE smb_id = #{id}
-    </update>
-
-    <update id="updateBillState">
-        <selectKey keyProperty="count" resultType="int" order="BEFORE" keyColumn="count">
-            SELECT count(1) FROM ${account}.dbo.pda_pickBill_D d WHERE d.DealStates = 0 AND d.bill_id = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
-        </selectKey>
-
-        <if test="count == 0">
-            UPDATE ${account}.dbo.pda_pickBill SET billstates = 13 WHERE billid = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
-        </if>
+        UPDATE ${account}.dbo.pda_PutOnBill_D SET pickQty = #{number}, loginid = #{userId}, wctime = getdate(), DealStates = 1 WHERE smb_id = #{id}
     </update>
 
     <update id="updateDate">
-        UPDATE ${account}.dbo.pda_pickBill SET pdaWrTime = getdate() WHERE billid = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
+        UPDATE ${account}.dbo.pda_pickBill SET pdaWrTime = getdate() WHERE billid = #{id}
     </update>
 </mapper>

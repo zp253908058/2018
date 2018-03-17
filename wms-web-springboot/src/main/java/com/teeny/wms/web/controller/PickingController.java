@@ -2,7 +2,6 @@ package com.teeny.wms.web.controller;
 
 import com.teeny.wms.app.annotation.User;
 import com.teeny.wms.web.model.EmptyEntity;
-import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.request.OutputPickingRequestEntity;
@@ -34,23 +33,13 @@ public class PickingController {
     }
 
     /**
-     * 获取订单
+     * 初始化
      *
      * @return List<KeyValueEntity>
      */
-    @GetMapping("orderList")
-    public ResponseEntity<List<KeyValueEntity>> getOrderList(@RequestHeader("account") String account, @User UserEntity entity) {
-        return new ResponseEntity<>(mService.getOrderList(account, entity.getId()));
-    }
-
-    /**
-     * 获取详情
-     *
-     * @return List<KeyValueEntity>
-     */
-    @GetMapping("list/{id}")
-    public ResponseEntity<OutputPickingOrderEntity> getList(@RequestHeader("account") String account, @PathVariable("id") int id) {
-        return new ResponseEntity<>(mService.getData(account, id));
+    @GetMapping("initialize")
+    public ResponseEntity<OutputPickingOrderEntity> initialize(@RequestHeader("account") String account, @User UserEntity entity) {
+        return new ResponseEntity<>(mService.initialize(account, entity.getId()));
     }
 
     /**

@@ -14,7 +14,8 @@ import java.util.List;
  */
 @Alias("OutputPickingOrderEntity")
 public class OutputPickingOrderEntity {
-    private int id;
+    private int id;               //单据id
+    private String number;        //单据编号
     private int completed;
     private int total;
     private String warehouse;
@@ -22,6 +23,7 @@ public class OutputPickingOrderEntity {
     private String shopName;
     private float totalMoney;
     private List<OutputPickingItemEntity> dataList;
+    private List<OutputPickingEntity> turnoverList;
 
     public int getId() {
         return id;
@@ -29,6 +31,14 @@ public class OutputPickingOrderEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public int getCompleted() {
@@ -85,5 +95,13 @@ public class OutputPickingOrderEntity {
 
     public void setDataList(List<OutputPickingItemEntity> dataList) {
         this.dataList = dataList;
+    }
+
+    public List<OutputPickingEntity> getTurnoverList() {
+        return turnoverList;
+    }
+
+    public void setTurnoverList(List<OutputPickingEntity> turnoverList) {
+        this.turnoverList = turnoverList;
     }
 }

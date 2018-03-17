@@ -1,6 +1,7 @@
 package com.teeny.wms.web.service.impl;
 
-import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.app.exception.InnerException;
+import com.teeny.wms.util.Validator;
 import com.teeny.wms.web.model.request.OutputPickingRequestEntity;
 import com.teeny.wms.web.model.response.OutPickingTaskEntity;
 import com.teeny.wms.web.model.response.OutputPickingOrderEntity;
@@ -32,14 +33,24 @@ public class PickingServiceImpl implements PickingService {
     }
 
     @Override
-    public List<KeyValueEntity> getOrderList(String account, int userId) {
-        //TODO  trigger
-        return mMapper.getOrderList(account, userId);
-    }
-
-    @Override
-    public OutputPickingOrderEntity getData(String account, int id) {
-        return mMapper.getData(account, id);
+    public OutputPickingOrderEntity initialize(String account, int userId) {
+        //这个方法执行步骤
+        //1.执行存储过程获取单据id
+        Integer id = mMapper.getIdByTrigger(account, userId);
+        //如果单据不存在或者为0,直接返回
+        if (id == null || id == 0) {
+            throw new InnerException("没有可用单据.");
+        }
+        //2.根据存储过程返回id查找数据
+        OutputPickingOrderEntity entity = mMapper.getDataById(account, id);
+        //如果单据返回为空或者单据详情为空,更新单据状态并直接返回
+        if (entity == null || Validator.isEmpty(entity.getDataList())) {
+            if (entity != null) {
+                mMapper.updateBillState(account, entity.getId());
+            }
+            throw new InnerException("没有可用单据.");
+        }
+        return entity;
     }
 
     @Override
@@ -50,8 +61,10 @@ public class PickingServiceImpl implements PickingService {
     @Override
     public void complete(String account, OutputPickingRequestEntity entity, int userId) {
         mMapper.delete(account, entity.getId());
-        mMapper.add(account, entity.getId(), entity.getList());
-        mMapper.updateDetailDate(account, entity.getId(), userId);
+        if (Validator.isNotEmpty(entity.getList())) {
+            mMapper.add(account, entity.getId(), entity.getList());
+        }
+        mMapper.updateDetailDate(account, entity.getDetailId(), entity.getNumber(), userId);
         mMapper.updateBillState(account, entity.getId());
         mMapper.updateDate(account, entity.getId());
     }

@@ -24,14 +24,13 @@ public class OutputPickingItemEntity {
     private String productionDate;
     private String location;
     private float orderCount;
+    private float pickCount;  //拣货数量
     private String lot;
     private String validate;
     private String manufacturer;
     private float unitPrice;        //单价
     private float money;
     private int status;
-
-    private List<OutputPickingEntity> list;
 
     public int getId() {
         return id;
@@ -105,6 +104,14 @@ public class OutputPickingItemEntity {
         this.orderCount = orderCount;
     }
 
+    public float getPickCount() {
+        return pickCount;
+    }
+
+    public void setPickCount(float pickCount) {
+        this.pickCount = pickCount;
+    }
+
     public String getLot() {
         return lot;
     }
@@ -151,13 +158,5 @@ public class OutputPickingItemEntity {
 
     public void setStatus(int status) {
         this.status = status;
-    }
-
-    public List<OutputPickingEntity> getList() {
-        return list;
-    }
-
-    public void setList(List<OutputPickingEntity> list) {
-        this.list = list;
     }
 }
