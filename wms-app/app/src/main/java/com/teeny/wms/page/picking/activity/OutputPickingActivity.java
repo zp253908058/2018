@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ import com.teeny.wms.pop.DialogFactory;
 import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.Converter;
 import com.teeny.wms.util.Validator;
+import com.teeny.wms.util.WindowUtils;
 import com.teeny.wms.util.log.Logger;
 import com.teeny.wms.widget.KeyValueTextView;
 
@@ -156,6 +158,13 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mMoneyView = (TextView) findViewById(R.id.output_picking_money);
         mOrderCountView = (TextView) findViewById(R.id.output_picking_order_count);
         mPickCountView = (EditText) findViewById(R.id.output_picking_pick_count);
+        mPickCountView.setOnEditorActionListener((v, actionId, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                WindowUtils.hideInputSoft(v);
+                return true;
+            }
+            return false;
+        });
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new OutputPickingAdapter(new ArrayList<>());

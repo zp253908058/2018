@@ -80,7 +80,7 @@
         </selectKey>
 
         <if test="count == 0">
-            UPDATE ${account}.dbo.pda_pickBill SET billstates = 13 WHERE billid = (SELECT bill_id FROM ${account}.dbo.pda_pickBill_D WHERE smb_id = #{id})
+            UPDATE ${account}.dbo.pda_pickBill SET billstates = 13 WHERE billid = #{id}
         </if>
     </update>
 
