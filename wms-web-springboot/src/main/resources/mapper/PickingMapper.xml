@@ -109,7 +109,7 @@
     </insert>
 
     <update id="updateDetailDate">
-        UPDATE ${account}.dbo.pda_PutOnBill_D SET pickQty = #{number}, loginid = #{userId}, wctime = getdate(), DealStates = 1 WHERE smb_id = #{id}
+        UPDATE ${account}.dbo.pda_pickBill_D SET pickQty = #{number}, loginid = #{userId}, wctime = getdate(), DealStates = 1 WHERE smb_id = #{id}
     </update>
 
     <update id="updateDate">

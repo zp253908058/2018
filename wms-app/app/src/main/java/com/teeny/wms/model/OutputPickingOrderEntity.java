@@ -97,7 +97,7 @@ public class OutputPickingOrderEntity {
     }
 
     public String getProgress() {
-        return completed + "/" + total;
+        return (completed + 1) + "/" + total;
     }
 
     public List<OutputPickingEntity> getTurnoverList() {
