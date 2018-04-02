@@ -29,6 +29,7 @@ public class PutawayEntity {
     private String locationCode;
     private String goodsCode;
     private String pinyin;
+    private String remark;
 
     public int getId() {
         return id;
@@ -140,5 +141,13 @@ public class PutawayEntity {
 
     public void setPinyin(String pinyin) {
         this.pinyin = pinyin;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

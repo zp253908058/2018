@@ -28,6 +28,7 @@ public class ShelveEntity implements Parcelable{
     private String locationCode;
     private String goodsCode;
     private String pinyin;
+    private String remark;
 
     public ShelveEntity() {
     }
@@ -144,6 +145,14 @@ public class ShelveEntity implements Parcelable{
         this.pinyin = pinyin;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     protected ShelveEntity(Parcel in) {
         id = in.readInt();
         originalId = in.readInt();
@@ -159,6 +168,7 @@ public class ShelveEntity implements Parcelable{
         locationCode = in.readString();
         goodsCode = in.readString();
         pinyin = in.readString();
+        remark = in.readString();
     }
 
     @Override
@@ -177,6 +187,7 @@ public class ShelveEntity implements Parcelable{
         dest.writeString(locationCode);
         dest.writeString(goodsCode);
         dest.writeString(pinyin);
+        dest.writeString(remark);
     }
 
     @Override

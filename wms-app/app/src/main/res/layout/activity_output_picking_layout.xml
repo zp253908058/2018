@@ -67,6 +67,25 @@
                 android:layout_height="@dimen/px_1"
                 android:background="@drawable/shape_divider" />
 
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/output_picking_client_name"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                app:key="@string/text_client_name"
+                app:keySize="@dimen/sp_14"
+                app:separatorSize="@dimen/sp_14"
+                app:valueSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="@drawable/shape_divider" />
+
             <com.teeny.wms.widget.ExpandableLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -427,6 +446,25 @@
                         android:gravity="center_vertical|end" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="@string/text_remark" />
+
+                    <TextView
+                        android:id="@+id/output_picking_remark"
+                        style="@style/TextViewStyle.Grey"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|end" />
+                </LinearLayout>
 
             </LinearLayout>
 

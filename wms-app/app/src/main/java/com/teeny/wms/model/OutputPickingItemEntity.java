@@ -27,7 +27,7 @@ public class OutputPickingItemEntity {
     private float unitPrice;        //单价
     private float money;
     private int status;
-
+    private String remark;
 
 
     public int getId() {
@@ -156,5 +156,13 @@ public class OutputPickingItemEntity {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

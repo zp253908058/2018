@@ -127,6 +127,7 @@ public class ShelveAndStorageEditActivity extends ToolbarActivity implements Dia
         KeyValueTextView validityDate = (KeyValueTextView) findViewById(R.id.shelve_and_storage_edit_validity_date);
         KeyValueTextView unitView = (KeyValueTextView) findViewById(R.id.shelve_and_storage_edit_unit);
         KeyValueTextView manufacturerView = (KeyValueTextView) findViewById(R.id.shelve_and_storage_edit_manufacturer);
+        KeyValueTextView remark = (KeyValueTextView) findViewById(R.id.shelve_and_storage_edit_remark);
 
         nameView.setValue(mEntity.getGoodsName());
         specificationView.setValue(mEntity.getSpecification());
@@ -134,6 +135,7 @@ public class ShelveAndStorageEditActivity extends ToolbarActivity implements Dia
         unitView.setValue(mEntity.getUnit());
         manufacturerView.setValue(mEntity.getManufacturer());
         validityDate.setValue(mEntity.getProductionDate());
+        remark.setValue(mEntity.getRemark());
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new AllocationAdapter(new ArrayList<>());

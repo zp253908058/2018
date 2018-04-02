@@ -79,10 +79,15 @@ public class InventoryServiceImpl implements InventoryService {
         if (Validator.isEmpty(param)){
             throw new InnerException("盘点批次不能为空.");
         }
+        //获取单据id
         Integer billId = mInventoryMapper.getBillId(account, entity.getId());
+        //获取编辑之前的smb_id列表
         List<Integer> ids = mInventoryMapper.getIdsByOriginalId(entity.getId(), account);
+        //插入新数据
         mInventoryMapper.singleComplete(entity.getId(), param, account, userId);
+        //删除之前的数据
         mInventoryMapper.deleteByIds(ids, account);
+        //更新大单据状态
         mInventoryMapper.updateState(account, billId);
     }
 

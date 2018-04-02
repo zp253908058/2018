@@ -94,17 +94,17 @@
 
     <select id="getPutawayList" resultType="DocumentEntity">
         SELECT
-        b.billid AS id,
-        b.billnumber AS documentNo,
-        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
-        2 AS type,
-        '上架单' AS typeDescription,
+        b.billid                               AS id,
+        b.billnumber                           AS documentNo,
+        CONVERT(VARCHAR(100), b.pdaInTime, 23) AS documentDate,
+        2                                      AS type,
+        '上架单'                                AS typeDescription,
         CASE b.billstates
         WHEN 10
         THEN '待上架'
         WHEN 13
         THEN '已上架'
-        ELSE '' END AS status
+        ELSE '' END                            AS status
         FROM ${account}.dbo.pda_PutOnBill b
         WHERE b.pdastates = 1
         <if test="sId != 0">

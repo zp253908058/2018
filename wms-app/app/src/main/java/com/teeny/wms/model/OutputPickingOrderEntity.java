@@ -18,6 +18,7 @@ public class OutputPickingOrderEntity {
     private int id;               //单据id
     private String number;        //单据编号
     private String deskName;      //复核台
+    private String clientName;    //往来单位
     private int completed;
     private int total;
     private String warehouse;
@@ -49,6 +50,14 @@ public class OutputPickingOrderEntity {
 
     public void setDeskName(String deskName) {
         this.deskName = deskName;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 
     public int getCompleted() {

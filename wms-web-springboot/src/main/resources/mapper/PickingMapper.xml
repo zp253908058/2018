@@ -31,6 +31,7 @@
             b.billid            AS id,
             b.billnumber        AS number,
             b.deskname          AS deskName,
+            b.ClientName        AS clientName,
             sum(d.DealStates)   AS completed,
             count(d.DealStates) AS total,
             s.name              AS warehouse,
@@ -43,7 +44,7 @@
             LEFT JOIN ${account}.dbo.pda_storages s ON b.s_id = s.s_id
             LEFT JOIN ${account}.dbo.pda_employees e ON e.e_id = b.e_id
         WHERE b.billid = #{id} AND b.billstates = 10
-        GROUP BY b.billid, b.billnumber, b.deskname, s.name, e.name, b.cname, b.total
+        GROUP BY b.billid, b.billnumber, b.deskname, s.name, e.name, b.cname, b.total, b.ClientName
     </select>
 
     <select id="getDetail" resultType="OutputPickingItemEntity">
@@ -64,6 +65,7 @@
             d.TaxPrice   AS unitPrice,
             d.TaxTotal   AS money,
             d.DealStates AS status,
+            d.comment    AS remark,
             #{account}   AS account
         FROM ${account}.dbo.pda_pickBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id

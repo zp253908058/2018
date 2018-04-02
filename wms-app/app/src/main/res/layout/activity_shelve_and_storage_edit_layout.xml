@@ -111,6 +111,17 @@
                     app:separatorSize="@dimen/sp_14"
                     app:valueSize="@dimen/sp_14" />
 
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/shelve_and_storage_edit_remark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_32"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8"
+                    app:key="@string/text_remark"
+                    app:keySize="@dimen/sp_14"
+                    app:separatorSize="@dimen/sp_14"
+                    app:valueSize="@dimen/sp_14" />
+
             </LinearLayout>
 
             <android.support.v4.widget.Space

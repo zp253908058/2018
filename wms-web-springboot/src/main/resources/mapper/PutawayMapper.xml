@@ -51,7 +51,8 @@
             p.Factory                              AS manufacturer,
             l.loc_code                             AS locationCode,
             p.barcode                              AS goodsCode,
-            p.pinyin                               AS pinyin
+            p.pinyin                               AS pinyin,
+            d.comment                              AS remark
         FROM ${account}.dbo.pda_PutOnBill_D d
             INNER JOIN ${account}.dbo.pda_PutOnBill b ON d.bill_id = b.billid AND b.pdastates != 2
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
@@ -99,7 +100,8 @@
          pdastates,
          original_id,
          wctime,
-         loginid)
+         loginid,
+         comment)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -120,7 +122,8 @@
                 d.pdastates,
                 d.original_id,
                 getdate(),
-                #{userId,jdbcType=INTEGER}
+                #{userId,jdbcType=INTEGER},
+                d.comment
             FROM ${account}.dbo.pda_PutOnBill_D d
             WHERE d.smb_id = (SELECT max(d1.smb_id)
                               FROM ${account}.dbo.pda_PutOnBill_D d1
