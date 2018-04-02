@@ -109,10 +109,8 @@
         </if>
     </select>
 
-    <select id="getReplenishmentCount" resultType="int">
-        SELECT count(*)
-        FROM ${account}.dbo.pda_CheckBill
-        WHERE FirstStates = '1'
+    <select id="getReplenishmentCount" resultType="string">
+        SELECT repbill FROM ${account}.dbo.pda_CheckBill
         <if test="sId != 0">
             AND s_id = #{sId}
         </if>

@@ -1,8 +1,8 @@
 package com.teeny.wms.web.service.impl;
 
 import com.teeny.wms.app.exception.InnerException;
-import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.util.Validator;
+import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.request.InventoryAddRequestEntity;
 import com.teeny.wms.web.model.request.InventoryRequestEntity;
 import com.teeny.wms.web.model.request.LotEntity;
@@ -27,7 +27,6 @@ import java.util.List;
  */
 
 @Service
-@Transactional
 public class InventoryServiceImpl implements InventoryService {
 
     private InventoryMapper mInventoryMapper;
@@ -44,6 +43,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    @Transactional
     public List<InventoryGoodsEntity> getInventoryList(int id, boolean isMerge, String account) {
         List<InventoryGoodsEntity> list = mInventoryMapper.getInventoryList(id, isMerge, account);
         mInventoryMapper.updateInventoryStatus(account, id, 1);
@@ -51,6 +51,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    @Transactional
     public int single(int originalId, String account, int userId) {
         mInventoryMapper.single(originalId, account, userId);
         Integer id = mInventoryMapper.getBillId(account, originalId);
@@ -59,6 +60,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    @Transactional
     public void complete(List<Integer> ids, String account, int userId) {
         if (Validator.isNotEmpty(ids)) {
             mInventoryMapper.complete(account, ids, userId);
@@ -70,16 +72,18 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public void edit(InventoryRequestEntity entity, String account, int userId) {
+    @Transactional
+    public void singleComplete(InventoryRequestEntity entity, String account, int userId) {
+        System.out.println("执行编辑操作");
         List<LotEntity> param = entity.getParam();
-        if (Validator.isNotEmpty(param)) {
-            List<Integer> ids = mInventoryMapper.getIdsByOriginalId(entity.getId(), account);
-            mInventoryMapper.edit(entity.getId(), param, account, userId);
-            mInventoryMapper.deleteByIds(ids, account);
-        } else {
+        if (Validator.isEmpty(param)){
             throw new InnerException("盘点批次不能为空.");
         }
-        mInventoryMapper.updateBillStatus(entity.getId(), account);
+        Integer billId = mInventoryMapper.getBillId(account, entity.getId());
+        List<Integer> ids = mInventoryMapper.getIdsByOriginalId(entity.getId(), account);
+        mInventoryMapper.singleComplete(entity.getId(), param, account, userId);
+        mInventoryMapper.deleteByIds(ids, account);
+        mInventoryMapper.updateState(account, billId);
     }
 
     @Override
@@ -93,6 +97,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    @Transactional
     public void addInventory(int type, InventoryAddRequestEntity entity, String account, int sId, int userId) {
         Integer locationId = mCommonMapper.getLocationIdByCode(entity.getLocationCode(), account);
         if (locationId != null && locationId >= 0) {
@@ -120,6 +125,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    @Transactional
     public void addSku(SKUAddRequestEntity entity, String account, int sId, int userId) {
         int locationId = entity.getLocationId();
         if (locationId <= 0) {
@@ -151,6 +157,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    @Transactional
     public InventoryGoodsWrapperEntity getHomeData(String account, int pdId, int repositoryId, int areaId, String locationCode, boolean isMerge) {
         InventoryGoodsWrapperEntity entity = new InventoryGoodsWrapperEntity();
         List<InventoryGoodsEntity> list = mInventoryMapper.getList(account, pdId, repositoryId, areaId, locationCode, isMerge);
@@ -165,6 +172,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
+    @Transactional
     public void complete(String account, List<Integer> ids, int userId) {
         complete(ids, account, userId);
     }

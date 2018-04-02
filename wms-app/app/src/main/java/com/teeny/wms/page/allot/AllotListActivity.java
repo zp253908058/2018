@@ -279,6 +279,7 @@ public class AllotListActivity extends ToolbarActivity implements RecyclerViewTo
             public void doComplete() {
                 if (mDocumentEntity != null) {
                     mDocumentView.setText(mDocumentEntity.getNumber());
+                    mDocumentCode = mDocumentEntity.getNumber();
                     obtainData();
                 }
             }

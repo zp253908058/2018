@@ -1,7 +1,5 @@
 package com.teeny.wms.model;
 
-import java.util.List;
-
 /**
  * Class description:
  *

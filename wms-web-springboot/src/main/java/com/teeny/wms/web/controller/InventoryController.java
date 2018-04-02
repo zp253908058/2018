@@ -61,9 +61,9 @@ public class InventoryController {
 //    }
 
     //盘点编辑
-    @PostMapping(value = "/edit")
-    public ResponseEntity<EmptyEntity> edit(@RequestBody InventoryRequestEntity entity, @RequestHeader("account") String account, @User UserEntity user) {
-        mInventoryService.edit(entity, account, user.getId());
+    @PostMapping(value = "/singleComplete")
+    public ResponseEntity<EmptyEntity> singleComplete(@RequestBody InventoryRequestEntity entity, @RequestHeader("account") String account, @User UserEntity user) {
+        mInventoryService.singleComplete(entity, account, user.getId());
         return new ResponseEntity<>();
     }
 

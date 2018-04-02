@@ -2,12 +2,13 @@ package com.teeny.wms.page.picking.helper;
 
 import com.teeny.wms.model.OutputPickingItemEntity;
 import com.teeny.wms.model.OutputPickingOrderEntity;
+import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.CollectionsUtils;
+import com.teeny.wms.util.ObjectUtils;
 import com.teeny.wms.util.Validator;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +21,6 @@ import java.util.List;
  */
 
 public class OutputPickingHelper {
-
     private static volatile OutputPickingHelper mInstance;
 
     public static OutputPickingHelper getInstance() {
@@ -45,7 +45,7 @@ public class OutputPickingHelper {
     public void setData(OutputPickingOrderEntity data) {
         if (data != null) {
             this.mData = data;
-            notifyChanged();
+            initialize();
         }
     }
 
@@ -53,31 +53,68 @@ public class OutputPickingHelper {
         return this.mData;
     }
 
+    public OutputPickingItemEntity getCurrent() {
+        return mCurrent;
+    }
+
+    private void initialize() {
+        mCurrent = findAvailableData();
+        if (mCurrent.getStatus() == 0) {
+            notifyChanged();
+        } else {
+            Toaster.showToast("单据已经全部完成.");
+        }
+    }
+
+    private OutputPickingItemEntity findAvailableData() {
+        List<OutputPickingItemEntity> list = mData.getDataList();
+        OutputPickingItemEntity result = list.get(0);
+        if (result.getStatus() == 0) {
+            return result;
+        }
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            OutputPickingItemEntity entity = list.get(i);
+            if (entity.getStatus() == 0) {
+                result = entity;
+            }
+        }
+        return result;
+    }
+
+    private void notifyChanged() {
+        mEventBus.post(this);
+    }
+
     public String getNextLocation() {
         List<OutputPickingItemEntity> list = mData.getDataList();
         int size = CollectionsUtils.sizeOf(list);
-        int next = list.indexOf(mCurrent) + 1;
-        if (next < size) {
-            return list.get(next).getLocation();
+        int currentIndex = list.indexOf(mCurrent);
+        String result = "";
+        for (int i = 1; i <= 3; i++) {
+            int j = currentIndex + i;
+            if (j >= size) {
+                break;
+            }
+            result = ObjectUtils.concat(result, list.get(j).getLocation());
+            if (j + 1 == size) {
+                break;
+            }
+            result = ObjectUtils.concat(result, ",");
         }
-        return "无";
+        return Validator.isEmpty(result) ? "无" : result.trim();
     }
 
     public boolean hasNext() {
-        if (mData == null) {
-            return false;
-        }
         List<OutputPickingItemEntity> list = mData.getDataList();
         if (Validator.isEmpty(list)) {
             return false;
-        }
-        if (mCurrent == null) {
-            return true;
         }
         int size = CollectionsUtils.sizeOf(list);
         int next = list.indexOf(mCurrent) + 1;
         return next != size;
     }
+
 
     public void next() {
         List<OutputPickingItemEntity> list = mData.getDataList();
@@ -90,10 +127,11 @@ public class OutputPickingHelper {
         if (mData == null) {
             return false;
         }
-        if (mCurrent == null) {
+        List<OutputPickingItemEntity> list = mData.getDataList();
+        if (Validator.isEmpty(list)) {
             return false;
         }
-        int index = mData.getDataList().indexOf(mCurrent);
+        int index = list.indexOf(mCurrent);
         return index != 0;
     }
 
@@ -104,12 +142,8 @@ public class OutputPickingHelper {
         post();
     }
 
-    public OutputPickingItemEntity getCurrent() {
-        return mCurrent;
-    }
-
     public void addCount() {
-        mData.setCompleted(mData.getCompleted() + 1);
+        mData.inset(1);
     }
 
     public boolean isLast() {
@@ -127,10 +161,4 @@ public class OutputPickingHelper {
     private void post() {
         mEventBus.post(mCurrent);
     }
-
-    public void notifyChanged() {
-        mEventBus.post(this);
-    }
-
-
 }

@@ -81,7 +81,7 @@ public interface WarehouseService {
      * @param entity 盘点编辑请求实体
      * @return EmptyEntity
      */
-    @POST("warehouseFirst/edit")
+    @POST("warehouseFirst/singleComplete")
     Flowable<ResponseEntity<EmptyEntity>> edit(@Body WarehouseInventoryRequestEntity entity);
 
     /**

@@ -25,7 +25,7 @@ public interface InventoryService {
 
     void complete(List<Integer> ids, String account, int userId);
 
-    void edit(InventoryRequestEntity entity, String account, int userId);
+    void singleComplete(InventoryRequestEntity entity, String account, int userId);
 
     List<LotEntity> getLotList(int originalId, String account);
 

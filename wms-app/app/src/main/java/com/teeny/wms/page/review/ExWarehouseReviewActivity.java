@@ -228,7 +228,7 @@ public class ExWarehouseReviewActivity extends ToolbarActivity {
                 mPriorityView.setValue(data.getPriority());
                 mStagingAreaView.setValue(data.getTempArea());
                 mCustomerView.setValue(data.getCustomer());
-                mStatusView.setValue(data.getStatus());
+                mStatusView.setValue(data.getStatusString());
                 mDocumentStatusView.setValue(String.valueOf(data.getDocumentStatus()));
                 mDistributionRoadView.setValue(data.getDeliveryLine());
                 mDocumentRemarkView.setValue(data.getBillRemark());

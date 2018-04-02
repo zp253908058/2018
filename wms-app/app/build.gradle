@@ -12,7 +12,7 @@ android {
         }
     }
     compileSdkVersion sdk_version
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.teeny.wms"
         minSdkVersion 16

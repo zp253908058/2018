@@ -34,7 +34,7 @@ public interface PickingMapper {
 
     void add(@Param("account") String account, @Param("id") int id, @Param("list") List<OutputPickingEntity> list);
 
-    void updateDetailDate(@Param("account") String account, @Param("id") int id, @Param("number") int number, @Param("userId") int userId);
+    void updateDetailDate(@Param("account") String account, @Param("id") int id, @Param("number") float number, @Param("userId") int userId);
 
     void updateDate(@Param("account") String account, @Param("id") int id);
 }

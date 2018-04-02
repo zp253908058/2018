@@ -1,5 +1,7 @@
 package com.teeny.wms.web.model.response;
 
+import org.apache.ibatis.type.Alias;
+
 /**
  * Class description:
  *
@@ -8,6 +10,7 @@ package com.teeny.wms.web.model.response;
  * @see OutPickingTaskEntity
  * @since 2018/1/21
  */
+@Alias("OutPickingTaskEntity")
 public class OutPickingTaskEntity {
     private int id;
     private String documentNo;

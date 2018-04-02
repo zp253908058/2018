@@ -17,7 +17,7 @@ public class OutputPickingRequestEntity {
 
     private int id;
     private int detailId;
-    private int number;
+    private float number;
     private List<OutputPickingEntity> list;
 
     public int getId() {
@@ -36,11 +36,11 @@ public class OutputPickingRequestEntity {
         this.detailId = detailId;
     }
 
-    public int getNumber() {
+    public float getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(float number) {
         this.number = number;
     }
 

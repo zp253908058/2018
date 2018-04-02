@@ -16,7 +16,7 @@ public class ExWarehouseReviewEntity {
     private String customer; //客户
     private String priority; //优先级
     private String tempArea; //暂存区
-    private String status;//状态
+    private int status;//状态
     private int documentStatus; //单据状态
     private String billRemark; //单据备注
 
@@ -68,11 +68,11 @@ public class ExWarehouseReviewEntity {
         this.tempArea = tempArea;
     }
 
-    public String getStatus() {
+    public int getSStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -138,5 +138,9 @@ public class ExWarehouseReviewEntity {
 
     public void setDbQuantityTotal(int dbQuantityTotal) {
         this.dbQuantityTotal = dbQuantityTotal;
+    }
+
+    public String getStatusString() {
+        return status == 10 ? "未复核" : "已复核";
     }
 }

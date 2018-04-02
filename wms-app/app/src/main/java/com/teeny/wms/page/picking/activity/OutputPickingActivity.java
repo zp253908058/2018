@@ -76,6 +76,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     private KeyValueTextView mDocumentNoView;
 
     private KeyValueTextView mLocationView;
+    private KeyValueTextView mDeskNameView;
     private KeyValueTextView mProgressView;
     private KeyValueTextView mNextLocationView;
     private KeyValueTextView mWarehouseView;
@@ -139,6 +140,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         });
 
         mLocationView = (KeyValueTextView) findViewById(R.id.output_picking_location);
+        mDeskNameView = (KeyValueTextView) findViewById(R.id.output_picking_desk_name);
         mProgressView = (KeyValueTextView) findViewById(R.id.output_picking_progress);
         mNextLocationView = (KeyValueTextView) findViewById(R.id.output_picking_next_location);
         mWarehouseView = (KeyValueTextView) findViewById(R.id.output_picking_warehouse);
@@ -158,13 +160,6 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mMoneyView = (TextView) findViewById(R.id.output_picking_money);
         mOrderCountView = (TextView) findViewById(R.id.output_picking_order_count);
         mPickCountView = (EditText) findViewById(R.id.output_picking_pick_count);
-        mPickCountView.setOnEditorActionListener((v, actionId, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN) {
-                WindowUtils.hideInputSoft(v);
-                return true;
-            }
-            return false;
-        });
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mAdapter = new OutputPickingAdapter(new ArrayList<>());
@@ -205,19 +200,18 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     public void onDataChanged(OutputPickingHelper helper) {
         OutputPickingOrderEntity entity = helper.getData();
         mDocumentNoView.setValue(entity.getNumber());
-        mProgressView.setValue(entity.getProgress());
+        mDeskNameView.setValue(entity.getDeskName());
         mWarehouseView.setValue(entity.getWarehouse());
         mClerkView.setValue(entity.getClerk());
         mShopView.setValue(entity.getShopName());
         mTotalMoneyView.setValue(String.valueOf(entity.getTotalMoney()));
         mAdapter.setItems(entity.getTurnoverList());
-        if (mHelper.hasNext()) {
-            mHelper.next();
-        }
+
+        setData(helper.getCurrent());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void get(OutputPickingItemEntity entity) {
+    public void setData(OutputPickingItemEntity entity) {
         mNameView.setText(entity.getGoodsName());
         mSpecificationView.setText(entity.getSpecification());
         mManufacturerView.setText(entity.getManufacturer());
@@ -232,6 +226,8 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mPickCountView.setText(String.valueOf(entity.getPickCount()));
         mLocationView.setValue(entity.getLocation());
         mNextLocationView.setValue(mHelper.getNextLocation());
+
+        mProgressView.setValue(mHelper.getData().getProgress());
     }
 
     @Override
@@ -291,7 +287,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         }
         requestEntity.setId(mHelper.getData().getId());
         requestEntity.setDetailId(entity.getId());
-        int number = Converter.toInt(mPickCountView.getText().toString());
+        float number = Converter.toFloat(mPickCountView.getText().toString());
         if (number > entity.getOrderCount()) {
             Toaster.showToast("拣货数量不能大于订单数量.");
             return;
@@ -319,6 +315,8 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     }
 
     public void clear() {
+        mDocumentNoView.setValue("");
+        mDeskNameView.setValue("");
         mProgressView.setValue("");
         mWarehouseView.setValue("");
         mClerkView.setValue("");
@@ -336,16 +334,14 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mUnitPriceView.setText("");
         mMoneyView.setText("");
         mOrderCountView.setText("");
+        mPickCountView.setText("");
         mLocationView.setValue("");
         mNextLocationView.setValue("");
-        mAdapter.removes();
+        mAdapter.replaces(new ArrayList<>());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLocationAdd(OutputPickingEntity entity) {
-
-        Logger.e(entity.toString());
-
         if (mSelectPosition != INVALID_POSITION) {
             mAdapter.update(entity, mSelectPosition);
         } else {
@@ -370,4 +366,6 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
             mAdapter.remove(mDeletePosition);
         }
     }
+
+
 }

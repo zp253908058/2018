@@ -7,34 +7,34 @@
 
     <select id="getInventoryList" resultType="InventoryGoodsEntity">
         SELECT
-            d.smb_id                               AS id,
-            d.original_id                          AS originalId,
-            d.bill_id                              AS billId,
-            d.p_id                                 AS goodsId,
-            p.name                                 AS goodsName,
-            l.loc_code                             AS location,
-            d.EligibleQty                          AS countInBill,
-            d.pdQty                                AS inventoryCount,
-            p.unit1Name                            AS unit,
-            p.standard                             AS specification,
-            c.name                                 AS manufacturer,
-            d.DealStates                           AS status,
-            l.loc_code                             AS locationCode,
-            p.barcode                              AS goodsCode,
-            d.Batchno                              AS lotNo,
-            CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
-            CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
-            isnull(sa.name, '')                    AS repositoryName,
-            isnull(a.name, '')                     AS areaName,
-            p.pinyin                               AS pinyin
+        d.smb_id                               AS id,
+        d.original_id                          AS originalId,
+        d.bill_id                              AS billId,
+        d.p_id                                 AS goodsId,
+        p.name                                 AS goodsName,
+        l.loc_code                             AS location,
+        d.EligibleQty                          AS countInBill,
+        d.pdQty                                AS inventoryCount,
+        p.unit1Name                            AS unit,
+        p.standard                             AS specification,
+        c.name                                 AS manufacturer,
+        d.DealStates                           AS status,
+        l.loc_code                             AS locationCode,
+        p.barcode                              AS goodsCode,
+        d.Batchno                              AS lotNo,
+        CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
+        CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
+        isnull(sa.name, '')                    AS repositoryName,
+        isnull(a.name, '')                     AS areaName,
+        p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_pdBill_D d
-            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
-            LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
-            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-            LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
-            LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = l.sc_id
+        LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+        LEFT JOIN ${account}.dbo.pda_clients c ON c.c_id = d.Supplier_id
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
+        LEFT JOIN ${account}.dbo.pda_Area a ON a.sc_id = l.sc_id
         WHERE
-            d.bill_id = #{id}
+        d.bill_id = #{id}
         <if test="isMerge">
             AND d.smb_id = (SELECT min(smb_id) AS id FROM ${account}.dbo.pda_pdBill_D WHERE d.original_id = original_id)
         </if>
@@ -51,7 +51,7 @@
         SELECT TOP 1 d.bill_id FROM ${account}.dbo.pda_pdBill_D d WHERE d.original_id = #{originalId}
     </select>
 
-    <update id="updateState">
+    <update id="updateState" flushCache="true">
         <selectKey keyProperty="count" resultType="int" order="BEFORE">
             SELECT count(*) AS count
             FROM ${account}.dbo.pda_pdBill_D d
@@ -89,7 +89,7 @@
         </if>
     </select>
 
-    <insert id="edit">
+    <insert id="singleComplete" flushCache="true">
         INSERT INTO ${account}.dbo.pda_pdBill_D
         (bill_id,
         p_id,
@@ -134,7 +134,7 @@
         </foreach>
     </insert>
 
-    <delete id="deleteByIds">
+    <delete id="deleteByIds" flushCache="true">
         DELETE FROM ${account}.dbo.pda_pdBill_D WHERE smb_id IN
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
@@ -143,7 +143,7 @@
 
     <update id="updateBillStatus">
         <selectKey keyProperty="count" resultType="int" order="BEFORE">
-            SELECT count(*)
+            SELECT count(*) AS count
             FROM ${account}.dbo.pda_pdBill_D d
             WHERE d.DealStates = 0 AND d.bill_id = (SELECT DISTINCT d1.bill_id
             FROM ${account}.dbo.pda_pdBill_D d1
@@ -198,25 +198,25 @@
 
     <select id="getSKUList" resultType="SKUEntity">
         SELECT
-            s.storehouse_id                        AS id,
-            s.p_id                                 AS goodsId,
-            s.Pname                                AS goodsName,
-            s.Code                                 AS number,
-            s.Locname                              AS locationName,
-            s.location_id                          AS locationId,
-            s.batchno                              AS lotNo,
-            s.factory                              AS manufacturer,
-            s.quantity,
-            CONVERT(VARCHAR(100), s.validdate, 23) AS validateDate,
-            CONVERT(VARCHAR(100), s.makedate, 23)  AS productDate,
-            s.Standard                             AS specification,
-            s.Name1                                AS unit,
-            s.costprice                            AS costPrice,
-            s.costtotal                            AS costTotal,
-            s.Makearea                             AS productionPlace
+        s.storehouse_id                        AS id,
+        s.p_id                                 AS goodsId,
+        s.Pname                                AS goodsName,
+        s.Code                                 AS number,
+        s.Locname                              AS locationName,
+        s.location_id                          AS locationId,
+        s.batchno                              AS lotNo,
+        s.factory                              AS manufacturer,
+        s.quantity,
+        CONVERT(VARCHAR(100), s.validdate, 23) AS validateDate,
+        CONVERT(VARCHAR(100), s.makedate, 23)  AS productDate,
+        s.Standard                             AS specification,
+        s.Name1                                AS unit,
+        s.costprice                            AS costPrice,
+        s.costtotal                            AS costTotal,
+        s.Makearea                             AS productionPlace
         FROM ${account}.dbo.VW_PDA_Storehouse s
-            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
-            INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
+        INNER JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
         <where>
             <if test="location != null and location != ''">
                 l.loc_code = #{location}
@@ -267,12 +267,12 @@
 
     <select id="getCollection" resultMap="repositoryList">
         SELECT DISTINCT
-        sa.sa_id            AS id,
-        isnull(sa.name, '') AS name,
-        #{account}          AS account
+            sa.sa_id            AS id,
+            isnull(sa.name, '') AS name,
+            #{account}          AS account
         FROM ${account}.dbo.pda_pdBill_D d
-        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
+            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+            LEFT JOIN ${account}.dbo.pda_stockArea sa ON sa.sa_id = l.sa_id
         WHERE d.bill_id = #{id} AND sa.sa_id > 0
         ORDER BY name
     </select>
@@ -309,27 +309,27 @@
 
     <select id="getList" resultType="InventoryGoodsEntity">
         SELECT
-            d.smb_id                               AS id,
-            d.original_id                          AS originalId,
-            d.bill_id                              AS billId,
-            d.p_id                                 AS goodsId,
-            p.name                                 AS goodsName,
-            l.loc_code                             AS location,
-            d.EligibleQty                          AS countInBill,
-            d.pdQty                                AS inventoryCount,
-            p.unit1Name                            AS unit,
-            p.standard                             AS specification,
-            p.Factory                              AS manufacturer,
-            d.DealStates                           AS status,
-            l.loc_code                             AS locationCode,
-            p.barcode                              AS goodsCode,
-            d.Batchno                              AS lotNo,
-            CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
-            CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
-            p.pinyin                               AS pinyin
+        d.smb_id                               AS id,
+        d.original_id                          AS originalId,
+        d.bill_id                              AS billId,
+        d.p_id                                 AS goodsId,
+        p.name                                 AS goodsName,
+        l.loc_code                             AS location,
+        d.EligibleQty                          AS countInBill,
+        d.pdQty                                AS inventoryCount,
+        p.unit1Name                            AS unit,
+        p.standard                             AS specification,
+        p.Factory                              AS manufacturer,
+        d.DealStates                           AS status,
+        l.loc_code                             AS locationCode,
+        p.barcode                              AS goodsCode,
+        d.Batchno                              AS lotNo,
+        CONVERT(VARCHAR(100), d.Validdate, 23) AS validateDate,
+        CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
+        p.pinyin                               AS pinyin
         FROM ${account}.dbo.pda_pdBill_D d
-            LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
-            LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
+        LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
+        LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
         WHERE d.bill_id = #{id} AND l.loc_code = #{locationCode}
         <if test="repositoryId > 0">
             AND l.sa_id = #{repositoryId}

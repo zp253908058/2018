@@ -783,3 +783,12 @@ GO
 ---------------门店收货end
 
 
+--新增外复核界面上的补货订单字段
+IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('pda_checkbill') AND Name='repbill')
+  BEGIN
+    ALTER table pda_checkbill
+      add repbill varchar(60) default(0)
+  END
+
+
+

@@ -195,4 +195,5 @@
     <string name="text_detail_row">明细行数</string>
     <string name="text_total_money">总金额</string>
     <string name="text_clerk">业务员</string>
+    <string name="text_desk_name">复核台</string>
 </resources>

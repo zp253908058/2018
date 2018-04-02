@@ -68,7 +68,7 @@ public interface InventoryMapper {
 
     List<KeyValueEntity> getPdType(@Param("account") String account, @Param("type") int type, @Param("sId") int sId);
 
-    void edit(@Param("id") int id, @Param("list") List<LotEntity> param, @Param("account") String account, @Param("userId") int userId);
+    void singleComplete(@Param("id") int id, @Param("list") List<LotEntity> param, @Param("account") String account, @Param("userId") int userId);
 
     void deleteByIds(@Param("list") List<Integer> ids, @Param("account") String account);
 

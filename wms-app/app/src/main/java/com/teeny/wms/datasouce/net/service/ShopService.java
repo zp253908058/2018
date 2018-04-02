@@ -54,7 +54,7 @@ public interface ShopService {
      * @param entity 盘点编辑请求实体
      * @return EmptyEntity
      */
-    @POST("shopFirst/edit")
+    @POST("shopFirst/singleComplete")
     Flowable<ResponseEntity<EmptyEntity>> edit(@Body ShopInventoryRequestEntity entity);
 
     /**

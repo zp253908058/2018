@@ -106,7 +106,7 @@ public class AllotOrderAddDetailActivity extends ToolbarActivity implements Dial
         switch (id) {
             case R.id.add:
                 mSelectPosition = INVALID_POSITION;
-                AllotOrderLocationAddActivity.startActivity(this);
+                AllotOrderLocationAddActivity.startActivity(this, mEntity.getGoodsId());
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -223,7 +223,7 @@ public class AllotOrderAddDetailActivity extends ToolbarActivity implements Dial
     public void onItemClick(View view, int position) {
         mSelectPosition = position;
         AllotLocationEntity entity = mAdapter.getItem(position);
-        AllotOrderLocationAddActivity.startActivity(this, entity);
+        AllotOrderLocationAddActivity.startActivity(this, mEntity.getGoodsId(), entity);
     }
 
     public boolean onItemLongClick(View view, int position) {

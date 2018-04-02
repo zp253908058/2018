@@ -22,17 +22,56 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginTop="@dimen/dp_16"
                 android:background="@color/white"
-                app:key="@string/text_document_number"
-                android:paddingLeft="@dimen/dp_16"
-                android:paddingStart="@dimen/dp_16"
                 android:paddingEnd="@dimen/dp_16"
-                android:paddingRight="@dimen/dp_16" />
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                app:key="@string/text_document_number" />
+
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/output_picking_next_location"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/dp_16"
+                android:background="@color/white"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                app:key="NEXT"
+                app:keySize="@dimen/sp_14"
+                app:separatorSize="@dimen/sp_14"
+                app:valueSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="@drawable/shape_divider" />
+
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/output_picking_desk_name"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                app:key="@string/text_desk_name"
+                app:keySize="@dimen/sp_14"
+                app:separatorSize="@dimen/sp_14"
+                app:valueSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="@drawable/shape_divider" />
 
             <com.teeny.wms.widget.ExpandableLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_16"
+
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingEnd="@dimen/dp_16"
@@ -64,16 +103,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:key="@string/text_progress"
-                        app:keySize="@dimen/sp_14"
-                        app:separatorSize="@dimen/sp_14"
-                        app:valueSize="@dimen/sp_14" />
-
-                    <com.teeny.wms.widget.KeyValueTextView
-                        android:id="@+id/output_picking_next_location"
-                        android:layout_width="@dimen/dp_0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        app:key="NEXT"
                         app:keySize="@dimen/sp_14"
                         app:separatorSize="@dimen/sp_14"
                         app:valueSize="@dimen/sp_14" />
@@ -272,9 +301,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:inputType="numberDecimal"
                         android:gravity="center_vertical|end"
-                        android:imeOptions="actionDone"/>
+                        android:imeOptions="actionDone"
+                        android:inputType="numberDecimal" />
                 </LinearLayout>
 
                 <LinearLayout

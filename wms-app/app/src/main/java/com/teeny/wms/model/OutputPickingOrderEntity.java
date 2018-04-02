@@ -1,5 +1,7 @@
 package com.teeny.wms.model;
 
+import android.graphics.Rect;
+
 import java.util.List;
 
 /**
@@ -15,6 +17,7 @@ public class OutputPickingOrderEntity {
 
     private int id;               //单据id
     private String number;        //单据编号
+    private String deskName;      //复核台
     private int completed;
     private int total;
     private String warehouse;
@@ -38,6 +41,14 @@ public class OutputPickingOrderEntity {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public String getDeskName() {
+        return deskName;
+    }
+
+    public void setDeskName(String deskName) {
+        this.deskName = deskName;
     }
 
     public int getCompleted() {
@@ -106,5 +117,9 @@ public class OutputPickingOrderEntity {
 
     public void setTurnoverList(List<OutputPickingEntity> turnoverList) {
         this.turnoverList = turnoverList;
+    }
+
+    public void inset(int inset) {
+        completed += inset;
     }
 }

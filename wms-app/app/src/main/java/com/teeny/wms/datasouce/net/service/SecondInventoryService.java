@@ -81,7 +81,7 @@ public interface SecondInventoryService {
      * @param entity 盘点编辑请求实体
      * @return EmptyEntity
      */
-    @POST("secondInventory/edit")
+    @POST("secondInventory/singleComplete")
     Flowable<ResponseEntity<EmptyEntity>> edit(@Body SecondInventoryRequestEntity entity);
 
     /**

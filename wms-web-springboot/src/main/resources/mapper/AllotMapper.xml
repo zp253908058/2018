@@ -177,18 +177,18 @@
 
     <select id="getAllotGoodsList" resultType="AllotGoodsEntity">
         SELECT
-            s.storehouse_id                       AS id,
-            p.p_id                                AS goodsId,
-            p.name                                AS goodsName,
-            s.batchno                             AS lotNo,
-            p.standard                            AS specification,
-            CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
-            CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
-            p.unit1Name                           AS unit,
-            s.AvlQty                              AS amount,
-            p.Factory                             AS manufacturer,
-            l.loc_code                            AS locationCode,
-            p.barcode                             AS goodsCode
+            s.storehouse_id                        AS id,
+            p.p_id                                 AS goodsId,
+            p.name                                 AS goodsName,
+            s.batchno                              AS lotNo,
+            p.standard                             AS specification,
+            CONVERT(VARCHAR(100), s.validdate, 23) AS validityDate,
+            CONVERT(VARCHAR(100), s.makedate, 23)  AS productionDate,
+            p.unit1Name                            AS unit,
+            s.AvlQty                               AS amount,
+            p.Factory                              AS manufacturer,
+            l.loc_code                             AS locationCode,
+            p.barcode                              AS goodsCode
         FROM ${account}.dbo.VW_PDA_Storehouse_AvlQty s
             LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = s.location_id
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = s.p_id
@@ -262,24 +262,24 @@
 
     <select id="getTempleGoodsList" resultType="AllotGoodsEntity">
         SELECT
-            d.storehouse_id                       AS id,
-            d.smb_id                              AS detailId,
-            b.billid                              AS billId,
-            ld.id                                 AS locationRowId,
-            p.p_id                                AS goodsId,
-            p.name                                AS goodsName,
-            d.Batchno                             AS lotNo,
-            p.standard                            AS specification,
-            CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
-            CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
-            p.unit1Name                           AS unit,
-            s.AvlQty                              AS amount,
-            p.Factory                             AS manufacturer,
-            l.loc_code                            AS locationCode,
-            p.barcode                             AS goodsCode,
-            l.loc_code                            AS exportLocation,
-            l2.loc_code                           AS importLocation,
-            s.AvlQty                              AS currentInventory
+            d.storehouse_id                        AS id,
+            d.smb_id                               AS detailId,
+            b.billid                               AS billId,
+            ld.id                                  AS locationRowId,
+            p.p_id                                 AS goodsId,
+            p.name                                 AS goodsName,
+            d.Batchno                              AS lotNo,
+            p.standard                             AS specification,
+            CONVERT(VARCHAR(100), s.validdate, 23) AS validityDate,
+            CONVERT(VARCHAR(100), s.makedate, 23)  AS productionDate,
+            p.unit1Name                            AS unit,
+            s.AvlQty                               AS amount,
+            p.Factory                              AS manufacturer,
+            l.loc_code                             AS locationCode,
+            p.barcode                              AS goodsCode,
+            l.loc_code                             AS exportLocation,
+            l2.loc_code                            AS importLocation,
+            s.AvlQty                               AS currentInventory
         FROM ${account}.dbo.pda_AddTranBill_D d
             INNER JOIN ${account}.dbo.VW_PDA_Storehouse_AvlQty s ON d.storehouse_id = s.storehouse_id
             INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
@@ -292,24 +292,24 @@
 
     <select id="getAllotGoods" resultType="AllotGoodsEntity">
         SELECT
-            d.storehouse_id                       AS id,
-            d.smb_id                              AS detailId,
-            d.bill_id                             AS billId,
-            ld.id                                 AS locationRowId,
-            p.p_id                                AS goodsId,
-            p.name                                AS goodsName,
-            d.Batchno                             AS lotNo,
-            p.standard                            AS specification,
-            CONVERT(VARCHAR(100), p.validday, 23) AS validityDate,
-            CONVERT(VARCHAR(100), s.makedate, 23) AS productionDate,
-            p.unit1Name                           AS unit,
-            s.AvlQty                              AS amount,
-            p.Factory                             AS manufacturer,
-            l.loc_code                            AS locationCode,
-            p.barcode                             AS goodsCode,
-            l.loc_code                            AS exportLocation,
-            l2.loc_code                           AS importLocation,
-            s.AvlQty                              AS currentInventory
+            d.storehouse_id                        AS id,
+            d.smb_id                               AS detailId,
+            d.bill_id                              AS billId,
+            ld.id                                  AS locationRowId,
+            p.p_id                                 AS goodsId,
+            p.name                                 AS goodsName,
+            d.Batchno                              AS lotNo,
+            p.standard                             AS specification,
+            CONVERT(VARCHAR(100), s.validdate, 23) AS validityDate,
+            CONVERT(VARCHAR(100), s.makedate, 23)  AS productionDate,
+            p.unit1Name                            AS unit,
+            s.AvlQty                               AS amount,
+            p.Factory                              AS manufacturer,
+            l.loc_code                             AS locationCode,
+            p.barcode                              AS goodsCode,
+            l.loc_code                             AS exportLocation,
+            l2.loc_code                            AS importLocation,
+            s.AvlQty                               AS currentInventory
         FROM ${account}.dbo.pda_AddTranBill_D d
             INNER JOIN ${account}.dbo.pda_AddTranBill b ON b.billid = d.bill_id
             INNER JOIN ${account}.dbo.VW_PDA_Storehouse_AvlQty s ON d.storehouse_id = s.storehouse_id

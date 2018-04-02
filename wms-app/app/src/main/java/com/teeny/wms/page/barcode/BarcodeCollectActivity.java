@@ -83,6 +83,7 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
 
     private void handleResult(String result) {
         if (mFocusView != null) {
+            mFocusView.setText("");
             mFocusView.setText(result);
         } else {
             Toaster.showToast("当前没有焦点.");

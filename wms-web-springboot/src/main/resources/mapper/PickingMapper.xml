@@ -12,6 +12,7 @@
     <resultMap id="data" type="OutputPickingOrderEntity">
         <result property="id" column="id"/>
         <result property="number" column="number"/>
+        <result property="deskName" column="deskName"/>
         <result property="completed" column="completed"/>
         <result property="total" column="total"/>
         <result property="warehouse" column="warehouse"/>
@@ -29,6 +30,7 @@
         SELECT
             b.billid            AS id,
             b.billnumber        AS number,
+            b.deskname          AS deskName,
             sum(d.DealStates)   AS completed,
             count(d.DealStates) AS total,
             s.name              AS warehouse,
@@ -41,7 +43,7 @@
             LEFT JOIN ${account}.dbo.pda_storages s ON b.s_id = s.s_id
             LEFT JOIN ${account}.dbo.pda_employees e ON e.e_id = b.e_id
         WHERE b.billid = #{id} AND b.billstates = 10
-        GROUP BY b.billid, b.billnumber, s.name, e.name, b.cname, b.total
+        GROUP BY b.billid, b.billnumber, b.deskname, s.name, e.name, b.cname, b.total
     </select>
 
     <select id="getDetail" resultType="OutputPickingItemEntity">
@@ -84,7 +86,7 @@
         </if>
     </update>
 
-    <select id="getTaskList">
+    <select id="getTaskList" resultType="OutPickingTaskEntity">
         SELECT
             b.id          AS id,
             b.billnumber  AS documentNo,
@@ -102,9 +104,9 @@
     </delete>
 
     <insert id="add">
-        INSERT INTO ${account}.dbo.pda_pickBill_D_Turnover (smb_id,number, turnover) VALUES
+        INSERT INTO ${account}.dbo.pda_pickBill_D_Turnover (smb_id, turnover) VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{id}, #{item.number}, #{item.turnover})
+            (#{id}, #{item.turnover})
         </foreach>
     </insert>
 
