@@ -31,6 +31,7 @@ public class PutawayEntity {
     private String pinyin;
     private String remark;
 
+
     public int getId() {
         return id;
     }
