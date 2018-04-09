@@ -48,6 +48,7 @@ public class ShelveAdapter extends RecyclerAdapter<ShelveEntity> {
         KeyValueTextView amount = holder.get(R.id.shelve_amount_view);
         KeyValueTextView manufacturer = holder.get(R.id.shelve_manufacturer_view);
         KeyValueTextView barcode = holder.get(R.id.shelve_barcode);
+        KeyValueTextView remark = holder.get(R.id.shelve_remark);
 
         if (item != null) {
             no.setValue(item.getLocationCode());
@@ -60,6 +61,7 @@ public class ShelveAdapter extends RecyclerAdapter<ShelveEntity> {
             amount.setValue(item.getAmount());
             manufacturer.setValue(item.getManufacturer());
             barcode.setValue(item.getGoodsCode());
+            remark.setValue(item.getRemark());
         }
 
     }

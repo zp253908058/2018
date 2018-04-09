@@ -282,6 +282,10 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         if (entity == null) {
             return;
         }
+        if (entity.getStatus() == 1){
+            mHelper.next();
+            return;
+        }
         OutputPickingRequestEntity requestEntity = new OutputPickingRequestEntity();
         List<OutputPickingEntity> list = mAdapter.getItems();
         requestEntity.setList(list);
@@ -304,6 +308,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
             @Override
             public void doNext(EmptyEntity data) {
                 mHelper.addCount();
+                mHelper.getCurrent().setStatus(1);
                 if (mHelper.hasNext()) {
                     mHelper.next();
                 } else {

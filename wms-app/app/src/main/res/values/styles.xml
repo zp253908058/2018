@@ -18,6 +18,14 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="popupTheme">@style/ToolbarPopupTheme</item>
+    </style>
+
+    <style name="ToolbarPopupTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorPrimary </item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
     <style name="ToolbarTextAppearance">
@@ -53,7 +61,6 @@
     <!-- 启动界面样式，防止黑屏 -->
     <style name="SplashStyle" parent="@style/AppTheme">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:background">@mipmap/background_splash</item>
     </style>
 
     <style name="FloatingActionButton" parent="Theme.AppCompat.Light">

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_group_shelve"
+        android:checkableBehavior="single"
+        android:visible="false">
+        <item
+            android:id="@+id/menu_group_shelve_all"
+            android:title="@string/text_all"
+            android:checkable="true"
+            android:orderInCategory="1"
+            android:checked="true"/>
+
+        <item
+            android:id="@+id/menu_group_shelve_not_putaway"
+            android:title="@string/text_not_putaway"
+            android:checkable="true"
+            android:orderInCategory="2"/>
+
+        <item
+            android:id="@+id/menu_group_shelve_putaway_complete"
+            android:title="@string/text_putaway_complete"
+            android:checkable="true"
+            android:orderInCategory="3"/>
+    </group>
+</menu>

@@ -10,6 +10,7 @@ import com.teeny.wms.R;
 import com.teeny.wms.base.RecyclerAdapter;
 import com.teeny.wms.base.RecyclerViewHolder;
 import com.teeny.wms.model.DocumentEntity;
+import com.teeny.wms.util.ObjectUtils;
 import com.teeny.wms.util.Validator;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class DocumentAdapter extends RecyclerAdapter<DocumentEntity> implements 
 
     private List<DocumentEntity> mOriginalValues;
 
+    private CharSequence mStatus;
+
     /**
      * the constructor of this class.
      *
@@ -45,6 +48,14 @@ public class DocumentAdapter extends RecyclerAdapter<DocumentEntity> implements 
     public void setItems(List<DocumentEntity> items) {
         super.setItems(items);
         mOriginalValues = null;
+    }
+
+    public CharSequence getStatus() {
+        return mStatus;
+    }
+
+    public void setStatus(CharSequence status) {
+        mStatus = status;
     }
 
     @Override
@@ -92,7 +103,7 @@ public class DocumentAdapter extends RecyclerAdapter<DocumentEntity> implements 
                 }
             }
 
-            if (Validator.isEmpty(prefix)) {
+            if (Validator.isEmpty(prefix) && Validator.isEmpty(mStatus)) {
                 final ArrayList<DocumentEntity> list;
                 synchronized (mLock) {
                     list = new ArrayList<>(mOriginalValues);
@@ -114,10 +125,12 @@ public class DocumentAdapter extends RecyclerAdapter<DocumentEntity> implements 
                     final DocumentEntity value = values.get(i);
                     final String valueText = value.getNumber().toLowerCase();
                     if (valueText.contains(prefixString)) {
+                        if (Validator.isNotEmpty(mStatus) && !ObjectUtils.equals(mStatus, value.getStatus())) {
+                            continue;
+                        }
                         newValues.add(value);
                     }
                 }
-
                 results.values = newValues;
                 results.count = newValues.size();
             }

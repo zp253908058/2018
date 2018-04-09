@@ -16,12 +16,15 @@ import com.teeny.wms.base.BaseFragment;
 import com.teeny.wms.base.RecyclerViewTouchListener;
 import com.teeny.wms.base.decoration.VerticalDecoration;
 import com.teeny.wms.model.DocumentEntity;
+import com.teeny.wms.page.document.QueryDocumentActivity;
 import com.teeny.wms.page.receiving.ReceivingActivity;
 import com.teeny.wms.page.allot.AllotListActivity;
 import com.teeny.wms.page.document.adapter.DocumentAdapter;
 import com.teeny.wms.page.document.controller.DocumentHelper;
 import com.teeny.wms.page.review.ExWarehouseReviewActivity;
 import com.teeny.wms.page.shelve.ShelveAndStorageActivity;
+import com.teeny.wms.util.ObjectUtils;
+import com.teeny.wms.util.log.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,6 +54,7 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
     private int mType;
     private DocumentAdapter mAdapter = new DocumentAdapter(null);
     private EventBus mEventBus;
+    private Editable mEditable;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +97,19 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
         mAdapter.setItems(helper.getDataByType(mType));
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    public void onMenuSelected(QueryDocumentActivity.DocumentMenu menu) {
+        if (mType != 2) {
+            return;
+        }
+        String title = menu.getTitle().toString();
+        if (ObjectUtils.equals(title, "全部")) {
+            title = "";
+        }
+        mAdapter.setStatus(title);
+        mAdapter.getFilter().filter(mEditable);
+    }
+
     @Override
     public void onItemClick(View view, int position) {
         DocumentEntity entity = mAdapter.getItem(position);
@@ -125,6 +142,7 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
 
     @Override
     public void afterTextChanged(Editable s) {
-        mAdapter.getFilter().filter(s);
+        mEditable = s;
+        mAdapter.getFilter().filter(mEditable);
     }
 }

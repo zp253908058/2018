@@ -125,4 +125,10 @@
         android:layout_height="@dimen/dp_32"
         app:key="@string/text_manufacturer" />
 
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/shelve_remark"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_remark" />
+
 </LinearLayout>

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.TextView;
 
+import com.teeny.wms.R;
 import com.teeny.wms.base.BaseActivity;
 import com.teeny.wms.datasouce.local.cache.ServerConfigManager;
 import com.teeny.wms.datasouce.local.cache.UserManager;
@@ -12,6 +14,7 @@ import com.teeny.wms.datasouce.net.NetServiceManager;
 import com.teeny.wms.model.ServerConfigEntity;
 import com.teeny.wms.page.login.LoginActivity;
 import com.teeny.wms.page.main.MainActivity;
+import com.teeny.wms.util.SystemUtils;
 
 /**
  * Class description:
@@ -48,6 +51,14 @@ public class SplashActivity extends BaseActivity implements Runnable {
         configServer();
 
         mIsTokenAvailable = !UserManager.getInstance().get().isEmpty();
+        setContentView(R.layout.activity_splash_layout);
+
+        initView();
+    }
+
+    private void initView() {
+        TextView versionCode = (TextView) findViewById(R.id.splash_version_code);
+        versionCode.setText(SystemUtils.getVersionName(this));
     }
 
     private void configServer() {
