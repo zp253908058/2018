@@ -60,13 +60,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".page.main.WarehouseSwitchActivity"
-            android:exported="false"
-            android:label="@string/text_switch_warehouse"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".page.receiving.ReceivingActivity"
             android:exported="false"
             android:label="@string/text_receiving_acceptance"

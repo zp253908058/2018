@@ -44,7 +44,7 @@ public interface InventoryMapper {
      * @param status  盘点单状态 0提供,1pda已读取,2pda已完成,3pda已回写(后台更改,前台不做)
      * @param account 账套
      */
-    @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=#{status,jdbcType=INTEGER},pdaWrTime=getdate() WHERE billid = #{id}")
+    @Update("UPDATE ${account}.dbo.pda_pdBill SET pdastates=#{status,jdbcType=INTEGER},pdaReTime=getdate() WHERE billid = #{id} AND pdastates = 0")
     void updateInventoryStatus(@Param("account") String account, @Param("id") int id, @Param("status") int status);
 
     void single(@Param("originalId") int originalId, @Param("account") String account, @Param("userId") int userId);
