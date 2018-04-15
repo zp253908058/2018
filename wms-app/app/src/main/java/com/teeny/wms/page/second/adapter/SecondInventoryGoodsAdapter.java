@@ -1,15 +1,18 @@
 package com.teeny.wms.page.second.adapter;
 
 import android.support.annotation.Nullable;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import com.teeny.wms.R;
 import com.teeny.wms.base.RecyclerAdapter;
 import com.teeny.wms.base.RecyclerViewHolder;
 import com.teeny.wms.model.InventoryGoodsEntity;
-import com.teeny.wms.model.SecondInventoryGoodsEntity;
+import com.teeny.wms.model.RecipientEntity;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.widget.KeyValueTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +24,13 @@ import java.util.List;
  * @since 2017/8/20
  */
 
-public class SecondInventoryGoodsAdapter extends RecyclerAdapter<InventoryGoodsEntity> {
+public class SecondInventoryGoodsAdapter extends RecyclerAdapter<InventoryGoodsEntity> implements Filterable {
+
+    private final Object mLock = new Object();
+
+    private Filter mFilter;
+
+    private List<InventoryGoodsEntity> mOriginalValues;
 
     /**
      * the constructor of this class.
@@ -61,6 +70,65 @@ public class SecondInventoryGoodsAdapter extends RecyclerAdapter<InventoryGoodsE
             unit.setValue(item.getUnit());
             specification.setValue(item.getSpecification());
             manufacturer.setValue(item.getManufacturer());
+        }
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (mFilter == null) {
+            mFilter = new FilterImpl();
+        }
+        return mFilter;
+    }
+
+    private class FilterImpl extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence prefix) {
+            final FilterResults results = new FilterResults();
+
+            if (mOriginalValues == null) {
+                synchronized (mLock) {
+                    mOriginalValues = new ArrayList<>(getItems());
+                }
+            }
+
+            if (prefix == null || prefix.length() == 0) {
+                final ArrayList<InventoryGoodsEntity> list;
+                synchronized (mLock) {
+                    list = new ArrayList<>(mOriginalValues);
+                }
+                results.values = list;
+                results.count = list.size();
+            } else {
+                final String prefixString = prefix.toString().toLowerCase();
+
+                final ArrayList<InventoryGoodsEntity> values;
+                synchronized (mLock) {
+                    values = new ArrayList<>(mOriginalValues);
+                }
+
+                final int count = values.size();
+                final ArrayList<InventoryGoodsEntity> newValues = new ArrayList<>();
+
+                for (int i = 0; i < count; i++) {
+                    final InventoryGoodsEntity value = values.get(i);
+                    String valueText = value.getLocationCode().toLowerCase();
+                    if (valueText.contains(prefixString)) {
+                        newValues.add(value);
+                    }
+                }
+
+                results.values = newValues;
+                results.count = newValues.size();
+            }
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            //noinspection unchecked
+            replaces((List<InventoryGoodsEntity>) results.values);
         }
     }
 }

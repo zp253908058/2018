@@ -236,6 +236,11 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+                int type = getPdType();
+                if (type == 2) {
+                    mEventBus.post(s);
+                    return;
+                }
                 if (Validator.isEmpty(s)) {
                     if (mIsClear) {
                         getHelper().clear();
@@ -336,6 +341,9 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
                 mAreaTextView.setText("");
                 mLocationTextView.setText("");
                 mGoodsTextView.setText("");
+                if (getPdType() == 2) {
+                    obtainDetailData();
+                }
             }
         });
     }
@@ -374,7 +382,8 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
         int selectedRepositoryId = mSelectedRepository != null ? mSelectedRepository.getId() : 0;
         int selectedAreaId = mSelectedArea != null ? mSelectedArea.getId() : 0;
         String code = mLocationTextView.getText().toString();
-        if (Validator.isEmpty(code)) {
+        int type = getPdType();
+        if (type != 2 && Validator.isEmpty(code)) {
             return;
         }
         Object item = mSpinner.getSelectedItem();

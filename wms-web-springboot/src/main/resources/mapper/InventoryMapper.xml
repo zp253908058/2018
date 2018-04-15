@@ -330,7 +330,10 @@
         FROM ${account}.dbo.pda_pdBill_D d
         LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
         LEFT JOIN ${account}.dbo.pda_location l ON l.l_id = d.Location_id
-        WHERE d.bill_id = #{id} AND l.loc_code = #{locationCode}
+        WHERE d.bill_id = #{id}
+        <if test="locationCode != null and locationCode != ''">
+            AND l.loc_code = #{locationCode}
+        </if>
         <if test="repositoryId > 0">
             AND l.sa_id = #{repositoryId}
         </if>
