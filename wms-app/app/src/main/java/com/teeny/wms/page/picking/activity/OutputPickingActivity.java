@@ -77,7 +77,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
 
     private KeyValueTextView mLocationView;
     private KeyValueTextView mDeskNameView;
-    private KeyValueTextView mClientNameView;
+    private TextView mClientNameView;
     private KeyValueTextView mProgressView;
     private KeyValueTextView mNextLocationView;
     private KeyValueTextView mWarehouseView;
@@ -143,7 +143,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
 
         mLocationView = (KeyValueTextView) findViewById(R.id.output_picking_location);
         mDeskNameView = (KeyValueTextView) findViewById(R.id.output_picking_desk_name);
-        mClientNameView = (KeyValueTextView) findViewById(R.id.output_picking_client_name);
+        mClientNameView = (TextView) findViewById(R.id.output_picking_client_name);
         mProgressView = (KeyValueTextView) findViewById(R.id.output_picking_progress);
         mNextLocationView = (KeyValueTextView) findViewById(R.id.output_picking_next_location);
         mWarehouseView = (KeyValueTextView) findViewById(R.id.output_picking_warehouse);
@@ -205,7 +205,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         OutputPickingOrderEntity entity = helper.getData();
         mDocumentNoView.setValue(entity.getNumber());
         mDeskNameView.setValue(entity.getDeskName());
-        mClientNameView.setValue(entity.getClientName());
+        mClientNameView.setText(entity.getClientName());
         mWarehouseView.setValue(entity.getWarehouse());
         mClerkView.setValue(entity.getClerk());
         mShopView.setValue(entity.getShopName());
@@ -328,7 +328,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     public void clear() {
         mDocumentNoView.setValue("");
         mDeskNameView.setValue("");
-        mClientNameView.setValue("");
+        mClientNameView.setText("");
         mProgressView.setValue("");
         mWarehouseView.setValue("");
         mClerkView.setValue("");

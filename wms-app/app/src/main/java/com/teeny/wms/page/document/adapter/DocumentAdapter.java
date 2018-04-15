@@ -111,7 +111,10 @@ public class DocumentAdapter extends RecyclerAdapter<DocumentEntity> implements 
                 results.values = list;
                 results.count = list.size();
             } else {
-                final String prefixString = prefix.toString().toLowerCase();
+                String prefixString = "";
+                if (Validator.isNotEmpty(prefix)) {
+                    prefixString = prefix.toString().toLowerCase();
+                }
 
                 final ArrayList<DocumentEntity> values;
                 synchronized (mLock) {

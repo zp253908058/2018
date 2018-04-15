@@ -103,6 +103,7 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
             return;
         }
         String title = menu.getTitle().toString();
+        Logger.e(title);
         if (ObjectUtils.equals(title, "全部")) {
             title = "";
         }
