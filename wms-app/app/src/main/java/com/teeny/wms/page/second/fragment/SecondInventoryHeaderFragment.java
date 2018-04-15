@@ -19,7 +19,7 @@ import com.teeny.wms.page.warehouse.helper.WarehouseFirstHelper;
  */
 
 public class SecondInventoryHeaderFragment extends InventoryHeaderFragment {
-    
+
     public static SecondInventoryHeaderFragment newInstance() {
         return new SecondInventoryHeaderFragment();
     }

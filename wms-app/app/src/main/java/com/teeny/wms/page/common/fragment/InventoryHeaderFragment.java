@@ -139,7 +139,7 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
                 mAreaAdapter.addAll(areas);
                 mAreaTextView.setAdapter(mAreaAdapter);
             }
-            count();
+            onRepositoryOrAreaSelected();
         });
         mRepositoryTextView.addTextChangedListener(new TextWatcher() {
             private boolean mIsClear;
@@ -184,7 +184,7 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
                 return;
             }
             mSelectedArea = areaEntity;
-            count();
+            onRepositoryOrAreaSelected();
         });
         mAreaTextView.addTextChangedListener(new TextWatcher() {
             private boolean mIsClear;
@@ -291,6 +291,14 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
     private void onFocusChanged(View view, boolean hasFocus) {
         if (hasFocus) {
             mFocusView = (EditText) view;
+        }
+    }
+
+    private void onRepositoryOrAreaSelected(){
+        if (getPdType() != 2) {
+            count();
+        } else {
+            obtainDetailData();
         }
     }
 
