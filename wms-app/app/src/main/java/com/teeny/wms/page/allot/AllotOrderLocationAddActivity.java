@@ -128,8 +128,8 @@ public class AllotOrderLocationAddActivity extends ToolbarActivity implements Di
 
 
     private void initView() {
-        mLocationText = (EditText) findViewById(R.id.allot_order_location_add_name);
-        mAmountEdit = (EditText) findViewById(R.id.allot_order_location_add_amount);
+        mLocationText = findViewById(R.id.allot_order_location_add_name);
+        mAmountEdit = findViewById(R.id.allot_order_location_add_amount);
 
         Intent intent = getIntent();
         if (intent.hasExtra(KEY_ENTITY)) {

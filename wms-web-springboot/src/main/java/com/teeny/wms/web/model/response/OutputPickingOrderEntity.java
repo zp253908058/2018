@@ -18,6 +18,8 @@ public class OutputPickingOrderEntity {
     private String number;        //单据编号
     private String deskName;      //复核台
     private String clientName;    //往来单位
+    private String orderRemark;   //订单备注
+    private String originalType;  //原单类型
     private int completed;
     private int total;
     private String warehouse;
@@ -57,6 +59,22 @@ public class OutputPickingOrderEntity {
 
     public void setClientName(String clientName) {
         this.clientName = clientName;
+    }
+
+    public String getOrderRemark() {
+        return orderRemark;
+    }
+
+    public void setOrderRemark(String orderRemark) {
+        this.orderRemark = orderRemark;
+    }
+
+    public String getOriginalType() {
+        return originalType;
+    }
+
+    public void setOrginalType(String originalType) {
+        this.originalType = originalType;
     }
 
     public int getCompleted() {

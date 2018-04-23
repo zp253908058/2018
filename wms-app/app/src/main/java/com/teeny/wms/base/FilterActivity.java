@@ -64,7 +64,6 @@ public abstract class FilterActivity<T> extends ToolbarActivity {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(this.getContext());
         manager.setSmoothScrollbarEnabled(true);
-        manager.setAutoMeasureEnabled(true);
         recyclerView.setLayoutManager(manager);
         VerticalDecoration decoration = new VerticalDecoration(this.getContext());
         decoration.setHeight(this.getContext().getResources().getDimensionPixelSize(R.dimen.dp_16));

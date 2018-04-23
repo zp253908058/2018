@@ -1,6 +1,7 @@
 package com.teeny.wms.datasouce.net.service;
 
 import com.teeny.wms.model.GoodsAllocationEntity;
+import com.teeny.wms.model.HistoryGoodsEntity;
 import com.teeny.wms.model.ResponseEntity;
 
 import java.util.List;
@@ -27,4 +28,12 @@ public interface CommonService {
      */
     @GET("common/historyLocation")
     Flowable<ResponseEntity<List<GoodsAllocationEntity>>> getHistoryAllocation(@Query("goodsId") int goodsId);
+
+    /**
+     * 获取仓库
+     *
+     * @return List<KeyValueEntity>
+     */
+    @GET("common/historyGoods")
+    Flowable<ResponseEntity<List<HistoryGoodsEntity>>> getHistoryGoods(@Query("condition") String condition);
 }

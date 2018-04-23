@@ -3,6 +3,7 @@ package com.teeny.wms.web.service.impl;
 import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.StringMapEntity;
 import com.teeny.wms.web.model.response.DocumentResponseEntity;
+import com.teeny.wms.web.model.response.HistoryGoodsEntity;
 import com.teeny.wms.web.repository.CommonMapper;
 import com.teeny.wms.web.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +69,10 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public List<KeyValueEntity> obtainAreaList(String account, int repositoryId) {
         return mCommonMapper.obtainAreaList(account, repositoryId);
+    }
+
+    @Override
+    public List<HistoryGoodsEntity> getHistoryGoods(String account, String condition) {
+        return mCommonMapper.getHistoryGoods(account, condition);
     }
 }

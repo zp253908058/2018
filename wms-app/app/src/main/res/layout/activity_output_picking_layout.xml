@@ -32,7 +32,7 @@
             <com.teeny.wms.widget.KeyValueTextView
                 android:id="@+id/output_picking_next_location"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/dp_32"
                 android:layout_marginTop="@dimen/dp_16"
                 android:background="@color/white"
                 android:paddingEnd="@dimen/dp_16"
@@ -52,7 +52,7 @@
             <com.teeny.wms.widget.KeyValueTextView
                 android:id="@+id/output_picking_desk_name"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/dp_32"
                 android:background="@color/white"
                 android:paddingEnd="@dimen/dp_16"
                 android:paddingLeft="@dimen/dp_16"
@@ -68,9 +68,47 @@
                 android:layout_height="@dimen/px_1"
                 android:background="@drawable/shape_divider" />
 
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/output_picking_order_remark"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_32"
+                android:background="@color/white"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                app:key="@string/text_order_remark"
+                app:keySize="@dimen/sp_14"
+                app:separatorSize="@dimen/sp_14"
+                app:valueSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="@drawable/shape_divider" />
+
+            <com.teeny.wms.widget.KeyValueTextView
+                android:id="@+id/output_picking_original_type"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_32"
+                android:background="@color/white"
+                android:paddingEnd="@dimen/dp_16"
+                android:paddingLeft="@dimen/dp_16"
+                android:paddingRight="@dimen/dp_16"
+                android:paddingStart="@dimen/dp_16"
+                app:key="@string/text_original_order_type"
+                app:keySize="@dimen/sp_14"
+                app:separatorSize="@dimen/sp_14"
+                app:valueSize="@dimen/sp_14" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="@drawable/shape_divider" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/dp_32"
                 android:orientation="horizontal"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/dp_16"
@@ -102,7 +140,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_16"
-
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingEnd="@dimen/dp_16"
@@ -223,106 +260,6 @@
                         style="@style/TextViewStyle.Grey"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/text_goods_name" />
-
-                    <TextView
-                        android:id="@+id/output_picking_name"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_specification" />
-
-                    <TextView
-                        android:id="@+id/output_picking_specification"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_manufacturer" />
-
-                    <TextView
-                        android:id="@+id/output_picking_manufacturer"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_unit" />
-
-                    <TextView
-                        android:id="@+id/output_picking_unit"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_order_count" />
-
-                    <TextView
-                        android:id="@+id/output_picking_order_count"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
                         android:text="@string/text_picking_number" />
 
                     <EditText
@@ -337,146 +274,133 @@
                         android:inputType="numberDecimal" />
                 </LinearLayout>
 
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/output_picking_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_32"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8"
+                    app:key="@string/text_goods_name" />
+
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/output_picking_validity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_32"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8"
+                    app:key="@string/text_validity" />
+
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/output_picking_production_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_32"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8"
+                    app:key="@string/text_production_date" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_lot_number" />
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/output_picking_specification"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_32"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_specification" />
 
-                    <TextView
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/output_picking_unit"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_32"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_unit" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.teeny.wms.widget.KeyValueTextView
+                        android:id="@+id/output_picking_order_count"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_32"
+                        android:layout_weight="1"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_order_count" />
+
+                    <com.teeny.wms.widget.KeyValueTextView
                         android:id="@+id/output_picking_lot"
-                        style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_lot_number" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_validity" />
-
-                    <TextView
-                        android:id="@+id/output_picking_validity"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_production_date" />
-
-                    <TextView
-                        android:id="@+id/output_picking_production_date"
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_barcode" />
-
-                    <TextView
+                    <com.teeny.wms.widget.KeyValueTextView
                         android:id="@+id/output_picking_barcode"
-                        style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_weight="1"
-                        android:gravity="center_vertical|end"
-                        android:hint="@string/hint_barcode_collect" />
-                </LinearLayout>
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_barcode" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_unit_price" />
-
-                    <TextView
+                    <com.teeny.wms.widget.KeyValueTextView
                         android:id="@+id/output_picking_unit_price"
-                        style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_unit_price" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_money" />
-
-                    <TextView
+                    <com.teeny.wms.widget.KeyValueTextView
                         android:id="@+id/output_picking_money"
-                        style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
-                </LinearLayout>
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_money" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/TextViewStyle.Grey"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_remark" />
-
-                    <TextView
+                    <com.teeny.wms.widget.KeyValueTextView
                         android:id="@+id/output_picking_remark"
-                        style="@style/TextViewStyle.Grey"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="@dimen/dp_32"
                         android:layout_weight="1"
-                        android:gravity="center_vertical|end" />
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        app:key="@string/text_remark" />
                 </LinearLayout>
+
+                <com.teeny.wms.widget.KeyValueTextView
+                    android:id="@+id/output_picking_manufacturer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp_32"
+                    android:paddingBottom="@dimen/dp_8"
+                    android:paddingTop="@dimen/dp_8"
+                    app:key="@string/text_manufacturer" />
 
             </LinearLayout>
 

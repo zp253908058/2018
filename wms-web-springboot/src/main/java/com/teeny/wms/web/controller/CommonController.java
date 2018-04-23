@@ -7,6 +7,7 @@ import com.teeny.wms.web.model.StringMapEntity;
 import com.teeny.wms.web.model.EmptyEntity;
 import com.teeny.wms.web.model.UserEntity;
 import com.teeny.wms.web.model.response.DocumentResponseEntity;
+import com.teeny.wms.web.model.response.HistoryGoodsEntity;
 import com.teeny.wms.web.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -87,5 +88,17 @@ public class CommonController {
     @GetMapping(value = "/api/common/areaList/{id}")
     public ResponseEntity<List<KeyValueEntity>> getAreaList(@PathVariable("id") int id, @RequestHeader("account") String account) {
         return new ResponseEntity<>(mCommonService.obtainAreaList(account, id));
+    }
+
+    /**
+     * 获取区域
+     *
+     * @param condition 查询条件
+     * @param account   账套
+     * @return
+     */
+    @GetMapping(value = "/api/common/historyGoods")
+    public ResponseEntity<List<HistoryGoodsEntity>> getHistoryGoods(@RequestHeader("account") String account, @RequestParam("condition") String condition) {
+        return new ResponseEntity<>(mCommonService.getHistoryGoods(account, condition));
     }
 }

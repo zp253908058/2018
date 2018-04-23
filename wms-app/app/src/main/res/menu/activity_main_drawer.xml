@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item android:title="@string/text_setting">
+        <menu>
+            <item
+                android:id="@+id/nav_switch_warehouse"
+                android:title="@string/text_switch_warehouse" />
+            <item
+                android:id="@+id/nav_refresh_time"
+                android:title="@string/text_refresh_time" />
+        </menu>
+    </item>
+
+    <item android:title="@string/text_other">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:title="@string/text_logout" />
+        </menu>
+    </item>
+</menu>

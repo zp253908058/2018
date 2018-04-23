@@ -46,6 +46,12 @@
         android:paddingTop="@dimen/dp_8"
         app:key="@string/text_goods_name" />
 
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/shelve_production_date"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_32"
+        app:key="@string/text_production_date" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

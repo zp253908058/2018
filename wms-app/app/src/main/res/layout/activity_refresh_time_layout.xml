@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        app:gravity="center"
+        app:key="@string/text_unit"
+        app:keyColor="@color/text_color"
+        app:value="@string/text_minute" />
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/refresh_time_seek_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:indeterminate="false"
+        android:max="10" />
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/refresh_time_tip"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        app:gravity="center"
+        app:key="@string/text_refresh_time"
+        app:keyColor="@color/text_color"  />
+
+</LinearLayout>

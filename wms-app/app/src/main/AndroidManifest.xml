@@ -39,11 +39,26 @@
             android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity
-            android:name=".page.main.MainActivity"
+            android:name=".page.main.activity.MainActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustNothing" />
+
+        <activity
+            android:name=".page.main.activity.WarehouseSwitchActivity"
+            android:exported="false"
+            android:label="@string/text_switch_warehouse"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+
+        <activity
+            android:name=".page.main.activity.RefreshTimeActivity"
+            android:exported="false"
+            android:label="@string/text_refresh_time"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".page.login.ServerConfigActivity"
@@ -237,94 +252,115 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.review.RecipientActivity"
+        <activity
+            android:name=".page.review.RecipientActivity"
             android:exported="false"
             android:label="@string/text_recipient_choose"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <!--2017.12.28-->
-        <activity android:name=".page.barcode.BarcodeCollectActivity"
+        <activity
+            android:name=".page.barcode.BarcodeCollectActivity"
             android:exported="false"
             android:label="@string/text_barcode_collect"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.barcode.BarcodeAddActivity"
+        <activity
+            android:name=".page.barcode.BarcodeAddActivity"
             android:exported="false"
             android:label="@string/text_barcode_add"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.allot.AllotOrderAddActivity"
+        <activity
+            android:name=".page.allot.AllotOrderAddActivity"
             android:exported="false"
             android:label="@string/text_allot_order_add"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.allot.AllotOrderFilterActivity"
+        <activity
+            android:name=".page.allot.AllotOrderFilterActivity"
             android:exported="false"
             android:label="@string/text_allot_list_filter"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".page.allot.AllotOrderAddDetailActivity"
+        <activity
+            android:name=".page.allot.AllotOrderAddDetailActivity"
             android:exported="false"
             android:label="@string/text_allot_order_add_detail"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".page.allot.AllotOrderLocationAddActivity"
+        <activity
+            android:name=".page.allot.AllotOrderLocationAddActivity"
             android:exported="false"
             android:label="@string/text_location_add"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.delivery.activity.ShopDeliveryActivity"
+        <activity
+            android:name=".page.delivery.activity.ShopDeliveryActivity"
             android:exported="false"
             android:label="@string/text_shop_delivery"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".page.delivery.activity.ShopDeliveryEditActivity"
+        <activity
+            android:name=".page.delivery.activity.ShopDeliveryEditActivity"
             android:exported="false"
             android:label="@string/text_shop_delivery_edit"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.picking.activity.OutputPickingActivity"
+        <activity
+            android:name=".page.picking.activity.OutputPickingActivity"
             android:exported="false"
             android:label="@string/text_output_picking"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.picking.activity.OutputPickingAddActivity"
+        <activity
+            android:name=".page.picking.activity.OutputPickingAddActivity"
             android:exported="false"
             android:label="@string/text_turnover_box_add"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.picking.activity.OrderDetailActivity"
+        <activity
+            android:name=".page.picking.activity.OrderDetailActivity"
             android:exported="false"
             android:label="@string/text_document_detail"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name=".page.picking.activity.TaskActivity"
+        <activity
+            android:name=".page.picking.activity.TaskActivity"
             android:exported="false"
             android:label="@string/text_work_task"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity android:name=".page.history.activity.HistoryGoodsActivity"
+            android:exported="false"
+            android:label="@string/text_history_goods"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustNothing" />
+
 
         <service
             android:name=".service.PollingService"

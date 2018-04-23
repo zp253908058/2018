@@ -113,7 +113,7 @@ public class AllotServiceImpl implements AllotService {
 
     @Override
     public AllotGoodsEntity add(String account, int id, int userId, String serial) {
-        String billNo = DateFormatUtils.format(new Date(), DATE_PATTERN);
+        String billNo = serial + DateFormatUtils.format(new Date(), DATE_PATTERN);
         //生成大单据
         mAllotMapper.generateBill(account, userId, billNo);
         //添加至待完成
@@ -165,6 +165,23 @@ public class AllotServiceImpl implements AllotService {
 
     @Override
     public void finishBill(String account, int userId) {
+        List<AllotGoodsEntity> list = mAllotMapper.getTempleGoodsList(account, userId);
+        if (Validator.isEmpty(list)) {
+            throw new InnerException("列表为空.");
+        }
+        for (AllotGoodsEntity entity : list) {
+            List<AllotLocationEntity> locations = mAllotMapper.getLocationList(account, entity.getDetailId());
+            if (Validator.isEmpty(locations)) {
+                throw new InnerException("商品:" + entity.getGoodsName() + "未添加货位.");
+            }
+            float amount = 0;
+            for (AllotLocationEntity location : locations) {
+                amount += location.getAmount();
+            }
+            if (amount > entity.getAmount()) {
+                throw new InnerException("商品:" + entity.getGoodsName() + "可开数量不足.");
+            }
+        }
         mAllotMapper.finish(account, userId);
     }
 }

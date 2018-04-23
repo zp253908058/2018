@@ -151,6 +151,7 @@
     <string name="prompt_input_password">请输入密码!</string>
     <string name="prompt_select_unit">请选择单位!</string>
     <string name="prompt_complete_all">确定要完成全部吗?</string>
+    <string name="prompt_complete_current">点击确定完成当前.</string>
     <string name="prompt_allot_add_finish_bill">该单据可能包含未添加调入货位的商品,确定要全部完成吗?</string>
 
     <string name="hint_barcode_collect">请采集条码</string>
@@ -199,7 +200,20 @@
     <string name="text_desk_name">复核台</string>
     <string name="text_client_name">往来单位</string>
     <string name="text_remark">备注</string>
+    <string name="text_header_remark">表头备注</string>
     <string name="text_all">全部</string>
     <string name="text_not_putaway">待上架</string>
     <string name="text_putaway_complete">已上架</string>
+
+    <string name="text_navigation_drawer_open">Open navigation drawer</string>
+    <string name="text_navigation_drawer_close">Close navigation drawer</string>
+    <string name="text_setting">设置</string>
+    <string name="text_other">其他</string>
+    <string name="text_refresh_time">刷新时间</string>
+    <string name="text_exit">退出</string>
+    <string name="text_minute">分钟</string>
+    <string name="text_refresh_time_format">%1$s分钟</string>
+    <string name="text_history_goods">历史商品</string>
+    <string name="text_original_order_type">原单类型</string>
+    <string name="text_order_remark">订单备注</string>
 </resources>

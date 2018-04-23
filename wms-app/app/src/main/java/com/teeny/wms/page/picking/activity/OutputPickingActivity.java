@@ -78,6 +78,8 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     private KeyValueTextView mLocationView;
     private KeyValueTextView mDeskNameView;
     private TextView mClientNameView;
+    private KeyValueTextView mOrderRemark;
+    private KeyValueTextView mOriginalType;
     private KeyValueTextView mProgressView;
     private KeyValueTextView mNextLocationView;
     private KeyValueTextView mWarehouseView;
@@ -85,19 +87,19 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     private KeyValueTextView mShopView;
     private KeyValueTextView mTotalMoneyView;
 
-    private TextView mNameView;
-    private TextView mSpecificationView;
-    private TextView mManufacturerView;
-    private TextView mUnitView;
-    private TextView mLotView;
-    private TextView mValidityView;
-    private TextView mProductionDateView;
-    private TextView mBarcodeView;
-    private TextView mUnitPriceView;
-    private TextView mMoneyView;
-    private TextView mOrderCountView;
+    private KeyValueTextView mNameView;
+    private KeyValueTextView mSpecificationView;
+    private KeyValueTextView mManufacturerView;
+    private KeyValueTextView mUnitView;
+    private KeyValueTextView mLotView;
+    private KeyValueTextView mValidityView;
+    private KeyValueTextView mProductionDateView;
+    private KeyValueTextView mBarcodeView;
+    private KeyValueTextView mUnitPriceView;
+    private KeyValueTextView mMoneyView;
+    private KeyValueTextView mOrderCountView;
     private EditText mPickCountView;
-    private TextView mRemarkView;
+    private KeyValueTextView mRemarkView;
 
     private OutputPickingAdapter mAdapter;
 
@@ -109,6 +111,8 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     private PickingService mService;
 
     private OutputPickingHelper mHelper;
+
+    private AlertDialog mSubmitDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,38 +138,43 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
                 Toaster.showToast("前面没有更多了.");
             }
         });
-        mDocumentNoView = (KeyValueTextView) findViewById(R.id.output_picking_document_no);
+        mDocumentNoView = findViewById(R.id.output_picking_document_no);
         mDocumentNoView.setOnClickListener(v -> {
             if (Validator.isEmpty(mDocumentNoView.getValue())) {
                 initialize();
             }
         });
 
-        mLocationView = (KeyValueTextView) findViewById(R.id.output_picking_location);
-        mDeskNameView = (KeyValueTextView) findViewById(R.id.output_picking_desk_name);
-        mClientNameView = (TextView) findViewById(R.id.output_picking_client_name);
-        mProgressView = (KeyValueTextView) findViewById(R.id.output_picking_progress);
-        mNextLocationView = (KeyValueTextView) findViewById(R.id.output_picking_next_location);
-        mWarehouseView = (KeyValueTextView) findViewById(R.id.output_picking_warehouse);
-        mClerkView = (KeyValueTextView) findViewById(R.id.output_picking_clerk);
-        mShopView = (KeyValueTextView) findViewById(R.id.output_picking_shop);
-        mTotalMoneyView = (KeyValueTextView) findViewById(R.id.output_picking_total_money);
+        mSubmitDialog = DialogFactory.createAlertDialog(this, getString(R.string.prompt_complete_current), this::onSubmit);
 
-        mNameView = (TextView) findViewById(R.id.output_picking_name);
-        mSpecificationView = (TextView) findViewById(R.id.output_picking_specification);
-        mManufacturerView = (TextView) findViewById(R.id.output_picking_manufacturer);
-        mUnitView = (TextView) findViewById(R.id.output_picking_unit);
-        mLotView = (TextView) findViewById(R.id.output_picking_lot);
-        mValidityView = (TextView) findViewById(R.id.output_picking_validity);
-        mProductionDateView = (TextView) findViewById(R.id.output_picking_production_date);
-        mBarcodeView = (TextView) findViewById(R.id.output_picking_barcode);
-        mUnitPriceView = (TextView) findViewById(R.id.output_picking_unit_price);
-        mMoneyView = (TextView) findViewById(R.id.output_picking_money);
-        mOrderCountView = (TextView) findViewById(R.id.output_picking_order_count);
-        mPickCountView = (EditText) findViewById(R.id.output_picking_pick_count);
-        mRemarkView = (TextView) findViewById(R.id.output_picking_remark);
+        mLocationView = findViewById(R.id.output_picking_location);
+        mDeskNameView = findViewById(R.id.output_picking_desk_name);
+        mClientNameView = findViewById(R.id.output_picking_client_name);
+        mOrderRemark = findViewById(R.id.output_picking_order_remark);
+        mOriginalType = findViewById(R.id.output_picking_original_type);
+        mProgressView = findViewById(R.id.output_picking_progress);
+        mNextLocationView = findViewById(R.id.output_picking_next_location);
+        mWarehouseView = findViewById(R.id.output_picking_warehouse);
+        mClerkView = findViewById(R.id.output_picking_clerk);
+        mShopView = findViewById(R.id.output_picking_shop);
+        mTotalMoneyView = findViewById(R.id.output_picking_total_money);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mNameView = findViewById(R.id.output_picking_name);
+        mSpecificationView = findViewById(R.id.output_picking_specification);
+        mManufacturerView = findViewById(R.id.output_picking_manufacturer);
+        //TODO
+        mUnitView = findViewById(R.id.output_picking_unit);
+        mLotView = findViewById(R.id.output_picking_lot);
+        mValidityView = findViewById(R.id.output_picking_validity);
+        mProductionDateView = findViewById(R.id.output_picking_production_date);
+        mBarcodeView = findViewById(R.id.output_picking_barcode);
+        mUnitPriceView = findViewById(R.id.output_picking_unit_price);
+        mMoneyView = findViewById(R.id.output_picking_money);
+        mOrderCountView = findViewById(R.id.output_picking_order_count);
+        mPickCountView = findViewById(R.id.output_picking_pick_count);
+        mRemarkView = findViewById(R.id.output_picking_remark);
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         mAdapter = new OutputPickingAdapter(new ArrayList<>());
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -177,12 +186,16 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         listener.setOnItemLongClickListener(this::onItemLongClick);
         recyclerView.addOnItemTouchListener(listener);
 
-        mDeleteDialog = DialogFactory.createAlertDialog(this, getString(R.string.prompt_delete_confirm), this);
+        mDeleteDialog = DialogFactory.createAlertDialog(this, getString(R.string.prompt_complete_current), this);
         mDeleteDialog.setOnDismissListener(dialog -> mDeletePosition = INVALID_POSITION);
 
         mService = NetServiceManager.getInstance().getService(PickingService.class);
         mHelper = OutputPickingHelper.getInstance();
         initialize();
+    }
+
+    private void onSubmit(DialogInterface dialog, int which) {
+        complete();
     }
 
     private void initialize() {
@@ -206,6 +219,8 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mDocumentNoView.setValue(entity.getNumber());
         mDeskNameView.setValue(entity.getDeskName());
         mClientNameView.setText(entity.getClientName());
+        mOrderRemark.setValue(entity.getOrderRemark());
+        mOriginalType.setValue(entity.getOriginalType());
         mWarehouseView.setValue(entity.getWarehouse());
         mClerkView.setValue(entity.getClerk());
         mShopView.setValue(entity.getShopName());
@@ -217,21 +232,21 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void setData(OutputPickingItemEntity entity) {
-        mNameView.setText(entity.getGoodsName());
-        mSpecificationView.setText(entity.getSpecification());
-        mManufacturerView.setText(entity.getManufacturer());
-        mUnitView.setText(entity.getUnit());
-        mLotView.setText(entity.getLot());
-        mValidityView.setText(entity.getValidate());
-        mProductionDateView.setText(entity.getProductionDate());
-        mBarcodeView.setText(entity.getGoodsBarcode());
-        mUnitPriceView.setText(String.valueOf(entity.getUnitPrice()));
-        mMoneyView.setText(String.valueOf(entity.getMoney()));
-        mOrderCountView.setText(String.valueOf(entity.getOrderCount()));
+        mNameView.setValue(entity.getGoodsName());
+        mSpecificationView.setValue(entity.getSpecification());
+        mManufacturerView.setValue(entity.getManufacturer());
+        mUnitView.setValue(entity.getUnit());
+        mLotView.setValue(entity.getLot());
+        mValidityView.setValue(entity.getValidate());
+        mProductionDateView.setValue(entity.getProductionDate());
+        mBarcodeView.setValue(entity.getGoodsBarcode());
+        mUnitPriceView.setValue(String.valueOf(entity.getUnitPrice()));
+        mMoneyView.setValue(String.valueOf(entity.getMoney()));
+        mOrderCountView.setValue(String.valueOf(entity.getOrderCount()));
         mPickCountView.setText(String.valueOf(entity.getPickCount()));
         mLocationView.setValue(entity.getLocation());
         mNextLocationView.setValue(mHelper.getNextLocation());
-        mRemarkView.setText(entity.getRemark());
+        mRemarkView.setValue(entity.getRemark());
 
         mProgressView.setValue(mHelper.getData().getProgress());
     }
@@ -274,18 +289,21 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
     }
 
     public void onClick(View view) {
-        complete();
-    }
-
-    private void complete() {
         OutputPickingItemEntity entity = mHelper.getCurrent();
         if (entity == null) {
             return;
         }
-        if (entity.getStatus() == 1){
-            mHelper.next();
-            return;
+        if (entity.getStatus() == 1) {
+            if (mHelper.hasNext()) {
+                mHelper.next();
+                return;
+            }
         }
+        mSubmitDialog.show();
+    }
+
+    private void complete() {
+        OutputPickingItemEntity entity = mHelper.getCurrent();
         OutputPickingRequestEntity requestEntity = new OutputPickingRequestEntity();
         List<OutputPickingEntity> list = mAdapter.getItems();
         requestEntity.setList(list);
@@ -329,27 +347,29 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mDocumentNoView.setValue("");
         mDeskNameView.setValue("");
         mClientNameView.setText("");
+        mOrderRemark.setValue("");
+        mOriginalType.setValue("");
         mProgressView.setValue("");
         mWarehouseView.setValue("");
         mClerkView.setValue("");
         mShopView.setValue("");
         mTotalMoneyView.setValue("");
 
-        mNameView.setText("");
-        mSpecificationView.setText("");
-        mManufacturerView.setText("");
-        mUnitView.setText("");
-        mLotView.setText("");
-        mValidityView.setText("");
-        mProductionDateView.setText("");
-        mBarcodeView.setText("");
-        mUnitPriceView.setText("");
-        mMoneyView.setText("");
-        mOrderCountView.setText("");
+        mNameView.setValue("");
+        mSpecificationView.setValue("");
+        mManufacturerView.setValue("");
+        mUnitView.setValue("");
+        mLotView.setValue("");
+        mValidityView.setValue("");
+        mProductionDateView.setValue("");
+        mBarcodeView.setValue("");
+        mUnitPriceView.setValue("");
+        mMoneyView.setValue("");
+        mOrderCountView.setValue("");
         mPickCountView.setText("");
         mLocationView.setValue("");
         mNextLocationView.setValue("");
-        mRemarkView.setText("");
+        mRemarkView.setValue("");
         mAdapter.replaces(new ArrayList<>());
     }
 

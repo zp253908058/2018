@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
-def sdk_version = 25
+def sdk_version = 27
 android {
     signingConfigs {
         release {
@@ -18,7 +18,7 @@ android {
         minSdkVersion 16
         targetSdkVersion sdk_version
         versionCode 2
-        versionName "201804151449"
+        versionName "201804221510"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -46,7 +46,7 @@ android {
     }
 }
 
-def support_version = "25.4.0"
+def support_version = "27.1.1"
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -54,7 +54,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.android.support:appcompat-v7:' + support_version
     implementation 'com.android.support:support-v4:' + support_version
     implementation 'com.android.support:design:' + support_version

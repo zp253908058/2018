@@ -126,15 +126,15 @@ public class AllotOrderAddDetailActivity extends ToolbarActivity implements Dial
         Intent intent = getIntent();
         mEntity = intent.getParcelableExtra(KEY_ENTITY);
 
-        TextView name = (TextView) findViewById(R.id.allot_order_add_detail_name);
-        TextView specification = (TextView) findViewById(R.id.allot_order_add_detail_specification);
-        TextView manufacturer = (TextView) findViewById(R.id.allot_order_add_detail_manufacturer);
-        TextView unit = (TextView) findViewById(R.id.allot_order_add_detail_unit);
-        TextView lot = (TextView) findViewById(R.id.allot_order_add_detail_lot);
-        TextView validity = (TextView) findViewById(R.id.allot_order_add_detail_validity);
-        TextView currentLocation = (TextView) findViewById(R.id.allot_order_add_detail_current_location);
+        TextView name = findViewById(R.id.allot_order_add_detail_name);
+        TextView specification = findViewById(R.id.allot_order_add_detail_specification);
+        TextView manufacturer = findViewById(R.id.allot_order_add_detail_manufacturer);
+        TextView unit =  findViewById(R.id.allot_order_add_detail_unit);
+        TextView lot =  findViewById(R.id.allot_order_add_detail_lot);
+        TextView validity =  findViewById(R.id.allot_order_add_detail_validity);
+        TextView currentLocation =  findViewById(R.id.allot_order_add_detail_current_location);
         //当前库存
-        TextView currentInventory = (TextView) findViewById(R.id.allot_order_add_detail_current_inventory);
+        TextView currentInventory =  findViewById(R.id.allot_order_add_detail_current_inventory);
 
         name.setText(mEntity.getGoodsName());
         specification.setText(mEntity.getSpecification());
@@ -197,7 +197,7 @@ public class AllotOrderAddDetailActivity extends ToolbarActivity implements Dial
             amount += entity.getAmount();
         }
         if (amount > mEntity.getAmount()) {
-            Toaster.showToast("当前数量不能大于库存数量.");
+            Toaster.showToast("当前数量不能大于可开数量.");
             return;
         }
         AllotLocationRequestEntity entity = new AllotLocationRequestEntity();

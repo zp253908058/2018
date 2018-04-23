@@ -38,35 +38,37 @@
             e.name              AS clerk,
             b.cname             AS shopName,
             b.total             AS totalMoney,
+            b.Note              AS orderRemark,
+            b.YTypeName         AS originalType,
             #{account}          AS account
         FROM ${account}.dbo.pda_pickBill b
             INNER JOIN ${account}.dbo.pda_pickBill_D d ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_storages s ON b.s_id = s.s_id
             LEFT JOIN ${account}.dbo.pda_employees e ON e.e_id = b.e_id
         WHERE b.billid = #{id} AND b.billstates = 10
-        GROUP BY b.billid, b.billnumber, b.deskname, s.name, e.name, b.cname, b.total, b.ClientName
+        GROUP BY b.billid, b.billnumber, b.deskname, s.name, e.name, b.cname, b.total, b.ClientName,b.Note,b.YTypeName
     </select>
 
     <select id="getDetail" resultType="OutputPickingItemEntity">
         SELECT
-            d.smb_id     AS id,
-            p.name       AS goodsName,
-            p.pinyin     AS pinyin,
-            p.barcode    AS goodsBarcode,
-            p.standard   AS specification,
-            p.unit1Name  AS unit,
-            d.MakeDate   AS productionDate,
-            l.loc_code   AS location,
-            d.Qty        AS orderCount,
-            d.pickQty    AS pickCount,
-            d.Batchno    AS lot,
-            d.Validdate  AS validate,
-            p.Factory    AS manufacturer,
-            d.TaxPrice   AS unitPrice,
-            d.TaxTotal   AS money,
-            d.DealStates AS status,
-            d.comment    AS remark,
-            #{account}   AS account
+            d.smb_id                               AS id,
+            p.name                                 AS goodsName,
+            p.pinyin                               AS pinyin,
+            p.barcode                              AS goodsBarcode,
+            p.standard                             AS specification,
+            p.unit1Name                            AS unit,
+            CONVERT(VARCHAR(100), d.MakeDate, 23)  AS productionDate,
+            l.loc_code                             AS location,
+            d.Qty                                  AS orderCount,
+            d.pickQty                              AS pickCount,
+            d.Batchno                              AS lot,
+            CONVERT(VARCHAR(100), d.Validdate, 23) AS validate,
+            p.Factory                              AS manufacturer,
+            d.TaxPrice                             AS unitPrice,
+            d.TaxTotal                             AS money,
+            d.DealStates                           AS status,
+            d.comment                              AS remark,
+            #{account}                             AS account
         FROM ${account}.dbo.pda_pickBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON d.Location_id = l.l_id

@@ -27,6 +27,8 @@ public class SharedPreferencesManager {
 
     private static final String NAME_ALLOT_ORDER_FILTER = "allot_order_filter";
 
+    private static final String NAME_REFRESH_TIME = "refresh_time";
+
     @SuppressLint("StaticFieldLeak")
     private static volatile SharedPreferencesManager mInstance;
 
@@ -79,5 +81,9 @@ public class SharedPreferencesManager {
 
     public Preferences getAllotOrderFilterPreferences(){
         return getPreferences(NAME_ALLOT_ORDER_FILTER);
+    }
+
+    public Preferences getRefreshTimePreferences(){
+        return getPreferences(NAME_REFRESH_TIME);
     }
 }

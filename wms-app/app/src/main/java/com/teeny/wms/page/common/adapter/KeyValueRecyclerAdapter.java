@@ -4,6 +4,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.teeny.wms.base.FilterRecyclerAdapter;
 import com.teeny.wms.base.RecyclerAdapter;
 import com.teeny.wms.base.RecyclerViewHolder;
 import com.teeny.wms.model.KeyValueEntity;
@@ -21,7 +22,7 @@ import java.util.List;
  * @since 2017/8/16
  */
 
-public class KeyValueRecyclerAdapter extends RecyclerAdapter<KeyValueEntity> implements Filterable {
+public class KeyValueRecyclerAdapter extends FilterRecyclerAdapter<KeyValueEntity>{
     private final Object mLock = new Object();
 
     private Filter mFilter;

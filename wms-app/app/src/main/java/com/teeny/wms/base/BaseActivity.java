@@ -30,9 +30,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Progress
 
     private static final String TAG = BaseActivity.class.getSimpleName();
 
-    private static final String SCN_CUST_ACTION_START = "android.intent.action.SCANNER_BUTTON_DOWN";
-    private static final String SCN_CUST_ACTION_CANCEL = "android.intent.action.SCANNER_BUTTON_UP";
-
     /**
      * Activity的堆栈管理
      */

@@ -791,4 +791,16 @@ IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('pda_checkbi
   END
 
 
+--XXX.2018-04-23 拣货单增加单据备注
+IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('Pda_PickBill') AND Name='Note')
+  BEGIN
+    ALTER table Pda_PickBill
+      add Note varchar(200) not null DEFAULT ('')  --备注
+  END
+--XXX.2018-04-23 拣货单增加原单类型
+IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('Pda_PickBill') AND Name='YTypeName')
+  BEGIN
+    ALTER table Pda_PickBill
+      add YTypeName varchar(100) not null DEFAULT ('')   --原单类型
+  END
 

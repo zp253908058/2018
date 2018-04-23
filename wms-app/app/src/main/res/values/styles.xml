@@ -5,8 +5,6 @@
         <item name="elevation">4dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:fitsSystemWindows">true</item>
-
     </style>
 
     <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
@@ -15,7 +13,6 @@
         <item name="elevation">4dp</item>
         <item name="titleTextAppearance">@style/ToolbarTextAppearance.Title</item>
         <item name="subtitleTextAppearance">@style/ToolbarTextAppearance.Subtitle</item>
-        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="popupTheme">@style/ToolbarPopupTheme</item>

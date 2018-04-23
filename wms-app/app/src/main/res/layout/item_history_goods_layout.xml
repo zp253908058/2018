@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_selectable_item_white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16"
+    android:paddingStart="@dimen/dp_16">
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/history_goods_name_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_32"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_8"
+        app:key="@string/text_goods_name" />
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/history_goods_code_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_8"
+        app:key="@string/text_code" />
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/history_goods_specification_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_32"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_8"
+        app:key="@string/text_specification" />
+
+    <com.teeny.wms.widget.KeyValueTextView
+        android:id="@+id/history_goods_manufacturer_view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_32"
+        android:paddingBottom="@dimen/dp_8"
+        android:paddingTop="@dimen/dp_8"
+        app:key="@string/text_manufacturer" />
+
+</LinearLayout>

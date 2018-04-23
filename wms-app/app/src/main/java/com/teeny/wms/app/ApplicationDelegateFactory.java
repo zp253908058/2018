@@ -1,5 +1,7 @@
 package com.teeny.wms.app;
 
+import android.os.Build;
+
 /**
  * Class description:
  *
@@ -10,7 +12,10 @@ package com.teeny.wms.app;
  */
 
 public class ApplicationDelegateFactory {
-    public static ApplicationDelegate create(){
+    public static ApplicationDelegate create() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return new ApplicationDelegateImplO();
+        }
         return new ApplicationDelegateImpl();
     }
 }

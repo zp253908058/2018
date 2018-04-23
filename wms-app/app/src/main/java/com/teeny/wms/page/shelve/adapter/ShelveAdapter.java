@@ -41,6 +41,7 @@ public class ShelveAdapter extends RecyclerAdapter<ShelveEntity> {
         KeyValueTextView no = holder.get(R.id.shelve_article_no_view);
         TextView status = holder.get(R.id.shelve_status_view);
         KeyValueTextView name = holder.get(R.id.shelve_goods_name_view);
+        KeyValueTextView productionDate = holder.get(R.id.shelve_production_date);
         KeyValueTextView lot = holder.get(R.id.shelve_lot_number_view);
         KeyValueTextView specification = holder.get(R.id.shelve_specification_view);
         KeyValueTextView date = holder.get(R.id.shelve_production_date_view);
@@ -54,6 +55,7 @@ public class ShelveAdapter extends RecyclerAdapter<ShelveEntity> {
             no.setValue(item.getLocationCode());
             status.setText(item.getStatus() == 0 ? "待上架" : "已上架");
             name.setValue(item.getGoodsName());
+            productionDate.setValue(item.getProductionDate());
             lot.setValue(item.getLotNo());
             specification.setValue(item.getSpecification());
             date.setValue(item.getProductionDate());

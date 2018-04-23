@@ -13,7 +13,7 @@ import com.teeny.wms.datasouce.local.cache.UserManager;
 import com.teeny.wms.datasouce.net.NetServiceManager;
 import com.teeny.wms.model.ServerConfigEntity;
 import com.teeny.wms.page.login.LoginActivity;
-import com.teeny.wms.page.main.MainActivity;
+import com.teeny.wms.page.main.activity.MainActivity;
 import com.teeny.wms.util.SystemUtils;
 
 /**
@@ -27,7 +27,6 @@ import com.teeny.wms.util.SystemUtils;
 
 public class SplashActivity extends BaseActivity implements Runnable {
     private static final String TAG = SplashActivity.class.getSimpleName();
-    private static final long DEFAULT_DURATION = 2000;
 
     private Handler mHandler = new Handler();
     private boolean mIsTokenAvailable;

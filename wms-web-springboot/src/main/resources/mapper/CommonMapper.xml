@@ -52,40 +52,41 @@
 
     <select id="getReceivingList" resultType="DocumentEntity">
         SELECT
-        b.billid AS id,
-        b.billnumber AS documentNo,
-        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
-        1 AS type,
-        '验收单' AS typeDescription,
-        CASE b.billstates
-        WHEN 10
-        THEN '验收中'
-        WHEN 13
-        THEN '已验收'
-        ELSE '' END AS status
+            b.billid                               AS id,
+            b.billnumber                           AS documentNo,
+            CONVERT(VARCHAR(100), b.pdaInTime, 23) AS documentDate,
+            1                                      AS type,
+            '验收单'                                  AS typeDescription,
+            CASE b.billstates
+            WHEN 10
+                THEN '验收中'
+            WHEN 13
+                THEN '已验收'
+            ELSE '' END                            AS status
         FROM ${account}.dbo.pda_RecBill b
-        WHERE b.pdastates = 1
+            LEFT JOIN ${account}.dbo.pda_RecBill_D d ON b.billid = d.bill_id
+        WHERE b.pdastates != 2
         <if test="sId != 0">
-            AND b.s_id=#{sId}
+            AND d.s_id=#{sId}
         </if>
         ORDER BY documentDate DESC
     </select>
 
     <select id="getAllotList" resultType="DocumentEntity">
         SELECT
-        b.billid AS id,
-        b.billnumber AS documentNo,
-        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
-        3 AS type,
-        '调拨单' AS typeDescription,
-        CASE b.billstates
-        WHEN 2
-        THEN '待调拨'
-        WHEN 3
-        THEN '调拨中'
-        ELSE '' END AS status
+            b.billid                               AS id,
+            b.billnumber                           AS documentNo,
+            CONVERT(VARCHAR(100), b.pdaInTime, 23) AS documentDate,
+            3                                      AS type,
+            '调拨单'                                  AS typeDescription,
+            CASE b.billstates
+            WHEN 2
+                THEN '待调拨'
+            WHEN 3
+                THEN '调拨中'
+            ELSE '' END                            AS status
         FROM ${account}.dbo.pda_TranBill b
-        WHERE b.pdastates = 1
+        WHERE b.pdastates != 2
         <if test="sId != 0">
             AND b.sout_id=#{sId}
         </if>
@@ -94,43 +95,41 @@
 
     <select id="getPutawayList" resultType="DocumentEntity">
         SELECT
-        b.billid                               AS id,
-        b.billnumber                           AS documentNo,
-        CONVERT(VARCHAR(100), b.pdaInTime, 23) AS documentDate,
-        2                                      AS type,
-        '上架单'                                AS typeDescription,
-        CASE b.billstates
-        WHEN 10
-        THEN '待上架'
-        WHEN 13
-        THEN '已上架'
-        ELSE '' END                            AS status
+            b.billid                               AS id,
+            b.billnumber                           AS documentNo,
+            CONVERT(VARCHAR(100), b.pdaInTime, 23) AS documentDate,
+            2                                      AS type,
+            '上架单'                                  AS typeDescription,
+            CASE b.billstates
+            WHEN 10
+                THEN '待上架'
+            WHEN 13
+                THEN '已上架'
+            ELSE '' END                            AS status
         FROM ${account}.dbo.pda_PutOnBill b
-        WHERE b.pdastates = 1
+            LEFT JOIN ${account}.dbo.pda_PutOnBill_D d ON b.billid = d.bill_id
+        WHERE b.pdastates != 2
         <if test="sId != 0">
-            AND b.s_id=#{sId}
+            AND d.s_id=#{sId}
         </if>
         ORDER BY documentDate DESC
     </select>
 
     <select id="getReviewList" resultType="DocumentEntity">
         SELECT
-        b.billid AS id,
-        b.billnumber AS documentNo,
-        CONVERT(VARCHAR (100), b.pdaInTime, 23) AS documentDate,
-        4 AS type,
-        '复核单' AS typeDescription,
-        CASE b.billstates
-        WHEN 10
-        THEN '未复核'
-        WHEN 13
-        THEN '复核中'
-        ELSE '' END AS status
+            b.billid                               AS id,
+            b.billnumber                           AS documentNo,
+            CONVERT(VARCHAR(100), b.pdaInTime, 23) AS documentDate,
+            4                                      AS type,
+            '复核单'                                  AS typeDescription,
+            CASE b.billstates
+            WHEN 10
+                THEN '未复核'
+            WHEN 13
+                THEN '复核中'
+            ELSE '' END                            AS status
         FROM ${account}.dbo.pda_CheckBill b
-        WHERE b.pdastates = 1
-        <if test="sId != 0">
-            AND b.s_id=#{sId}
-        </if>
+        WHERE b.pdastates != 2
         ORDER BY documentDate DESC
     </select>
 
@@ -140,19 +139,27 @@
 
     <select id="obtainRepositoryList" resultMap="keyValue">
         SELECT s.sa_id AS id, s.name FROM ${account}.dbo.pda_stockArea s
-        <where>
-            <if test="warehouseId != 0">
-                s.s_id=#{warehouseId}
-            </if>
-        </where>
+        <if test="warehouseId != 0">
+            WHERE s.s_id=#{warehouseId}
+        </if>
     </select>
 
     <select id="obtainAreaList" resultMap="keyValue">
         SELECT a.sc_id AS id, a.name FROM ${account}.dbo.pda_Area a
-        <where>
-            <if test="repositoryId != 0">
-                a.sa_id=#{repositoryId}
-            </if>
-        </where>
+        <if test="repositoryId != 0">
+            WHERE a.sa_id=#{repositoryId}
+        </if>
+    </select>
+
+    <select id="getHistoryGoods" resultType="HistoryGoodsEntity">
+        SELECT
+            p.p_id          AS id,
+            p.name          AS goodsName,
+            p.standard      AS specification,
+            p.Factory       AS manufacturer,
+            p.serial_number AS goodsEncode
+        FROM ${account}.dbo.pda_Products p
+            LEFT JOIN ${account}.dbo.pda_location l ON p.WholeLoc = l.l_id OR p.SingleLoc = l.l_id
+        WHERE l.loc_code = #{condition}
     </select>
 </mapper>
