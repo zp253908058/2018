@@ -6,6 +6,7 @@ import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.CollectionsUtils;
 import com.teeny.wms.util.ObjectUtils;
 import com.teeny.wms.util.Validator;
+import com.teeny.wms.util.log.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -21,6 +22,9 @@ import java.util.List;
  */
 
 public class OutputPickingHelper {
+
+    private static final String TAG = OutputPickingHelper.class.getSimpleName();
+
     private static volatile OutputPickingHelper mInstance;
 
     public static OutputPickingHelper getInstance() {
@@ -72,9 +76,7 @@ public class OutputPickingHelper {
         if (result.getStatus() == 0) {
             return result;
         }
-        int size = list.size();
-        for (int i = 0; i < size; i++) {
-            OutputPickingItemEntity entity = list.get(i);
+        for (OutputPickingItemEntity entity : list) {
             if (entity.getStatus() == 0) {
                 result = entity;
             }
@@ -90,6 +92,7 @@ public class OutputPickingHelper {
         List<OutputPickingItemEntity> list = mData.getDataList();
         int size = CollectionsUtils.sizeOf(list);
         int currentIndex = list.indexOf(mCurrent);
+        Logger.e(TAG, currentIndex);
         String result = "";
         for (int i = 1; i <= 3; i++) {
             int j = currentIndex + i;
@@ -142,10 +145,6 @@ public class OutputPickingHelper {
         post();
     }
 
-    public void addCount() {
-        mData.inset(1);
-    }
-
     public boolean isLast() {
         List<OutputPickingItemEntity> list = mData.getDataList();
         int size = CollectionsUtils.sizeOf(list);
@@ -160,5 +159,10 @@ public class OutputPickingHelper {
 
     private void post() {
         mEventBus.post(mCurrent);
+    }
+
+    public String getProgress() {
+        List<OutputPickingItemEntity> list = mData.getDataList();
+        return (list.indexOf(mCurrent) + 1) + "/" + list.size();
     }
 }

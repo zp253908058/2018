@@ -134,19 +134,11 @@ public class OutputPickingOrderEntity {
         this.dataList = dataList;
     }
 
-    public String getProgress() {
-        return (completed + 1) + "/" + total;
-    }
-
     public List<OutputPickingEntity> getTurnoverList() {
         return turnoverList;
     }
 
     public void setTurnoverList(List<OutputPickingEntity> turnoverList) {
         this.turnoverList = turnoverList;
-    }
-
-    public void inset(int inset) {
-        completed += inset;
     }
 }

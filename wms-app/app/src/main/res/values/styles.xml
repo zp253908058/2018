@@ -13,6 +13,7 @@
         <item name="elevation">4dp</item>
         <item name="titleTextAppearance">@style/ToolbarTextAppearance.Title</item>
         <item name="subtitleTextAppearance">@style/ToolbarTextAppearance.Subtitle</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="popupTheme">@style/ToolbarPopupTheme</item>
@@ -26,12 +27,12 @@
     </style>
 
     <style name="ToolbarTextAppearance">
-        <!--<item name="android:fontFamily">sans-serif-condensed</item>-->
+        <item name="android:fontFamily">sans-serif-condensed</item>
         <item name="android:textColor">@color/text_color</item>
-        <!--<item name="android:shadowDx">1</item>-->
-        <!--<item name="android:shadowDy">1</item>-->
-        <!--<item name="android:shadowRadius">2</item>-->
-        <!--<item name="android:shadowColor">?colorAccent</item>-->
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowColor">?colorAccent</item>
     </style>
 
     <style name="ToolbarTextAppearance.Title">

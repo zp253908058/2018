@@ -248,7 +248,7 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         mNextLocationView.setValue(mHelper.getNextLocation());
         mRemarkView.setValue(entity.getRemark());
 
-        mProgressView.setValue(mHelper.getData().getProgress());
+        mProgressView.setValue(mHelper.getProgress());
     }
 
     @Override
@@ -325,7 +325,6 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override
             public void doNext(EmptyEntity data) {
-                mHelper.addCount();
                 mHelper.getCurrent().setStatus(1);
                 if (mHelper.hasNext()) {
                     mHelper.next();

@@ -46,7 +46,7 @@
             LEFT JOIN ${account}.dbo.pda_storages s ON b.s_id = s.s_id
             LEFT JOIN ${account}.dbo.pda_employees e ON e.e_id = b.e_id
         WHERE b.billid = #{id} AND b.billstates = 10
-        GROUP BY b.billid, b.billnumber, b.deskname, s.name, e.name, b.cname, b.total, b.ClientName,b.Note,b.YTypeName
+        GROUP BY b.billid, b.billnumber, b.deskname, s.name, e.name, b.cname, b.total, b.ClientName, b.Note, b.YTypeName
     </select>
 
     <select id="getDetail" resultType="OutputPickingItemEntity">

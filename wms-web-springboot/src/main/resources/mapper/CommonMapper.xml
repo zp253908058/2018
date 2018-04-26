@@ -107,7 +107,6 @@
                 THEN '已上架'
             ELSE '' END                            AS status
         FROM ${account}.dbo.pda_PutOnBill b
-            LEFT JOIN ${account}.dbo.pda_PutOnBill_D d ON b.billid = d.bill_id
         WHERE b.pdastates != 2
         <if test="sId != 0">
             AND d.s_id=#{sId}
