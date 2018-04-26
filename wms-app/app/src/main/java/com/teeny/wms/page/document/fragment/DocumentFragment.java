@@ -30,6 +30,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Objects;
+
 /**
  * Class description:
  *
@@ -54,7 +56,6 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
     private int mType;
     private DocumentAdapter mAdapter = new DocumentAdapter(null);
     private EventBus mEventBus;
-    private Editable mEditable;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         VerticalDecoration decoration = new VerticalDecoration(this.getContext());
         decoration.setNeedDraw(false);
-        decoration.setHeight(this.getContext().getResources().getDimensionPixelSize(R.dimen.dp_16));
+        decoration.setHeight(Objects.requireNonNull(this.getContext()).getResources().getDimensionPixelSize(R.dimen.dp_16));
         recyclerView.addItemDecoration(decoration);
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(this.getContext(), this));
     }
@@ -95,20 +96,6 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onDataChange(DocumentHelper helper) {
         mAdapter.setItems(helper.getDataByType(mType));
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onMenuSelected(QueryDocumentActivity.DocumentMenu menu) {
-        if (mType != 2) {
-            return;
-        }
-        String title = menu.getTitle().toString();
-        Logger.e(title);
-        if (ObjectUtils.equals(title, "全部")) {
-            title = "";
-        }
-        mAdapter.setStatus(title);
-        mAdapter.getFilter().filter(mEditable);
     }
 
     @Override
@@ -143,7 +130,6 @@ public class DocumentFragment extends BaseFragment implements RecyclerViewTouchL
 
     @Override
     public void afterTextChanged(Editable s) {
-        mEditable = s;
-        mAdapter.getFilter().filter(mEditable);
+        mAdapter.getFilter().filter(s);
     }
 }

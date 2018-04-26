@@ -41,8 +41,6 @@ public class QueryDocumentActivity extends ToolbarActivity implements BaseFragme
 
     private SparseArrayCompat<Fragment> mFragmentHolder = new SparseArrayCompat<>();
     private String[] mTitles;
-    private Menu mMenu;
-    private int mType;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,32 +49,16 @@ public class QueryDocumentActivity extends ToolbarActivity implements BaseFragme
         initView();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_shelve, menu);
-        mMenu = menu;
-        mMenu.setGroupCheckable(R.id.menu_group_shelve, true, true);
-        mMenu.setGroupVisible(R.id.menu_group_shelve, mType == 2);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        item.setChecked(true);
-        getEventBus().post(new DocumentMenu(item.getTitle()));
-        return true;
-    }
-
     private void initView() {
         mTitles = getResources().getStringArray(R.array.sku_title);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(this);
         viewPager.setAdapter(new BaseFragmentPagerAdapter(getSupportFragmentManager(), this));
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
 
-        mType = getIntent().getIntExtra(KEY_TYPE, 0);
-        viewPager.setCurrentItem(mType);
+        int type = getIntent().getIntExtra(KEY_TYPE, 0);
+        viewPager.setCurrentItem(type);
     }
 
     @Override
@@ -116,29 +98,11 @@ public class QueryDocumentActivity extends ToolbarActivity implements BaseFragme
 
     @Override
     public void onPageSelected(int position) {
-        if (mMenu != null) {
-            mMenu.setGroupVisible(R.id.menu_group_shelve, position == 2);
-        }
+
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
 
-    }
-
-    public static class DocumentMenu {
-        private CharSequence title;
-
-        private DocumentMenu(CharSequence title) {
-            this.title = title;
-        }
-
-        public CharSequence getTitle() {
-            return title;
-        }
-
-        public void setTitle(CharSequence title) {
-            this.title = title;
-        }
     }
 }

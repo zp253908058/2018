@@ -107,7 +107,7 @@
                 THEN '已上架'
             ELSE '' END                            AS status
         FROM ${account}.dbo.pda_PutOnBill b
-        WHERE b.pdastates != 2
+        WHERE b.pdastates != 2 AND b.billstates = 10
         <if test="sId != 0">
             AND d.s_id=#{sId}
         </if>

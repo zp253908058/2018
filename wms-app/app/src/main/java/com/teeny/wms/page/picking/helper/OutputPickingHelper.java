@@ -46,7 +46,6 @@ public class OutputPickingHelper {
     List<OutputPickingItemEntity> mDataList;
     private EventBus mEventBus;
     private OutputPickingItemEntity mCurrent;
-    private int mCurrentId;
 
     private OutputPickingHelper() {
         mEventBus = EventBus.getDefault();
@@ -80,13 +79,15 @@ public class OutputPickingHelper {
 
     private OutputPickingItemEntity findAvailableData() {
         OutputPickingItemEntity result = mDataList.get(0);
-        mCurrentId = result.getId();
         if (result.getStatus() == 0) {
             return result;
         }
-        for (OutputPickingItemEntity entity : mDataList) {
+        int size = mDataList.size();
+        for (int i = 1; i < size; i++) {
+            OutputPickingItemEntity entity = mDataList.get(i);
             if (entity.getStatus() == 0) {
                 result = entity;
+                break;
             }
         }
         return result;
@@ -99,7 +100,6 @@ public class OutputPickingHelper {
     public String getNextLocation() {
         int size = CollectionsUtils.sizeOf(mDataList);
         int currentIndex = mDataList.indexOf(mCurrent);
-        Logger.e(TAG, currentIndex);
         String result = "";
         for (int i = 1; i <= 3; i++) {
             int j = currentIndex + i;
