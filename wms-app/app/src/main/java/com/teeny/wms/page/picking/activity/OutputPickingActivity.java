@@ -293,13 +293,17 @@ public class OutputPickingActivity extends ToolbarActivity implements DialogInte
         if (entity == null) {
             return;
         }
-        if (entity.getStatus() == 1) {
-            if (mHelper.hasNext()) {
-                mHelper.next();
-                return;
-            }
+        if (entity.getStatus() == 0){
+            mSubmitDialog.show();
+            return;
         }
-        mSubmitDialog.show();
+        if (mHelper.hasNext()){
+            mHelper.next();
+        }else {
+            clear();
+            mHelper.clear();
+            initialize();
+        }
     }
 
     private void complete() {

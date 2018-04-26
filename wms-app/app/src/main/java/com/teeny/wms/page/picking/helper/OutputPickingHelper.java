@@ -10,6 +10,10 @@ import com.teeny.wms.util.log.Logger;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -39,8 +43,10 @@ public class OutputPickingHelper {
     }
 
     private OutputPickingOrderEntity mData;
+    List<OutputPickingItemEntity> mDataList;
     private EventBus mEventBus;
     private OutputPickingItemEntity mCurrent;
+    private int mCurrentId;
 
     private OutputPickingHelper() {
         mEventBus = EventBus.getDefault();
@@ -49,6 +55,8 @@ public class OutputPickingHelper {
     public void setData(OutputPickingOrderEntity data) {
         if (data != null) {
             this.mData = data;
+            mDataList = new ArrayList<>(data.getDataList());
+            Collections.sort(mDataList, (t, t1) -> t.getId() > t1.getId() ? 1 : 0);
             initialize();
         }
     }
@@ -71,12 +79,12 @@ public class OutputPickingHelper {
     }
 
     private OutputPickingItemEntity findAvailableData() {
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        OutputPickingItemEntity result = list.get(0);
+        OutputPickingItemEntity result = mDataList.get(0);
+        mCurrentId = result.getId();
         if (result.getStatus() == 0) {
             return result;
         }
-        for (OutputPickingItemEntity entity : list) {
+        for (OutputPickingItemEntity entity : mDataList) {
             if (entity.getStatus() == 0) {
                 result = entity;
             }
@@ -89,9 +97,8 @@ public class OutputPickingHelper {
     }
 
     public String getNextLocation() {
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        int size = CollectionsUtils.sizeOf(list);
-        int currentIndex = list.indexOf(mCurrent);
+        int size = CollectionsUtils.sizeOf(mDataList);
+        int currentIndex = mDataList.indexOf(mCurrent);
         Logger.e(TAG, currentIndex);
         String result = "";
         for (int i = 1; i <= 3; i++) {
@@ -99,7 +106,7 @@ public class OutputPickingHelper {
             if (j >= size) {
                 break;
             }
-            result = ObjectUtils.concat(result, list.get(j).getLocation());
+            result = ObjectUtils.concat(result, mDataList.get(j).getLocation());
             if (j + 1 == size) {
                 break;
             }
@@ -109,20 +116,18 @@ public class OutputPickingHelper {
     }
 
     public boolean hasNext() {
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        if (Validator.isEmpty(list)) {
+        if (Validator.isEmpty(mDataList)) {
             return false;
         }
-        int size = CollectionsUtils.sizeOf(list);
-        int next = list.indexOf(mCurrent) + 1;
+        int size = CollectionsUtils.sizeOf(mDataList);
+        int next = mDataList.indexOf(mCurrent) + 1;
         return next != size;
     }
 
 
     public void next() {
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        int index = list.indexOf(mCurrent);
-        mCurrent = list.get(index + 1);
+        int index = mDataList.indexOf(mCurrent);
+        mCurrent = mDataList.get(index + 1);
         post();
     }
 
@@ -130,25 +135,22 @@ public class OutputPickingHelper {
         if (mData == null) {
             return false;
         }
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        if (Validator.isEmpty(list)) {
+        if (Validator.isEmpty(mDataList)) {
             return false;
         }
-        int index = list.indexOf(mCurrent);
+        int index = mDataList.indexOf(mCurrent);
         return index != 0;
     }
 
     public void prev() {
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        int index = list.indexOf(mCurrent);
-        mCurrent = list.get(index - 1);
+        int index = mDataList.indexOf(mCurrent);
+        mCurrent = mDataList.get(index - 1);
         post();
     }
 
     public boolean isLast() {
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        int size = CollectionsUtils.sizeOf(list);
-        int next = list.indexOf(mCurrent) + 1;
+        int size = CollectionsUtils.sizeOf(mDataList);
+        int next = mDataList.indexOf(mCurrent) + 1;
         return size == next;
     }
 
@@ -162,7 +164,6 @@ public class OutputPickingHelper {
     }
 
     public String getProgress() {
-        List<OutputPickingItemEntity> list = mData.getDataList();
-        return (list.indexOf(mCurrent) + 1) + "/" + list.size();
+        return (mDataList.indexOf(mCurrent) + 1) + "/" + mDataList.size();
     }
 }
