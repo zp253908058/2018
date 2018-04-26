@@ -69,7 +69,6 @@
             d.DealStates                           AS status,
             d.comment                              AS remark,
             #{account}                             AS account
-
         FROM ${account}.dbo.pda_pickBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON d.p_id = p.p_id
             LEFT JOIN ${account}.dbo.pda_location l ON d.Location_id = l.l_id
