@@ -288,6 +288,7 @@
             LEFT JOIN ${account}.dbo.pda_AddTranBillLoc_D ld ON ld.smb_id = d.smb_id
             LEFT JOIN ${account}.dbo.pda_location l2 ON ld.location_id2 = l2.l_id
         WHERE b.e_id = #{userId} AND b.billstates = 0
+        ORDER BY importLocation ASC
     </select>
 
     <select id="getAllotGoods" resultType="AllotGoodsEntity">
