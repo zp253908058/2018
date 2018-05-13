@@ -12,8 +12,8 @@
 
     <select id="getOrderList" resultMap="keyValue">
         SELECT
-            bill_id AS id,
-            barcode AS name
+            c.bill_id AS id,
+            c.barcode AS name
         FROM ${account}.dbo.pda_ShopRecBarcode c
             INNER JOIN ${account}.dbo.pda_ShopRecBill b ON b.billid = c.bill_id
         WHERE b.billstates = 10
@@ -52,7 +52,14 @@
     </update>
 
     <update id="single">
-        UPDATE ${account}.dbo.pda_RecShopBill_D SET EligibleQty = #{amount}, remark = #{remark}, DealStates = 1, wctime = getdate(), loginid = #{userId} WHERE smb_id = #{id}
+        UPDATE ${account}.dbo.pda_RecShopBill_D SET DealStates = 1, wctime = getdate(), loginid = #{userId}
+        <if test="amount > 0">
+            ,EligibleQty = #{amount}
+        </if>
+        <if test="remark != null and remark != ''">
+            , remark = #{remark}
+        </if>
+        WHERE smb_id = #{id}
     </update>
 
     <update id="updateStatus">

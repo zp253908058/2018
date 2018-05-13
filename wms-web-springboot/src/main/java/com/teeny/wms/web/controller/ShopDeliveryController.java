@@ -49,8 +49,8 @@ public class ShopDeliveryController {
         return new ResponseEntity<>();
     }
 
-    @PostMapping("single/{id}")
-    public ResponseEntity<EmptyEntity> single(@RequestHeader("account") String account, @PathVariable("id") int id, @RequestParam("billId") int billId, @User UserEntity entity) {
+    @PostMapping("single/{id}/{billId}")
+    public ResponseEntity<EmptyEntity> single(@RequestHeader("account") String account, @PathVariable("id") int id, @PathVariable("billId") int billId, @User UserEntity entity) {
         mService.single(account, id, billId, entity.getId());
         return new ResponseEntity<>();
     }

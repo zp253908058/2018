@@ -38,7 +38,6 @@ public interface ShopDeliveryService {
     Flowable<ResponseEntity<EmptyEntity>> complete(@Body ShopDeliveryRequestEntity entity);
 
     @POST("shop/delivery/single/{id}/{billId}")
-    @FormUrlEncoded
     Flowable<ResponseEntity<EmptyEntity>> single(@Path("id") int id, @Path("billId") int billId);
 
     @POST("shop/delivery/single")

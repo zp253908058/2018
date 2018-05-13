@@ -82,7 +82,7 @@ public class ShopDeliveryEditActivity extends ToolbarActivity {
         deliveryNumber.setText(String.valueOf(mEntity.getDeliveryNumber()));
 
         mAmountTextView = (EditText) findViewById(R.id.shop_delivery_edit_receiving_number);
-        mAmountTextView.setText(String.valueOf(mEntity.getReceivingNumber()));
+        mAmountTextView.setHint(String.valueOf(mEntity.getReceivingNumber()));
         mRemarkTextView = (EditText) findViewById(R.id.shop_delivery_edit_remark);
 
         mService = NetServiceManager.getInstance().getService(ShopDeliveryService.class);

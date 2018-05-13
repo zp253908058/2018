@@ -58,7 +58,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 public class WarehouseFragment extends BaseFragment implements View.OnClickListener, RecyclerViewTouchListener.OnItemClickListener, ProgressView {
     private static final String TAG = WarehouseFragment.class.getSimpleName();
 
-    private static final int INDEX_COUNT = 14;
+    private static final int INDEX_COUNT = 13;
 
     public static WarehouseFragment newInstance() {
         return new WarehouseFragment();
@@ -145,28 +145,28 @@ public class WarehouseFragment extends BaseFragment implements View.OnClickListe
                 case 5:
                     entity.setIcon(R.mipmap.icon_sku_check);
                     break;
+//                case 6:
+//                    entity.setIcon(R.mipmap.icon_shop_first);
+//                    break;
                 case 6:
-                    entity.setIcon(R.mipmap.icon_shop_first);
-                    break;
-                case 7:
                     entity.setIcon(R.mipmap.icon_warehouse_first);
                     break;
-                case 8:
+                case 7:
                     entity.setIcon(R.mipmap.icon_second_count);
                     break;
-                case 9:
+                case 8:
                     entity.setIcon(R.mipmap.icon_barcode_collect);
                     break;
-                case 10:
+                case 9:
                     entity.setIcon(R.mipmap.icon_allot_add);
                     break;
-                case 11:
+                case 10:
                     entity.setIcon(R.mipmap.icon_shop_receiving);
                     break;
-                case 12:
+                case 11:
                     entity.setIcon(R.mipmap.icon_output_picking);
                     break;
-                case 13:
+                case 12:
                     entity.setIcon(R.mipmap.icon_output_picking);
                     break;
 
@@ -197,28 +197,28 @@ public class WarehouseFragment extends BaseFragment implements View.OnClickListe
             case 5:
                 SKUCheckActivity.startActivity(getContext());
                 break;
+//            case 6:
+//                ShopFirstActivity.startActivity(getContext());
+//                break;
             case 6:
-                ShopFirstActivity.startActivity(getContext());
-                break;
-            case 7:
                 WarehouseFirstActivity.startActivity(getContext());
                 break;
-            case 8:
+            case 7:
                 SecondInventoryActivity.startActivity(getContext());
                 break;
-            case 9:
+            case 8:
                 BarcodeCollectActivity.startActivity(getContext());
                 break;
-            case 10:
+            case 9:
                 AllotOrderAddActivity.startActivity(getContext());
                 break;
-            case 11:
+            case 10:
                 ShopDeliveryActivity.startActivity(getContext());
                 break;
-            case 12:
+            case 11:
                 OutputPickingActivity.startActivity(getContext());
                 break;
-            case 13:
+            case 12:
                 HistoryGoodsActivity.startActivity(getContext());
                 break;
         }
