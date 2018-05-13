@@ -49,7 +49,7 @@ public class ShopDeliveryServiceImpl implements ShopDeliveryService {
 
     @Override
     public void single(String account, int id, int billId, int userId) {
-        complete(account, new ArrayList<>(id), billId, userId);
+        single(account, id, 0, "", billId, userId);
     }
 
     @Override

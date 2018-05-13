@@ -804,3 +804,9 @@ IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('Pda_PickBil
       add YTypeName varchar(100) not null DEFAULT ('')   --原单类型
   END
 
+--XXX.2018-05-13 门店收货增加备注字段
+IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('pda_RecShopBill_D') AND Name='remark')
+  BEGIN
+    ALTER table pda_RecShopBill_D
+      add remark varchar(200) default(0)
+  END
