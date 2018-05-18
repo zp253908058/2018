@@ -20,7 +20,7 @@ import java.util.List;
 @Repository
 public interface ShopDeliveryMapper {
 
-    List<KeyValueEntity> getOrderList(@Param("account") String account);
+    List<KeyValueEntity> getOrderList(@Param("account") String account, @Param("userId") int userId);
 
     List<ShopDeliveryGoodsEntity> getDeliveryGoodsList(@Param("account") String account, @Param("id") int id);
 

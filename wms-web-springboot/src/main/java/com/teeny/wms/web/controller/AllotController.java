@@ -5,6 +5,7 @@ import com.teeny.wms.web.model.EmptyEntity;
 import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.web.model.ResponseEntity;
 import com.teeny.wms.web.model.UserEntity;
+import com.teeny.wms.web.model.request.AllotListCompleteRequestEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
 import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
@@ -13,6 +14,7 @@ import com.teeny.wms.web.model.response.AllotGoodsEntity;
 import com.teeny.wms.web.model.response.AllotLocationEntity;
 import com.teeny.wms.web.service.AllotService;
 import com.teeny.wms.web.service.CommonService;
+import org.jboss.logging.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,8 +86,8 @@ public class AllotController {
      * @return null
      */
     @PostMapping("updateAll")
-    public ResponseEntity<EmptyEntity> complete(@RequestBody List<Integer> ids, @RequestHeader("account") String account, @User UserEntity entity) {
-        mAllotService.updateAll(ids, account, entity.getId());
+    public ResponseEntity<EmptyEntity> complete(@RequestBody List<AllotListCompleteRequestEntity> params, @RequestHeader("account") String account, @User UserEntity entity) {
+        mAllotService.updateAll(params, account, entity.getId());
         return new ResponseEntity<>();
     }
 
@@ -95,8 +97,8 @@ public class AllotController {
      * @return null
      */
     @PostMapping("updateOne")
-    public ResponseEntity<EmptyEntity> single(@RequestParam("id") int id, @RequestHeader("account") String account, @User UserEntity entity) {
-        mAllotService.updateOne(id, account, entity.getId());
+    public ResponseEntity<EmptyEntity> single(@RequestParam("id") int id, @RequestParam("classType") int classType, @RequestHeader("account") String account, @User UserEntity entity) {
+        mAllotService.updateOne(id,classType, account, entity.getId());
         return new ResponseEntity<>();
     }
 

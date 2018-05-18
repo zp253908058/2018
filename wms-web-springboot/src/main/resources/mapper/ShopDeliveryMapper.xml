@@ -16,7 +16,8 @@
             c.barcode AS name
         FROM ${account}.dbo.pda_ShopRecBarcode c
             INNER JOIN ${account}.dbo.pda_ShopRecBill b ON b.billid = c.bill_id
-        WHERE b.billstates = 10
+            INNER JOIN ${account}.dbo.pda_employees e ON e.Y_id = b.y_id
+        WHERE b.billstates = 10 AND b.e_id = #{userId}
     </select>
 
     <select id="getDeliveryGoodsList" resultType="ShopDeliveryGoodsEntity">

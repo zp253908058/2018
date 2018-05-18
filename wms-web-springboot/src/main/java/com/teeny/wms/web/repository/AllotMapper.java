@@ -1,6 +1,7 @@
 package com.teeny.wms.web.repository;
 
 import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.request.AllotListCompleteRequestEntity;
 import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
 import com.teeny.wms.web.model.response.AllotEntity;
@@ -32,9 +33,9 @@ public interface AllotMapper {
     @Update("UPDATE ${account}.dbo.pda_TranBill SET pdaReTime=getdate(), pdastates=1 WHERE billnumber = #{billNo}")
     void updateStatus(@Param("billNo") String billNo, @Param("account") String account);
 
-    void updateAll(@Param("id") int id, @Param("list") List<Integer> ids, @Param("account") String account, @Param("userId") int userId);
+    void updateAll(@Param("id") int id, @Param("classType") int classType, @Param("list") List<AllotListCompleteRequestEntity> params, @Param("account") String account, @Param("userId") int userId);
 
-    void updateOne(@Param("id") int id, @Param("account") String account, @Param("userId") int userId);
+    void updateOne(@Param("id") int id, @Param("classType") int classType, @Param("account") String account, @Param("userId") int userId);
 
     @Select("SELECT d.quantity AS amount, l.loc_code AS locationCode FROM ${account}.dbo.pda_TranBill_D d LEFT JOIN ${account}.dbo.pda_location l ON d.location_id2 = l.l_id WHERE d.original_id = #{id}")
     List<AllocationEntity> getLocationById(@Param("id") int id, @Param("account") String account);
@@ -46,11 +47,11 @@ public interface AllotMapper {
     @Select("SELECT d.smb_id FROM ${account}.dbo.pda_TranBill_D d WHERE d.original_id=#{id}")
     List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);
 
-    void copyData(@Param("id") int id, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account, @Param("userId") int userId);
+    void copyData(@Param("id") int id, @Param("classType") int classType, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account, @Param("userId") int userId);
 
     void deleteByIds(@Param("list") List<Integer> ids, @Param("originalId") int originalId, @Param("account") String account);
 
-    void updateBillStatus(@Param("account") String account, @Param("id") int id);
+    void updateBillStatus(@Param("account") String account, @Param("id") int id, @Param("classType") int classType);
 
     List<AllotGoodsEntity> getAllotGoodsList(@Param("account") String account, @Param("location") String location, @Param("goods") String goods, @Param("warehouseId") int warehouseId, @Param("repositoryId") int repositoryId, @Param("areaId") int areaId);
 

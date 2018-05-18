@@ -31,6 +31,7 @@ import com.teeny.wms.model.DocumentEntity;
 import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.KeyValueEntity;
 import com.teeny.wms.model.ResponseEntity;
+import com.teeny.wms.model.request.AllotListCompleteRequestEntity;
 import com.teeny.wms.page.allot.adapter.AllotListAdapter;
 import com.teeny.wms.page.allot.helper.AllotListHelper;
 import com.teeny.wms.page.common.adapter.KeyValueListAdapter;
@@ -39,7 +40,6 @@ import com.teeny.wms.pop.DialogFactory;
 import com.teeny.wms.pop.Toaster;
 import com.teeny.wms.util.Validator;
 import com.teeny.wms.util.WindowUtils;
-import com.teeny.wms.util.log.Logger;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -372,7 +372,7 @@ public class AllotListActivity extends ToolbarActivity implements RecyclerViewTo
 
     private void single() {
         final AllotListEntity entity = mAdapter.getItem(mSelectPosition);
-        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.single(entity.getOriginalId());
+        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.single(entity.getOriginalId(), entity.getClassType());
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override
             public void doNext(EmptyEntity data) {
@@ -441,7 +441,7 @@ public class AllotListActivity extends ToolbarActivity implements RecyclerViewTo
     }
 
     private void submit() {
-        List<Integer> ids = mHelper.getIds(mAdapter.getItems());
+        List<AllotListCompleteRequestEntity> ids = mHelper.getParams(mAdapter.getItems());
         Flowable<ResponseEntity<EmptyEntity>> flowable = mService.complete(ids);
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override

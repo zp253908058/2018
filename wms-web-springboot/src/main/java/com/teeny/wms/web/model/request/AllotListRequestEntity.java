@@ -15,7 +15,16 @@ import java.util.List;
 public class AllotListRequestEntity {
 
     private int id;
+    private int classType;
     private List<AllocationEntity> locations;
+
+    public void setClassType(int classType) {
+        this.classType = classType;
+    }
+
+    public int getClassType() {
+        return classType;
+    }
 
     public int getId() {
         return id;

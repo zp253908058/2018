@@ -1,6 +1,7 @@
 package com.teeny.wms.page.allot.helper;
 
 import com.teeny.wms.model.AllotListEntity;
+import com.teeny.wms.model.request.AllotListCompleteRequestEntity;
 import com.teeny.wms.util.ObjectUtils;
 import com.teeny.wms.util.Validator;
 
@@ -131,15 +132,18 @@ public class AllotListHelper {
         }
     }
 
-    public List<Integer> getIds(List<AllotListEntity> list) {
+    public List<AllotListCompleteRequestEntity> getParams(List<AllotListEntity> list) {
+        List<AllotListCompleteRequestEntity> params = new ArrayList<>();
         if (Validator.isEmpty(list)) {
-            return new ArrayList<>();
+            return params;
         }
-        List<Integer> ids = new ArrayList<>();
         for (AllotListEntity entity : list) {
-            ids.add(entity.getOriginalId());
+            AllotListCompleteRequestEntity param = new AllotListCompleteRequestEntity();
+            param.setId(entity.getOriginalId());
+            param.setClassType(entity.getClassType());
+            params.add(param);
         }
-        return ids;
+        return params;
     }
 
     public void clear() {

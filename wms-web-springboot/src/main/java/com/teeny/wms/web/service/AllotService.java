@@ -1,6 +1,7 @@
 package com.teeny.wms.web.service;
 
 import com.teeny.wms.web.model.KeyValueEntity;
+import com.teeny.wms.web.model.request.AllotListCompleteRequestEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
 import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
@@ -22,9 +23,9 @@ public interface AllotService {
 
     List<AllotEntity> getAllotList(String billNo, String goodsCode, int sId, int saId, String account);
 
-    void updateAll(List<Integer> ids, String account, int userId);
+    void updateAll(List<AllotListCompleteRequestEntity> params, String account, int userId);
 
-    void updateOne(int id, String account, int userId);
+    void updateOne(int id, int classType, String account, int userId);
 
     void update(AllotListRequestEntity entity, String account, int userId);
 

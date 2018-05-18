@@ -27,7 +27,8 @@
             p.serial_number                        AS number,
             l1.loc_code                            AS exportName,
             l2.loc_code                            AS importName,
-            p.pinyin                               AS pinyin
+            p.pinyin                               AS pinyin,
+            d.Class                                AS classType
         FROM ${account}.dbo.pda_TranBill_D d
             LEFT JOIN ${account}.dbo.pda_Products p ON p.p_id = d.p_id
             LEFT JOIN ${account}.dbo.pda_TranBill b ON b.billid = d.bill_id
@@ -51,16 +52,16 @@
     <update id="updateAll">
         UPDATE ${account}.dbo.pda_TranBill_D
         SET DealStates = 1, wctime = getdate(), loginid = #{userId}
-        WHERE original_id IN
+        WHERE Class = #{classType} AND original_id IN
         <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
-            #{item}
+            #{item.id}
         </foreach>
     </update>
 
     <update id="updateOne">
         UPDATE ${account}.dbo.pda_TranBill_D
         SET DealStates = 1, wctime = getdate(), loginid = #{userId}
-        WHERE original_id = #{id}
+        WHERE original_id = #{id} AND Class = #{classType}
     </update>
 
     <select id="getOrderList" resultMap="keyValue">
@@ -122,7 +123,7 @@
             FROM ${account}.dbo.pda_TranBill_D d
             WHERE d.smb_id = (SELECT max(d1.smb_id)
                               FROM ${account}.dbo.pda_TranBill_D d1
-                              WHERE d1.original_id = #{id})
+                              WHERE d1.original_id = #{id} AND Class = #{classType})
 
     </insert>
 
@@ -162,7 +163,7 @@
             AND d.bill_id =
             (SELECT DISTINCT d1.bill_id
             FROM ${account}.dbo.pda_TranBill_D d1
-            WHERE d1.original_id=#{id})
+            WHERE d1.original_id=#{id} AND Class = #{classType})
         </selectKey>
 
         <if test="count == 0">
@@ -170,7 +171,7 @@
             SET billstates = 3
             WHERE billid = (SELECT DISTINCT d.bill_id
             FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.original_id = #{id})
+            WHERE d.original_id = #{id} AND Class = #{classType})
         </if>
     </update>
 

@@ -30,8 +30,8 @@ public class ShopDeliveryServiceImpl implements ShopDeliveryService {
     }
 
     @Override
-    public List<KeyValueEntity> getOrderList(String account) {
-        return mMapper.getOrderList(account);
+    public List<KeyValueEntity> getOrderList(String account, int userId) {
+        return mMapper.getOrderList(account, userId);
     }
 
     @Override

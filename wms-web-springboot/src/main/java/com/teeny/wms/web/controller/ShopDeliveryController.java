@@ -34,8 +34,8 @@ public class ShopDeliveryController {
     }
 
     @GetMapping("orderList")
-    public ResponseEntity<List<KeyValueEntity>> getOrderList(@RequestHeader("account") String account) {
-        return new ResponseEntity<>(mService.getOrderList(account));
+    public ResponseEntity<List<KeyValueEntity>> getOrderList(@RequestHeader("account") String account, @User UserEntity entity) {
+        return new ResponseEntity<>(mService.getOrderList(account, entity.getId()));
     }
 
     @GetMapping("goodsList/{id}")

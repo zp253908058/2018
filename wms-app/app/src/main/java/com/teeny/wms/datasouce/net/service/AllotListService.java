@@ -5,6 +5,7 @@ import com.teeny.wms.model.AllotListEntity;
 import com.teeny.wms.model.EmptyEntity;
 import com.teeny.wms.model.KeyValueEntity;
 import com.teeny.wms.model.ResponseEntity;
+import com.teeny.wms.model.request.AllotListCompleteRequestEntity;
 import com.teeny.wms.model.request.AllotListRequestEntity;
 
 import java.util.List;
@@ -64,7 +65,7 @@ public interface AllotListService {
      * @return null
      */
     @POST("allot/updateAll")
-    Flowable<ResponseEntity<EmptyEntity>> complete(@Body List<Integer> ids);
+    Flowable<ResponseEntity<EmptyEntity>> complete(@Body List<AllotListCompleteRequestEntity> params);
 
     /**
      * 单个完成
@@ -73,7 +74,7 @@ public interface AllotListService {
      */
     @POST("allot/updateOne")
     @FormUrlEncoded
-    Flowable<ResponseEntity<EmptyEntity>> single(@Field("id") int id);
+    Flowable<ResponseEntity<EmptyEntity>> single(@Field("id") int id, @Field("classType") int classType);
 
     /**
      * 单个完成

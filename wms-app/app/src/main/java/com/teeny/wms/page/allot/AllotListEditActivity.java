@@ -214,6 +214,7 @@ public class AllotListEditActivity extends ToolbarActivity implements DialogInte
         AllotListRequestEntity entity = new AllotListRequestEntity();
         entity.setId(mEntity.getOriginalId());
         entity.setLocations(result);
+        entity.setClassType(mEntity.getClassType());
         Flowable<ResponseEntity<EmptyEntity>> flowable = mService.update(entity);
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
             @Override

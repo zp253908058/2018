@@ -810,3 +810,10 @@ IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('pda_RecShop
     ALTER table pda_RecShopBill_D
       add remark varchar(200) default(0)
   END
+
+--XXX.2018-05-13 职员表增加Y_id字段
+IF NOT EXISTS(SELECT 1 FROM SYS.COLUMNS WHERE [object_id]=OBJECT_ID('pda_employees') AND Name='Y_id')
+  BEGIN
+    ALTER table dbo.pda_employees
+      add Y_id INT not null default (0)
+  END

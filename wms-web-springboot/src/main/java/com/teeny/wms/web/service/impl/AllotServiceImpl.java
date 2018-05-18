@@ -3,6 +3,7 @@ package com.teeny.wms.web.service.impl;
 import com.teeny.wms.app.exception.InnerException;
 import com.teeny.wms.web.model.KeyValueEntity;
 import com.teeny.wms.util.Validator;
+import com.teeny.wms.web.model.request.AllotListCompleteRequestEntity;
 import com.teeny.wms.web.model.request.AllotListRequestEntity;
 import com.teeny.wms.web.model.request.AllotLocationRequestEntity;
 import com.teeny.wms.web.model.response.AllocationEntity;
@@ -57,17 +58,18 @@ public class AllotServiceImpl implements AllotService {
     }
 
     @Override
-    public void updateAll(List<Integer> ids, String account, int userId) {
-        if (Validator.isNotEmpty(ids)) {
-            mAllotMapper.updateAll(ids.get(0), ids, account, userId);
-            mAllotMapper.updateBillStatus(account, ids.get(0));
+    public void updateAll(List<AllotListCompleteRequestEntity> params, String account, int userId) {
+        if (Validator.isNotEmpty(params)) {
+            AllotListCompleteRequestEntity entity = params.get(0);
+            mAllotMapper.updateAll(entity.getId(),entity.getClassType(), params, account, userId);
+            mAllotMapper.updateBillStatus(account, entity.getId(), entity.getClassType());
         }
     }
 
     @Override
-    public void updateOne(int id, String account, int userId) {
-        mAllotMapper.updateOne(id, account, userId);
-        mAllotMapper.updateBillStatus(account, id);
+    public void updateOne(int id, int classType, String account, int userId) {
+        mAllotMapper.updateOne(id, classType, account, userId);
+        mAllotMapper.updateBillStatus(account, id, classType);
     }
 
     @Override
@@ -80,15 +82,15 @@ public class AllotServiceImpl implements AllotService {
                 if (locationId == null || locationId == 0) {
                     throw new InnerException("找不此货位:" + allocation.getLocationCode());
                 }
-                mAllotMapper.copyData(entity.getId(), allocation.getAmount(), locationId, account, userId);
+                mAllotMapper.copyData(entity.getId(), entity.getClassType(), allocation.getAmount(), locationId, account, userId);
             }
         } else {
-            mAllotMapper.copyData(entity.getId(), 0, 0, account, userId);
+            mAllotMapper.copyData(entity.getId(), entity.getClassType(), 0, 0, account, userId);
         }
 
         mAllotMapper.deleteByIds(ids, entity.getId(), account);
 
-        mAllotMapper.updateBillStatus(account, entity.getId());
+        mAllotMapper.updateBillStatus(account, entity.getId(), entity.getClassType());
     }
 
     @Override

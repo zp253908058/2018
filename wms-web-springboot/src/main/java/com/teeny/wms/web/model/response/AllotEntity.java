@@ -30,6 +30,7 @@ public class AllotEntity {
     private String exportName;
     private String importName;
     private String pinyin;
+    private int classType;
 
     public int getOriginalId() {
         return originalId;
@@ -175,5 +176,11 @@ public class AllotEntity {
         this.pinyin = pinyin;
     }
 
+    public int getClassType() {
+        return classType;
+    }
 
+    public void setClassType(int classType) {
+        this.classType = classType;
+    }
 }

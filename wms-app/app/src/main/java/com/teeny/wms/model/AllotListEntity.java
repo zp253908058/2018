@@ -33,6 +33,7 @@ public class AllotListEntity implements Parcelable {
     private String exportName;   //调出货位
     private String importName;   //调入货位
     private String pinyin;
+    private int classType;
 
     public AllotListEntity() {
     }
@@ -181,6 +182,14 @@ public class AllotListEntity implements Parcelable {
         this.pinyin = pinyin;
     }
 
+    public int getClassType() {
+        return classType;
+    }
+
+    public void setClassType(int classType) {
+        this.classType = classType;
+    }
+
     protected AllotListEntity(Parcel in) {
         id = in.readInt();
         originalId = in.readInt();
@@ -200,6 +209,7 @@ public class AllotListEntity implements Parcelable {
         exportName = in.readString();
         importName = in.readString();
         pinyin = in.readString();
+        classType = in.readInt();
     }
 
     @Override
@@ -222,6 +232,7 @@ public class AllotListEntity implements Parcelable {
         dest.writeString(exportName);
         dest.writeString(importName);
         dest.writeString(pinyin);
+        dest.writeInt(classType);
     }
 
     @Override

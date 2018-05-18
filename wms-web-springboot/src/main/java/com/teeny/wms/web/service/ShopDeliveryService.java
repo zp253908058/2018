@@ -15,8 +15,7 @@ import java.util.List;
  */
 public interface ShopDeliveryService {
 
-    List<KeyValueEntity> getOrderList(String account);
-
+    List<KeyValueEntity> getOrderList(String account, int userId);
 
     List<ShopDeliveryGoodsEntity> getDeliveryGoodsList(String account, int id);
 
