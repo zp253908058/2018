@@ -135,7 +135,7 @@ public class InventoryServiceImpl implements InventoryService {
         int locationId = entity.getLocationId();
         if (locationId <= 0) {
             Integer id = mCommonMapper.getLocationIdByCode(entity.getLocationCode(), account);
-            if (id == null || locationId == 0) {
+            if (id == null || id <= 0) {
                 throw new InnerException("找不此货位:" + entity.getLocationCode());
             }
             locationId = id;
