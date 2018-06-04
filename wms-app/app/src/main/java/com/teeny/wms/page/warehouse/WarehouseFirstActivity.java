@@ -84,4 +84,9 @@ public class WarehouseFirstActivity extends InventoryActivity {
     protected Fragment createFragment(int position) {
         return WarehouseInventoryFragment.newInstance(position);
     }
+
+    @Override
+    protected boolean isForceCompleteAvailable() {
+        return true;
+    }
 }
