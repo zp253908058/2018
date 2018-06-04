@@ -75,6 +75,19 @@ public class ShopDeliveryHeaderFragment extends BaseFragment {
     private void handleResult(String msg) {
         if (mFocusView != null) {
             mFocusView.setText(msg);
+            int count = mOrderAdapter.getCount();
+            switch (count) {
+                case 0:
+                    Toaster.showToast("找不到该单据:" + msg);
+                    break;
+                case 1:
+                    mSelectedOrder = mOrderAdapter.getItem(0);
+                    obtainGoods();
+                    break;
+                default:
+                    Toaster.showToast("找到多个类似单据,请手动选择。");
+                    break;
+            }
         } else {
             Toaster.showToast("当前没有焦点.");
         }
@@ -190,7 +203,7 @@ public class ShopDeliveryHeaderFragment extends BaseFragment {
         obtainGoods();
     }
 
-    public static class DataChangedObserver{
+    public static class DataChangedObserver {
 
     }
 }

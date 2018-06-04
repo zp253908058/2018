@@ -108,4 +108,13 @@ public interface InventoryMapper {
     InventoryCountEntity count(@Param("account") String account, @Param("id") int pdId, @Param("repositoryId") int repositoryId, @Param("areaId") int areaId, @Param("barcode") String barcode, @Param("isMerge") boolean isMerge);
 
     List<InventoryGoodsEntity> getList(@Param("account") String account, @Param("id") int pdId, @Param("repositoryId") int repositoryId, @Param("areaId") int areaId, @Param("locationCode") String locationCode, @Param("isMerge") boolean isMerge);
+
+    /**
+     * 强制完成中更新所有小单据
+     *
+     * @param account 账户
+     * @param id      bill_id
+     * @param userId  用户id
+     */
+    void updateAll(@Param("account") String account, @Param("id") int id, @Param("userId") int userId);
 }

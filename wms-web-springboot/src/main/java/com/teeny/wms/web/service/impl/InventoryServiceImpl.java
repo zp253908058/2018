@@ -181,4 +181,10 @@ public class InventoryServiceImpl implements InventoryService {
     public void complete(String account, List<Integer> ids, int userId) {
         complete(ids, account, userId);
     }
+
+    @Override
+    public void forceComplete(String account, int id, int userId) {
+        mInventoryMapper.updateAll(account, id, userId);
+        mInventoryMapper.updateState(account, id);
+    }
 }

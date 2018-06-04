@@ -25,6 +25,8 @@ import java.util.List;
 
 public abstract class InventoryHelper {
 
+    private int id;
+
     private int mFinishedNumber;
     private int mUnfinishedNumber;
     private List<InventoryGoodsEntity> mDataList;
@@ -34,10 +36,19 @@ public abstract class InventoryHelper {
     private String mGoodsCode;
 
     private EventBus mEventBus;
+    private boolean mIsForceCompleteAvailable;
 
     public InventoryHelper() {
         mEventBus = EventBus.getDefault();
         mDataHolder = new SparseArrayCompat<>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getFinishedNumber() {
@@ -204,6 +215,14 @@ public abstract class InventoryHelper {
      */
     public int getNumber(int type) {
         return type == 0 ? mUnfinishedNumber : mFinishedNumber;
+    }
+
+    public boolean isForceCompleteAvailable() {
+        return mIsForceCompleteAvailable && id != 0;
+    }
+
+    public void setForceCompleteAvailable(boolean forceCompleteAvailable) {
+        mIsForceCompleteAvailable = forceCompleteAvailable;
     }
 
     public static final class NumberObserver {

@@ -11,6 +11,8 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -78,4 +80,14 @@ public interface InventoryService {
      */
     @POST("inventory/complete")
     Flowable<ResponseEntity<EmptyEntity>> complete(@Body List<Integer> ids);
+
+    /**
+     * 强制完成
+     *
+     * @param id 盘点类型id
+     * @return EmptyEntity
+     */
+    @POST("inventory/forceComplete")
+    @FormUrlEncoded
+    Flowable<ResponseEntity<EmptyEntity>> forceComplete(@Field("id") int id);
 }

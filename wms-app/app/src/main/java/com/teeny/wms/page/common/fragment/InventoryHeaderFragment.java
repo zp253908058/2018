@@ -113,6 +113,9 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                KeyValueEntity entity = (KeyValueEntity) parent.getAdapter().getItem(pos);
+                getHelper().setId(entity.getKey());
+                getHelper().setForceCompleteAvailable(true);
                 obtainRepositoryAndArea();
             }
 
@@ -294,7 +297,7 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
         }
     }
 
-    private void onRepositoryOrAreaSelected(){
+    private void onRepositoryOrAreaSelected() {
         if (getPdType() != 2) {
             count();
         } else {
@@ -387,6 +390,7 @@ public abstract class InventoryHeaderFragment extends BaseFragment {
     }
 
     private void obtainDetailData() {
+        getHelper().setForceCompleteAvailable(false);
         int selectedRepositoryId = mSelectedRepository != null ? mSelectedRepository.getId() : 0;
         int selectedAreaId = mSelectedArea != null ? mSelectedArea.getId() : 0;
         String code = mLocationTextView.getText().toString();

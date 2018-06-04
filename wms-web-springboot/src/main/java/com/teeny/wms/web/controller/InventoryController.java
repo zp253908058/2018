@@ -160,4 +160,10 @@ public class InventoryController {
         mInventoryService.complete(account, ids, user.getId());
         return new ResponseEntity();
     }
+
+    @PostMapping(value = "forceComplete")
+    public ResponseEntity forceComplete(@RequestHeader("account") String account, @RequestParam("id") int id, @User UserEntity user) {
+        mInventoryService.forceComplete(account, id, user.getId());
+        return new ResponseEntity();
+    }
 }

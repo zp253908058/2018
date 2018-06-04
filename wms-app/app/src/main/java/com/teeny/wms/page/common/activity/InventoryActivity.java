@@ -55,6 +55,7 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
     private InventoryHeaderFragment mHeaderFragment;
 
     private AlertDialog mSubmitDialog;
+    private AlertDialog mForceCompleteDialog;
     private InventoryHelper mHelper;
 
     private InventoryService mService;
@@ -70,6 +71,7 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
         registerEventBus();
 
         mSubmitDialog = DialogFactory.createAlertDialog(this, getString(R.string.prompt_complete_all), this::onSubmit);
+        mForceCompleteDialog = DialogFactory.createAlertDialog(this, getString(R.string.prompt_force_complete), this::onForceSubmit);
         mService = NetServiceManager.getInstance().getService(InventoryService.class);
     }
 
@@ -91,6 +93,10 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
     }
 
     private void complete() {
+        if (isForceCompleteAvailable() && mHelper.isForceCompleteAvailable()) {
+            mForceCompleteDialog.show();
+            return;
+        }
         List<Integer> ids = mHelper.getAchievableIds();
         if (Validator.isEmpty(ids)) {
             Toaster.showToast("没有可以完成的商品.");
@@ -123,6 +129,26 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
             @Override
             public void doComplete() {
                 mHelper.reverseAllStatus();
+            }
+        });
+    }
+
+    private void onForceSubmit(DialogInterface dialog, int which) {
+        forceSubmit();
+    }
+
+    private void forceSubmit() {
+        int id = mHelper.getId();
+        Flowable<ResponseEntity<EmptyEntity>> flowable = mService.forceComplete(id);
+        flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<EmptyEntity>(this) {
+            @Override
+            public void doNext(EmptyEntity data) {
+                Toaster.showToast("强制完成操作成功.");
+            }
+
+            @Override
+            public void doComplete() {
+                mHelper.setId(0);
             }
         });
     }
@@ -176,7 +202,7 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
     public void onPageSelected(int position) {
         if (mHelper != null) {
             setCountValue(mHelper.getNumber(position));
-        }else {
+        } else {
             Logger.e("mHelper == null");
         }
     }
@@ -212,5 +238,9 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
     public void onNumberChanged(InventoryHelper.NumberObserver observer) {
         mHelper = observer.getHelper();
         setCountValue(mHelper.getNumber(getCurrentItem()));
+    }
+
+    protected boolean isForceCompleteAvailable() {
+        return false;
     }
 }

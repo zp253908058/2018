@@ -345,4 +345,10 @@
         </if>
         ORDER BY l.l_id
     </select>
+
+    <update id="updateAll">
+        UPDATE ${account}.dbo.pda_pdBill_D
+        SET DealStates = 1, pdQty = EligibleQty, wctime = getdate(), loginid = #{userId}
+        WHERE bill_id = #{id}
+    </update>
 </mapper>

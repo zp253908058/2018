@@ -54,4 +54,6 @@ public interface InventoryService {
     InventoryGoodsWrapperEntity getHomeData(String account, int pdId, int repositoryId, int areaId, String locationCode, boolean isMerge);
 
     void complete(String account,List<Integer> ids,  int userId);
+
+    void forceComplete(String account, int id, int userId);
 }

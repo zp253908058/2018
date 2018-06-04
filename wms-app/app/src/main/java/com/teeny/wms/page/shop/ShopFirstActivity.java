@@ -40,4 +40,9 @@ public class ShopFirstActivity extends InventoryActivity {
     protected Fragment createFragment(int position) {
         return ShopInventoryFragment.newInstance(position);
     }
+
+    @Override
+    protected boolean isForceCompleteAvailable() {
+        return true;
+    }
 }

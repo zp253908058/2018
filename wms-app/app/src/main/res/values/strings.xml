@@ -151,6 +151,7 @@
     <string name="prompt_input_password">请输入密码!</string>
     <string name="prompt_select_unit">请选择单位!</string>
     <string name="prompt_complete_all">确定要完成全部吗?</string>
+    <string name="prompt_force_complete">确定要强制完成吗?</string>
     <string name="prompt_complete_current">点击确定完成当前.</string>
     <string name="prompt_allot_add_finish_bill">该单据可能包含未添加调入货位的商品,确定要全部完成吗?</string>
 
