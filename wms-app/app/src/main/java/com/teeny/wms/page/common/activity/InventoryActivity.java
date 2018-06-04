@@ -148,7 +148,7 @@ public abstract class InventoryActivity extends TableViewPagerActivity implement
 
             @Override
             public void doComplete() {
-                mHelper.setId(0);
+                mHelper.clear();
             }
         });
     }

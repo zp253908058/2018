@@ -349,6 +349,6 @@
     <update id="updateAll">
         UPDATE ${account}.dbo.pda_pdBill_D
         SET DealStates = 1, pdQty = 0, wctime = getdate(), loginid = #{userId}
-        WHERE bill_id = #{id}
+        WHERE bill_id = #{id} AND DealStates = 0
     </update>
 </mapper>

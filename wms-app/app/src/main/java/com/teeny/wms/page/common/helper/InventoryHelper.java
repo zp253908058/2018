@@ -195,6 +195,7 @@ public abstract class InventoryHelper {
     }
 
     public void clear() {
+        id = 0;
         mDataList = new ArrayList<>();
         mOriginalData = null;
         mFinishedNumber = 0;
