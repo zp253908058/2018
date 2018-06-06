@@ -44,12 +44,12 @@ public interface AllotMapper {
 
     List<KeyValueEntity> getGoodsCode(@Param("account") String account, @Param("sId") int sId, @Param("saId") int saId);
 
-    @Select("SELECT d.smb_id FROM ${account}.dbo.pda_TranBill_D d WHERE d.original_id=#{id}")
-    List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account);
+    @Select("SELECT d.smb_id FROM ${account}.dbo.pda_TranBill_D d WHERE d.original_id=#{id} AND Class = #{classType}")
+    List<Integer> getIdsByOriginalId(@Param("id") int id, @Param("account") String account, @Param("classType") int classType);
 
-    void copyData(@Param("id") int id, @Param("classType") int classType, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account, @Param("userId") int userId);
+    void copyData(@Param("id") int id, @Param("amount") float amount, @Param("locationId") int locationId, @Param("account") String account, @Param("userId") int userId);
 
-    void deleteByIds(@Param("list") List<Integer> ids, @Param("originalId") int originalId, @Param("account") String account);
+    void deleteByIds(@Param("list") List<Integer> ids, @Param("account") String account);
 
     void updateBillStatus(@Param("account") String account, @Param("id") int id, @Param("classType") int classType);
 

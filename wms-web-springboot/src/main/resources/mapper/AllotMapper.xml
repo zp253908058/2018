@@ -98,7 +98,8 @@
          pdastates,
          original_id,
          wctime,
-         loginid)
+         loginid,
+        Class)
             SELECT
                 d.bill_id,
                 d.p_id,
@@ -119,11 +120,10 @@
                 d.pdastates,
                 d.original_id,
                 getdate(),
-                #{userId,jdbcType=NUMERIC}
+                #{userId,jdbcType=NUMERIC},
+                d.Class
             FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.smb_id = (SELECT max(d1.smb_id)
-                              FROM ${account}.dbo.pda_TranBill_D d1
-                              WHERE d1.original_id = #{id} AND Class = #{classType})
+            WHERE d.smb_id = #{id}
 
     </insert>
 
@@ -148,8 +148,7 @@
 
     <delete id="deleteByIds">
         DELETE FROM ${account}.dbo.pda_TranBill_D
-        WHERE original_id = #{originalId}
-        AND smb_id IN
+        WHERE  smb_id IN
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
@@ -157,9 +156,9 @@
 
     <update id="updateBillStatus">
         <selectKey keyProperty="count" resultType="int" order="BEFORE">
-            SELECT count(*) AS total
+            SELECT count(*)
             FROM ${account}.dbo.pda_TranBill_D d
-            WHERE d.DealStates=0
+            WHERE d.DealStates = 0
             AND d.bill_id =
             (SELECT DISTINCT d1.bill_id
             FROM ${account}.dbo.pda_TranBill_D d1

@@ -61,7 +61,7 @@ public class AllotServiceImpl implements AllotService {
     public void updateAll(List<AllotListCompleteRequestEntity> params, String account, int userId) {
         if (Validator.isNotEmpty(params)) {
             AllotListCompleteRequestEntity entity = params.get(0);
-            mAllotMapper.updateAll(entity.getId(),entity.getClassType(), params, account, userId);
+            mAllotMapper.updateAll(entity.getId(), entity.getClassType(), params, account, userId);
             mAllotMapper.updateBillStatus(account, entity.getId(), entity.getClassType());
         }
     }
@@ -74,7 +74,10 @@ public class AllotServiceImpl implements AllotService {
 
     @Override
     public void update(AllotListRequestEntity entity, String account, int userId) {
-        List<Integer> ids = mAllotMapper.getIdsByOriginalId(entity.getId(), account);
+        List<Integer> ids = mAllotMapper.getIdsByOriginalId(entity.getId(), account, entity.getClassType());
+        if (Validator.isEmpty(ids)) {
+            throw new InnerException("数据错误,找不到数据,id:" + entity.getId() + ".");
+        }
         List<AllocationEntity> locations = entity.getLocations();
         if (Validator.isNotEmpty(locations)) {
             for (AllocationEntity allocation : locations) {
@@ -82,13 +85,13 @@ public class AllotServiceImpl implements AllotService {
                 if (locationId == null || locationId == 0) {
                     throw new InnerException("找不此货位:" + allocation.getLocationCode());
                 }
-                mAllotMapper.copyData(entity.getId(), entity.getClassType(), allocation.getAmount(), locationId, account, userId);
+                mAllotMapper.copyData(ids.get(0), allocation.getAmount(), locationId, account, userId);
             }
         } else {
-            mAllotMapper.copyData(entity.getId(), entity.getClassType(), 0, 0, account, userId);
+            throw new InnerException("请添加货位.");
         }
 
-        mAllotMapper.deleteByIds(ids, entity.getId(), account);
+        mAllotMapper.deleteByIds(ids, account);
 
         mAllotMapper.updateBillStatus(account, entity.getId(), entity.getClassType());
     }
