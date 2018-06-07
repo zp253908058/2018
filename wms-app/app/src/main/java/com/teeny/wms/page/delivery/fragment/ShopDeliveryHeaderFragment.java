@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Flowable;
@@ -50,6 +51,7 @@ public class ShopDeliveryHeaderFragment extends BaseFragment {
 
     private AutoCompleteTextView mOrderTextView;    //库区
     private SimpleAdapter<KeyValueEntity> mOrderAdapter;
+    private List<KeyValueEntity> mOrderList;
 
     private EditText mFocusView;
     private ScannerHelper mScannerHelper;
@@ -75,13 +77,14 @@ public class ShopDeliveryHeaderFragment extends BaseFragment {
     private void handleResult(String msg) {
         if (mFocusView != null) {
             mFocusView.setText(msg);
-            int count = mOrderAdapter.getCount();
+            List<KeyValueEntity> result = getFilteredList(msg);
+            int count = result.size();
             switch (count) {
                 case 0:
                     Toaster.showToast("找不到该单据:" + msg);
                     break;
                 case 1:
-                    mSelectedOrder = mOrderAdapter.getItem(0);
+                    mSelectedOrder = result.get(0);
                     obtainGoods();
                     break;
                 default:
@@ -91,6 +94,23 @@ public class ShopDeliveryHeaderFragment extends BaseFragment {
         } else {
             Toaster.showToast("当前没有焦点.");
         }
+    }
+
+    private List<KeyValueEntity> getFilteredList(String filter) {
+        if (Validator.isEmpty(filter)) {
+            return mOrderList;
+        }
+        List<KeyValueEntity> result = new ArrayList<>(1);
+        if (Validator.isEmpty(mOrderList)) {
+            return result;
+        }
+        for (KeyValueEntity entity : mOrderList) {
+            String value = entity.getValue();
+            if (value.contains(filter)) {
+                result.add(entity);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -162,6 +182,7 @@ public class ShopDeliveryHeaderFragment extends BaseFragment {
         flowable.observeOn(AndroidSchedulers.mainThread()).subscribe(new ResponseSubscriber<List<KeyValueEntity>>(this) {
             @Override
             public void doNext(List<KeyValueEntity> data) {
+                mOrderList = data;
                 mOrderAdapter.clear();
                 mOrderAdapter.addAll(data);
                 if (Validator.isEmpty(data)) {
