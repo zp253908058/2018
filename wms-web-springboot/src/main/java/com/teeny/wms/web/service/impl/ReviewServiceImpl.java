@@ -28,26 +28,20 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     private ReviewMapper mReviewMapper;
-    private CommonMapper mCommonMapper;
 
     @Autowired
     public void setReviewMapper(ReviewMapper reviewMapper) {
         mReviewMapper = reviewMapper;
     }
 
-    @Autowired
-    public void setCommonMapper(CommonMapper commonMapper) {
-        mCommonMapper = commonMapper;
-    }
-
     @Override
-    public ExWarehouseReviewEntity getWarehouseReview(String account, String billNo, int userId) {
-        ReviewBillEntity bill = mReviewMapper.getBillByCode(billNo, account);
+    public ExWarehouseReviewEntity getWarehouseReview(String account, String barcode, int userId) {
+        ReviewBillEntity bill = mReviewMapper.getBillByCode(barcode, account);
         if (bill == null) {
-            throw new InnerException(billNo + "  不存在.");
+            throw new InnerException(barcode + "  不存在.");
         }
         if (bill.getDealStates() == 1) {
-            throw new InnerException(billNo + "已扫描!");
+            throw new InnerException(barcode + "已扫描!");
         }
         mReviewMapper.updateStatus(bill.getSmbId(), account, userId);
 
@@ -55,7 +49,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         mReviewMapper.updateBillStatus(bill.getBillId(), account);
 
-        return mReviewMapper.getDetail(billNo, account);
+        return mReviewMapper.getDetail(bill.getBillId(), account);
     }
 
     @Override

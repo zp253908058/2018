@@ -33,7 +33,7 @@ public interface ReviewMapper {
 
     void updateBillStatus(@Param("billId") int billId, @Param("account") String account);
 
-    ExWarehouseReviewEntity getDetail(@Param("billNo") String billNo, @Param("account") String account);
+    ExWarehouseReviewEntity getDetail(@Param("billId") int billId, @Param("account") String account);
 
     List<RecipientEntity> getRecipients(@Param("account") String account, @Param("sId") int sId);
 

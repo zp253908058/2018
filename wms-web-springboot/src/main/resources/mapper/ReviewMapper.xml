@@ -33,53 +33,41 @@
 
     <select id="getDetail" resultType="ExWarehouseReviewEntity">
         SELECT
-            b.billnumber                                                                       AS billNo,
-            c.RoadName                                                                         AS deliveryLine,
-            c.name                                                                             AS customer,
-            b.FirstStates                                                                      AS priority,
-            b.TempStore                                                                        AS tempArea,
-            b.pdastates                                                                        AS status,
-            b.billstates                                                                       AS documentStatus,
-            b.remark                                                                           AS billRemark,
+            b.billnumber      AS billNo,
+            c.RoadName        AS deliveryLine,
+            c.name            AS customer,
+            b.FirstStates     AS priority,
+            b.TempStore       AS tempArea,
+            b.pdastates       AS status,
+            b.billstates      AS documentStatus,
+            b.remark          AS billRemark,
+            count(CASE WHEN d.PickType = 1 AND d.EligibleQty = 1
+                THEN EligibleQty
+                  ELSE 0 END) AS zhQuantity,
 
-            (SELECT count(EligibleQty)
-             FROM ${account}.dbo.pda_CheckBill_B
-             WHERE PickType = 1 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
-                                                                   FROM ${account}.dbo.pda_CheckBill_B
-                                                                   WHERE barcode = #{billNo})) AS zhQuantity,
-            (SELECT count(EligibleQty)
-             FROM ${account}.dbo.pda_CheckBill_B
-             WHERE PickType = 2 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
-                                                                   FROM ${account}.dbo.pda_CheckBill_B
-                                                                   WHERE barcode = #{billNo})) AS pxQuantity,
-            (SELECT count(EligibleQty)
-             FROM ${account}.dbo.pda_CheckBill_B
-             WHERE PickType = 3 AND EligibleQty = 1 AND bill_id = (SELECT DISTINCT bill_id
-                                                                   FROM ${account}.dbo.pda_CheckBill_B
-                                                                   WHERE barcode = #{billNo})) AS dbQuantity,
+            count(CASE WHEN d.PickType = 2 AND d.EligibleQty = 1
+                THEN EligibleQty
+                  ELSE 0 END) AS pxQuantity,
 
+            count(CASE WHEN d.PickType = 3 AND d.EligibleQty = 1
+                THEN EligibleQty
+                  ELSE 0 END) AS dbQuantity,
 
-            (SELECT count(EligibleQty)
-             FROM ${account}.dbo.pda_CheckBill_B
-             WHERE PickType = 1 AND bill_id = (SELECT DISTINCT bill_id
-                                               FROM ${account}.dbo.pda_CheckBill_B
-                                               WHERE barcode = #{billNo}))                     AS zhQuantityTotal,
-            (SELECT count(EligibleQty)
-             FROM ${account}.dbo.pda_CheckBill_B
-             WHERE PickType = 2 AND bill_id = (SELECT DISTINCT bill_id
-                                               FROM ${account}.dbo.pda_CheckBill_B
-                                               WHERE barcode = #{billNo}))                     AS pxQuantityTotal,
-            (SELECT count(EligibleQty)
-             FROM ${account}.dbo.pda_CheckBill_B
-             WHERE PickType = 3 AND bill_id = (SELECT DISTINCT bill_id
-                                               FROM ${account}.dbo.pda_CheckBill_B
-                                               WHERE barcode = #{billNo}))                     AS dbQuantityTotal
+            count(CASE WHEN d.PickType = 1
+                THEN EligibleQty
+                  ELSE 0 END) AS zhQuantityTotal,
 
+            count(CASE WHEN d.PickType = 2
+                THEN EligibleQty
+                  ELSE 0 END) AS pxQuantityTotal,
+
+            count(CASE WHEN d.PickType = 3
+                THEN EligibleQty
+                  ELSE 0 END) AS dbQuantityTotal
         FROM ${account}.dbo.pda_CheckBill b
+            INNER JOIN ${account}.dbo.pda_CheckBill_B d ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_clients c ON b.c_id = c.c_id
-        WHERE b.billid = (SELECT DISTINCT bb.bill_id
-                          FROM ${account}.dbo.pda_CheckBill_B bb
-                          WHERE bb.barcode = #{billNo})
+        WHERE b.billid = #{billId}
     </select>
 
     <select id="getRecipients" resultType="RecipientEntity">

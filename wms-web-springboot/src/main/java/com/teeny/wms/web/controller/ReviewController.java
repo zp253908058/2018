@@ -38,9 +38,9 @@ public class ReviewController {
      *
      * @return 复核单详情
      */
-    @GetMapping("/exWarehouseReview/{billNo}")
-    public ResponseEntity<ExWarehouseReviewEntity> detail(@RequestHeader("account") String account, @PathVariable("billNo") String billNo, @User UserEntity entity) {
-        return new ResponseEntity<>(mReviewService.getWarehouseReview(account, billNo, entity.getId()));
+    @GetMapping("/exWarehouseReview/{barcode}")
+    public ResponseEntity<ExWarehouseReviewEntity> detail(@RequestHeader("account") String account, @PathVariable("barcode") String barcode, @User UserEntity entity) {
+        return new ResponseEntity<>(mReviewService.getWarehouseReview(account, barcode, entity.getId()));
     }
 
     /**

@@ -16,7 +16,7 @@ import java.util.List;
  * @since 2017/11/7
  */
 public interface ReviewService {
-    ExWarehouseReviewEntity getWarehouseReview(String account, String billNo, int i);
+    ExWarehouseReviewEntity getWarehouseReview(String account, String barcode, int userId);
 
     List<RecipientEntity> getRecipients(String account, int sId);
 
