@@ -101,7 +101,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
 
         mOldBarcode = intent.getStringExtra(KEY_OLD_BARCODE);
 
-        mBarcodeView = (AppCompatEditText) findViewById(R.id.barcode_add_barcode);
+        mBarcodeView = findViewById(R.id.barcode_add_barcode);
         mBarcodeView.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 WindowUtils.hideInputSoft(v);
@@ -110,7 +110,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
             }
             return false;
         });
-        mGoodsView = (AppCompatEditText) findViewById(R.id.barcode_add_goods);
+        mGoodsView = findViewById(R.id.barcode_add_goods);
         mGoodsView.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 WindowUtils.hideInputSoft(v);
@@ -120,13 +120,13 @@ public class BarcodeAddActivity extends ToolbarActivity {
             return false;
         });
 
-        mGoodsNameView = (KeyValueEditView) findViewById(R.id.barcode_add_goods_name);
-        mSpecificationView = (KeyValueEditView) findViewById(R.id.barcode_add_specification);
-        mManufacturerView = (KeyValueEditView) findViewById(R.id.barcode_add_manufacturer);
-        mMakeAreaView = (KeyValueEditView) findViewById(R.id.barcode_add_make_area);
-        mDosageFormView = (KeyValueEditView) findViewById(R.id.barcode_add_dosage_form);
-        mUnitView = (KeyValueEditView) findViewById(R.id.barcode_add_unit);
-        mApprovalNumberView = (KeyValueEditView) findViewById(R.id.barcode_add_approval_number);
+        mGoodsNameView = findViewById(R.id.barcode_add_goods_name);
+        mSpecificationView = findViewById(R.id.barcode_add_specification);
+        mManufacturerView = findViewById(R.id.barcode_add_manufacturer);
+        mMakeAreaView = findViewById(R.id.barcode_add_make_area);
+        mDosageFormView = findViewById(R.id.barcode_add_dosage_form);
+        mUnitView = findViewById(R.id.barcode_add_unit);
+        mApprovalNumberView = findViewById(R.id.barcode_add_approval_number);
 
         mService = NetServiceManager.getInstance().getService(BarcodeService.class);
 
@@ -141,7 +141,7 @@ public class BarcodeAddActivity extends ToolbarActivity {
     }
 
     private void complete() {
-        if (mId < 0) {
+        if (mId <= 0) {
             Toaster.showToast("商品id错误,请重新添加.");
             return;
         }

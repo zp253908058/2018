@@ -33,41 +33,42 @@
 
     <select id="getDetail" resultType="ExWarehouseReviewEntity">
         SELECT
-            b.billnumber      AS billNo,
-            c.RoadName        AS deliveryLine,
-            c.name            AS customer,
-            b.FirstStates     AS priority,
-            b.TempStore       AS tempArea,
-            b.pdastates       AS status,
-            b.billstates      AS documentStatus,
-            b.remark          AS billRemark,
-            count(CASE WHEN d.PickType = 1 AND d.EligibleQty = 1
-                THEN EligibleQty
-                  ELSE 0 END) AS zhQuantity,
+            b.billnumber    AS billNo,
+            c.RoadName      AS deliveryLine,
+            c.name          AS customer,
+            b.FirstStates   AS priority,
+            b.TempStore     AS tempArea,
+            b.pdastates     AS status,
+            b.billstates    AS documentStatus,
+            b.remark        AS billRemark,
+            sum(CASE WHEN d.PickType = 1 AND d.EligibleQty = 1
+                THEN 1
+                ELSE 0 END) AS zhQuantity,
 
-            count(CASE WHEN d.PickType = 2 AND d.EligibleQty = 1
-                THEN EligibleQty
-                  ELSE 0 END) AS pxQuantity,
+            sum(CASE WHEN d.PickType = 2 AND d.EligibleQty = 1
+                THEN 1
+                ELSE 0 END) AS pxQuantity,
 
-            count(CASE WHEN d.PickType = 3 AND d.EligibleQty = 1
-                THEN EligibleQty
-                  ELSE 0 END) AS dbQuantity,
+            sum(CASE WHEN d.PickType = 3 AND d.EligibleQty = 1
+                THEN 1
+                ELSE 0 END) AS dbQuantity,
 
-            count(CASE WHEN d.PickType = 1
-                THEN EligibleQty
-                  ELSE 0 END) AS zhQuantityTotal,
+            sum(CASE WHEN d.PickType = 1
+                THEN 1
+                ELSE 0 END) AS zhQuantityTotal,
 
-            count(CASE WHEN d.PickType = 2
-                THEN EligibleQty
-                  ELSE 0 END) AS pxQuantityTotal,
+            sum(CASE WHEN d.PickType = 2
+                THEN 1
+                ELSE 0 END) AS pxQuantityTotal,
 
-            count(CASE WHEN d.PickType = 3
-                THEN EligibleQty
-                  ELSE 0 END) AS dbQuantityTotal
+            sum(CASE WHEN d.PickType = 3
+                THEN 1
+                ELSE 0 END) AS dbQuantityTotal
         FROM ${account}.dbo.pda_CheckBill b
             INNER JOIN ${account}.dbo.pda_CheckBill_B d ON b.billid = d.bill_id
             LEFT JOIN ${account}.dbo.pda_clients c ON b.c_id = c.c_id
         WHERE b.billid = #{billId}
+        GROUP BY b.billnumber, c.RoadName, c.name, b.FirstStates, b.TempStore, b.pdastates, b.billstates, b.remark
     </select>
 
     <select id="getRecipients" resultType="RecipientEntity">
@@ -97,10 +98,10 @@
         </if>
     </select>
 
-    <select id="getReplenishmentCount" resultType="string">
-        SELECT repbill FROM ${account}.dbo.pda_CheckBill
+    <select id="getReplenishmentCount" resultType="int">
+        SELECT count(repbill) FROM ${account}.dbo.pda_CheckBill
         <if test="sId != 0">
-            AND s_id = #{sId}
+            WHERE s_id = #{sId}
         </if>
     </select>
 </mapper>

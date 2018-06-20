@@ -22,7 +22,7 @@ public interface ReviewService {
 
     List<KeyValueEntity> getBillList(int sId, String account);
 
-    String getReplenishmentCount(String account, int sId);
+    Integer getReplenishmentCount(String account, int sId);
 
     void complete(ExWarehouseReviewRequestEntity entity, String account);
 }

@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public String getReplenishmentCount(String account, int sId) {
+    public Integer getReplenishmentCount(String account, int sId) {
         return mReviewMapper.getReplenishmentCount(account, sId);
     }
 

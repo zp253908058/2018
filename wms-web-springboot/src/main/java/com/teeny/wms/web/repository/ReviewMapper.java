@@ -39,7 +39,7 @@ public interface ReviewMapper {
 
     List<KeyValueEntity> getBillList(@Param("sId") int sId, @Param("account") String account);
 
-    String getReplenishmentCount(@Param("account") String account, @Param("sId") int sId);
+    Integer getReplenishmentCount(@Param("account") String account, @Param("sId") int sId);
 
     @Update("UPDATE ${account}.dbo.pda_CheckBill SET diff_remark=#{remark,jdbcType=VARCHAR}, recipient_id=#{recipientId,jdbcType=INTEGER}, billstates=13 WHERE billnumber=#{billNo}")
     void complete(@Param("billNo") String billNo, @Param("recipientId") int recipientId, @Param("remark") String remark, @Param("account") String account);

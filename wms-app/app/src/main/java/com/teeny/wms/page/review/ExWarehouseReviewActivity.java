@@ -122,21 +122,21 @@ public class ExWarehouseReviewActivity extends ToolbarActivity {
         });
         mScanView.setOnFocusChangeListener(this::onFocusChange);
 
-        mBillView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_sale_order_number);
-        mPriorityView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_priority);
-        mStagingAreaView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_staging_area);
-        mCustomerView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_customer);
-        mStatusView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_status);
-        mDocumentStatusView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_document_status);
-        mDistributionRoadView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_distribution_road);
-        mDocumentRemarkView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_document_remark);
-        mReplenishmentOrderView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_replenishment_order);
-        mIntactGoodsNumberView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_intact_goods_number);
-        mLCLView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_lcl_count);
-        mPackageView = (KeyValueTextView) findViewById(R.id.ex_warehouse_review_package_count);
+        mBillView = findViewById(R.id.ex_warehouse_review_sale_order_number);
+        mPriorityView = findViewById(R.id.ex_warehouse_review_priority);
+        mStagingAreaView = findViewById(R.id.ex_warehouse_review_staging_area);
+        mCustomerView = findViewById(R.id.ex_warehouse_review_customer);
+        mStatusView = findViewById(R.id.ex_warehouse_review_status);
+        mDocumentStatusView = findViewById(R.id.ex_warehouse_review_document_status);
+        mDistributionRoadView = findViewById(R.id.ex_warehouse_review_distribution_road);
+        mDocumentRemarkView = findViewById(R.id.ex_warehouse_review_document_remark);
+        mReplenishmentOrderView = findViewById(R.id.ex_warehouse_review_replenishment_order);
+        mIntactGoodsNumberView = findViewById(R.id.ex_warehouse_review_intact_goods_number);
+        mLCLView = findViewById(R.id.ex_warehouse_review_lcl_count);
+        mPackageView = findViewById(R.id.ex_warehouse_review_package_count);
 
-        mRemarkTextView = (TextView) findViewById(R.id.ex_warehouse_review_diff_remark);
-        mRecipientTextView = (TextView) findViewById(R.id.ex_warehouse_review_recipient);
+        mRemarkTextView = findViewById(R.id.ex_warehouse_review_diff_remark);
+        mRecipientTextView = findViewById(R.id.ex_warehouse_review_recipient);
 
         mService = NetServiceManager.getInstance().getService(ReviewService.class);
 

@@ -70,7 +70,7 @@ public class ReviewController {
      * @return int
      */
     @GetMapping("/replenishment")
-    public ResponseEntity<String> getReplenishmentCount(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
+    public ResponseEntity<Integer> getReplenishmentCount(@RequestHeader("account") String account, @RequestHeader("sId") int sId) {
         return new ResponseEntity<>(mReviewService.getReplenishmentCount(account, sId));
     }
 

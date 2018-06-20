@@ -154,6 +154,7 @@ public abstract class InventoryHelper {
         for (InventoryGoodsEntity entity : list) {
             if (entity.getOriginalId() == id) {
                 entity.setStatus(1);
+                entity.setInventoryCount(entity.getCountInBill());
                 break;
             }
         }
@@ -175,6 +176,7 @@ public abstract class InventoryHelper {
         }
         for (InventoryGoodsEntity entity : list) {
             entity.setStatus(1);
+            entity.setInventoryCount(entity.getCountInBill());
         }
         mDataHolder.clear();
         inset(mUnfinishedNumber);

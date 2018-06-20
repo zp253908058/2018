@@ -101,15 +101,15 @@ public class BarcodeCollectActivity extends ToolbarActivity implements RecyclerV
         Intent intent = getIntent();
         String goods = intent.hasExtra(KEY_GOODS) ? intent.getStringExtra(KEY_GOODS) : "";
 
-        mGoodsTextView = (EditText) findViewById(R.id.barcode_collect_goods);
+        mGoodsTextView = findViewById(R.id.barcode_collect_goods);
         mGoodsTextView.setText(goods);
         mGoodsTextView.setOnEditorActionListener(this::onEditorAction);
         mGoodsTextView.setOnFocusChangeListener(this::onFocusChanged);
-        mLocationTextView = (EditText) findViewById(R.id.barcode_collect_allocation);
+        mLocationTextView = findViewById(R.id.barcode_collect_allocation);
         mLocationTextView.setOnEditorActionListener(this::onEditorAction);
         mGoodsTextView.setOnFocusChangeListener(this::onFocusChanged);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         mAdapter = new BarcodeGoodsAdapter(null);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setNestedScrollingEnabled(false);
