@@ -31,6 +31,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Objects;
+
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -71,15 +73,15 @@ public class WarehouseInventoryFragment extends BaseFragment implements Recycler
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mType = getArguments().getInt(KEY_TYPE);
+        mType = Objects.requireNonNull(getArguments()).getInt(KEY_TYPE);
         mEventBus = EventBus.getDefault();
         mEventBus.register(this);
         switch (mType) {
             case 0:
-                mOptionDialog = DialogFactory.createOptionMenuDialog(this.getContext(), R.array.pd_option_1, this);
+                mOptionDialog = DialogFactory.createOptionMenuDialog(this.requireContext(), R.array.pd_option_1, this);
                 break;
             case 1:
-                mOptionDialog = DialogFactory.createOptionMenuDialog(this.getContext(), R.array.pd_option_2, this);
+                mOptionDialog = DialogFactory.createOptionMenuDialog(this.requireContext(), R.array.pd_option_2, this);
                 break;
         }
         if (mOptionDialog != null) {

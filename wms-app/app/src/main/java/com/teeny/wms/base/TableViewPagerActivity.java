@@ -43,11 +43,11 @@ public abstract class TableViewPagerActivity extends ToolbarActivity {
     }
 
     protected void initView() {
-        mHeaderLayout = (FrameLayout) findViewById(R.id.table_view_pager_header_layout);
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        mCountView = (KeyValueTextView) findViewById(R.id.key_value_text_view);
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.table_view_pager_action_button);
+        mHeaderLayout = findViewById(R.id.table_view_pager_header_layout);
+        mTabLayout = findViewById(R.id.tab_layout);
+        mCountView = findViewById(R.id.key_value_text_view);
+        mViewPager = findViewById(R.id.view_pager);
+        mFloatingActionButton = findViewById(R.id.table_view_pager_action_button);
         mFloatingActionButton.setOnClickListener(this::onClick);
         mFloatingActionButton.setOnLongClickListener(this::onLongClick);
     }
